@@ -1,0 +1,35 @@
+C++ INFOSV Project - Questions
+
+Q1.1: Simplement en utilisant les méthodes isColliding and isPointInside dans
+le corps de ces méthodes de surcharge d'opérateurs.
+
+Q1.2: Une surcharge interne car les deux opérateurs d'appliquent sur un objet de
+type obstacle (comme une méthode le ferait).
+
+Q1.3: L'argument de type colorAllele dans notre méthode colorToString pour
+afficher la couleur d'un Genome, car nous ne voulons pas que la couleur puisse
+être modifiée dans la méthode.
+L'argument Genome passé à l'opérateur surchargé << pour la même raison.
+
+Q1.4: Absolument toutes les méthodes internes à la classe, à l'exception du
+constructeur. Car l'objet sur lequel est appellé un getter ou une méthode pour
+l'afficher ne doit en aucun cas être modifié.
+
+Q2.1: Uniquement la méthode drawOn, car toutes les autres modifient l'état de
+l'objet Environment.
+
+Q2.2: On aurait également pu détruire le constructeur de copies par défault avec
+un 'delete' explicite.
+
+Q2.3: La destruction d'un Environment devra donc induire la destruction de tous
+la faune et les ressources y vivant.
+
+Q2.4: "Vec2d attractionForce() const" Pour calculer la force d'attraction, elle
+ne modifie pas l'objet en question et necessite de connaitre plusieurs attributs
+du SeekingAutomaton. "void update(sf::Time dt)" La méthode update est faite pour
+modifier les attributs de l'automaton en fonction du temps.
+
+Q2.5: En créant l'enum Deceleration qui peut prendre les valeurs WEAK, MIDRANGE
+ou STRONG. La décéleration est calculée en fonction de la distance. Pour moi
+l'utilisation d'un type énuméré ici est redondante. Une simple méthode retournant
+le coefficiant de décélération en rapport à la distance me semble plus clair.
