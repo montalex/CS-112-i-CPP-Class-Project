@@ -1,8 +1,8 @@
 #include <Env/Obstacle.hpp>
 
 
-Obstacle::Obstacle(Vec2d pos, double rad)
-        :center(pos), rad(rad){}
+Obstacle::Obstacle(Vec2d center, double rad)
+        :center(center), rad(rad){}
 
 Vec2d Obstacle::getCenter() {
         return center;

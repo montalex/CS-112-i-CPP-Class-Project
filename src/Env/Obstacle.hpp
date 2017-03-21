@@ -12,7 +12,7 @@ class Obstacle {
 
         public:
                 //Constructor
-                Obstacle(Vec2d pos, double rad);
+                Obstacle(Vec2d center, double rad);
                 //Remove default constructor
                 Obstacle() = delete;
                 //Returns the Obstacle's center

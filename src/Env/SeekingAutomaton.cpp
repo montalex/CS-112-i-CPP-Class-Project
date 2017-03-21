@@ -1,11 +1,10 @@
 #include <Env/SeekingAutomaton.hpp>
 
-SeekingAutomaton::SeekingAutomaton(const Vec2d& initPos) {
-        this->position = initPos;
-        this->target = Vec2d::Vec2d(0, 0);
-        this->direction = Vec2d::Vec2d(1, 0);
-        this->speedNorm = 0.0;
-}
+SeekingAutomaton::SeekingAutomaton(const Vec2d& initPos)
+                : position(initPos), speedNorm(0.0) {
+                        target = Vec2d();
+                        direction = Vec2d(1.0, 0.0);
+                }
 
 double SeekingAutomaton::getStandardMaxSpeed() const {
         return SEEKING_AUTOMATON_MAX_SPEED;
@@ -49,7 +48,7 @@ Vec2d SeekingAutomaton::attractionForce() const {
         Vec2d toTarget = this->target - this->position;
         double toTargetNorm = toTarget.length();
         if(toTargetNorm == 0.0) {
-                return Vec2d::Vec2d(0.0, 0.0);
+                return Vec2d(0.0, 0.0);
         }
         double coef = getDecelerationCoef(this->getDeceleration(toTargetNorm));
         double tempSpeed = std::min(toTargetNorm / coef, this->getStandardMaxSpeed());
