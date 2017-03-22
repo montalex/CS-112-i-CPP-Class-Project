@@ -1,18 +1,10 @@
 #include <stdlib.h>
 #include <Random/Random.hpp>
 #include <iostream>
+#include <Utility/Utility.hpp>
 
 #define colorSize 2
 #define immuneSize 10
-//Represents a genome gender
-enum Sex {
-        MALE, FEMALE
-};
-
-//Represents a genome genetic color attributes
-enum ColorAllele {
-        WHITE, BLACK
-};
 
 /* Represents all animal's genome in the simulation
  *
@@ -44,6 +36,5 @@ class Genome {
                 std::string sexToString() const ;
 };
 
-//Returns given color allele as a string
-std::string colorToString(const ColorAllele& color);
+//Redefine operator << to be used with Genome.
 std::ostream& operator<<(std::ostream& out, const Genome& g);

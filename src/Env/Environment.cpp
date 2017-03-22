@@ -22,6 +22,9 @@ void Environment::drawOn(sf::RenderTarget& targetWindow) const {
                 circle = buildCircle(target, 5.0, red);
                 targetWindow.draw(circle);
         }
+        for(auto& animal: animals) {
+                animal.drawOn(targetWindow);
+        }
 }
 
 void Environment::reset() {

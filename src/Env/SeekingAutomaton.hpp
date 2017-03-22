@@ -3,13 +3,6 @@
 #include <SFML/Graphics.hpp>
 #include <Utility/Utility.hpp>
 
-#include <iostream>
-
-//Represents the SeekingAutomaton's deceleration
-enum Deceleration {
-        WEAK, MIDRANGE, STRONG
-};
-
 /* Represent the Animal's automaton which follows a target
  *
  * Vec2d position: the SeekingAutomaton's position
@@ -46,5 +39,3 @@ class SeekingAutomaton {
                 //depending on the distance to his target
                 Deceleration getDeceleration(const double& distanceToTarget) const;
 };
-
-double getDecelerationCoef(const Deceleration& dec);

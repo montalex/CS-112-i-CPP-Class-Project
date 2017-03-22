@@ -57,23 +57,11 @@ Vec2d SeekingAutomaton::attractionForce() const {
 }
 
 Deceleration SeekingAutomaton::getDeceleration(const double& distanceToTarget) const {
-        if(distanceToTarget >= 100.0) {
+        if(distanceToTarget >= SEEKING_DISTANCE_MID) {
                 return STRONG;
-        } else if(distanceToTarget >= 20.0) {
+        } else if(distanceToTarget >= SEEKING_DISTANCE_CLOSE) {
                 return MIDRANGE;
         } else {
                 return WEAK;
-        }
-}
-
-double getDecelerationCoef(const Deceleration& dec) {
-        switch(dec) {
-                case WEAK:
-                        return DECELERATION_WEAK;
-                case MIDRANGE:
-                        return DECELERATION_MIDRANGE;
-                case STRONG:
-                default:
-                        return DECELERATION_STRONG;
         }
 }

@@ -192,6 +192,26 @@ void append(InputIt first, InputIt last, C& dest);
 template <typename Map, typename F>
 void map_erase_if(Map& m, F pred);
 
+//Represents a genome gender
+enum Sex {
+        MALE, FEMALE
+};
+
+//Represents a genome genetic color attributes
+enum ColorAllele {
+        WHITE, BLACK
+};
+
+//Returns given color allele as a string
+std::string colorAlleleToString(const ColorAllele& color);
+
+//Represents an entity's deceleration
+enum Deceleration {
+        WEAK, MIDRANGE, STRONG
+};
+
+double getDecelerationCoef(const Deceleration& dec);
+
 #include "Utility.tpp"
 
 #endif // INFOSV_UTILITY_HPP

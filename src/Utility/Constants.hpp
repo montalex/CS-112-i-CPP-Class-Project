@@ -20,6 +20,8 @@ double const EPSILON = 1e-8;            ///< a small epsilon value
 double const SEEKING_AUTOMATON_MAX_SPEED = 80;
 double const SEEKING_AUTOMATON_MASS = 1;
 double const SEEKING_AUTOMATON_RADIUS = 20;
+double const SEEKING_DISTANCE_MID = 100.0;
+double const SEEKING_DISTANCE_CLOSE = 30.0;
 
 // Animal
 double const ANIMAL_MAX_SPEED = 80;

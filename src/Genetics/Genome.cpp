@@ -71,9 +71,9 @@ double Genome::getImmuneGenes(size_t idx) const {
 
 std::ostream& Genome::print(std::ostream& out) const {
         out << "Genome (" << sexToString() << ")" << std::endl;
-        out << "Color phenotype = " << colorToString(getColorPhenotype()) << std::endl;
-        out << "First color allele = " << colorToString(getFirstColorAllele()) << std::endl;
-        out << "Second color allele = " << colorToString(getSecondColorAllele()) << std::endl;
+        out << "Color phenotype = " << colorAlleleToString(getColorPhenotype()) << std::endl;
+        out << "First color allele = " << colorAlleleToString(getFirstColorAllele()) << std::endl;
+        out << "Second color allele = " << colorAlleleToString(getSecondColorAllele()) << std::endl;
         out << "Immune profile = ";
         for(int i = 0; i < immuneSize; i++) {
                 out << getImmuneGenes(i) << " ";
@@ -89,16 +89,6 @@ std::string Genome::sexToString() const {
                 case FEMALE:
                 default:
                         return "female";
-        }
-}
-
-std::string colorToString(const ColorAllele& color) {
-        switch(color) {
-                case WHITE:
-                        return "white";
-                case BLACK:
-                default:
-                        return "black";
         }
 }
 
