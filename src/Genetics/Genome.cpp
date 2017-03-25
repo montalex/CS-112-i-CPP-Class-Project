@@ -70,7 +70,7 @@ double Genome::getImmuneGenes(size_t idx) const {
 }
 
 std::ostream& Genome::print(std::ostream& out) const {
-        out << "Genome (" << sexToString() << ")" << std::endl;
+        out << "Genome (" << sexToString(getSex()) << ")" << std::endl;
         out << "Color phenotype = " << colorAlleleToString(getColorPhenotype()) << std::endl;
         out << "First color allele = " << colorAlleleToString(getFirstColorAllele()) << std::endl;
         out << "Second color allele = " << colorAlleleToString(getSecondColorAllele()) << std::endl;
@@ -80,16 +80,6 @@ std::ostream& Genome::print(std::ostream& out) const {
         }
         out << std::endl;
         return out;
-}
-
-std::string Genome::sexToString() const {
-        switch(sex) {
-                case MALE:
-                        return "male";
-                case FEMALE:
-                default:
-                        return "female";
-        }
 }
 
 std::ostream& operator<<(std::ostream& out, const Genome& g) {

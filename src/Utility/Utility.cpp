@@ -167,6 +167,16 @@ std::string colorAlleleToString(const ColorAllele& color) {
         }
 }
 
+std::string sexToString(const Sex& sex) {
+        switch(sex) {
+                case MALE:
+                        return "male";
+                case FEMALE:
+                default:
+                        return "female";
+        }
+}
+
 double getDecelerationCoef(const Deceleration& dec) {
         switch(dec) {
                 case WEAK:

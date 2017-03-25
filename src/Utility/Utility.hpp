@@ -18,6 +18,27 @@
 using Uid = unsigned int;
 
 /*!
+ * @brief Represents a genome gender.
+ */
+enum Sex {
+        MALE, FEMALE
+};
+
+/*!
+ * @brief Represents a genome genetic color attributes.
+ */
+enum ColorAllele {
+        WHITE, BLACK
+};
+
+/*!
+ * @brief Represents an entity's deceleration.
+ */
+enum Deceleration {
+        WEAK, MIDRANGE, STRONG
+};
+
+/*!
  * @brief Create a new unique id.
  *
  * @return a new unique id.
@@ -192,24 +213,31 @@ void append(InputIt first, InputIt last, C& dest);
 template <typename Map, typename F>
 void map_erase_if(Map& m, F pred);
 
-//Represents a genome gender
-enum Sex {
-        MALE, FEMALE
-};
-
-//Represents a genome genetic color attributes
-enum ColorAllele {
-        WHITE, BLACK
-};
-
-//Returns given color allele as a string
+/*!
+ * @brief Gets the given color as string.
+ *
+ * @param color the colorAllele
+ *
+ * @return the colorAllele as a string
+ */
 std::string colorAlleleToString(const ColorAllele& color);
 
-//Represents an entity's deceleration
-enum Deceleration {
-        WEAK, MIDRANGE, STRONG
-};
+/*!
+ * @brief Gets the given sex as string.
+ *
+ * @param sex the Sex
+ *
+ * @return the sex as a string
+ */
+std::string sexToString(const Sex& sex);
 
+/*!
+ * @brief Gets the deceleration coefficient.
+ *
+ * @param dec the deceleration enum
+ *
+ * @return the deceleration coefficient (double)
+ */
 double getDecelerationCoef(const Deceleration& dec);
 
 #include "Utility.tpp"

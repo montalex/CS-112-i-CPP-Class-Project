@@ -17,14 +17,14 @@ double const EPSILON = 1e-8;            ///< a small epsilon value
 
 // Ad'hoc constants
 // Seeking Automaton
-double const SEEKING_AUTOMATON_MAX_SPEED = 80;
+double const SEEKING_AUTOMATON_MAX_SPEED = 100;
 double const SEEKING_AUTOMATON_MASS = 1;
 double const SEEKING_AUTOMATON_RADIUS = 20;
-double const SEEKING_DISTANCE_MID = 100.0;
-double const SEEKING_DISTANCE_CLOSE = 30.0;
+double const SEEKING_DISTANCE_MID = 100;
+double const SEEKING_DISTANCE_CLOSE = 30;
 
 // Animal
-double const ANIMAL_MAX_SPEED = 80;
+double const ANIMAL_MAX_SPEED = 100;
 double const ANIMAL_MASS = 1;
 double const ANIMAL_RADIUS = 50;
 double const ANIMAL_VIEW_RANGE = 60 * DEG_TO_RAD;

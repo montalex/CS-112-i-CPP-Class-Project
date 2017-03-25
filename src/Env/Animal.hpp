@@ -8,53 +8,133 @@
 #include <Utility/Arc.hpp>
 #include <Config.hpp>
 
-/* Represent an Animal in the simulation
+/*!
+ * @class Animal
+ *
+ * @brief Represent an Animal in the simulation.
  *
  * Vec2d position: the Animal's position
  * Vec2d direction: the Animal's direction
- * Vec2d target: the Animal's target
+ * Vec2d target: the Animal's target position
  * double speedNorm: the norm of the Animal's speed
  */
 class Animal {
-        private:
-                Vec2d position;
-                Vec2d direction;
-                Vec2d target;
-                double speedNorm;
-                double viewAngle;
-                double viewMaxDistance;
-        public:
-                //Constructor
-                Animal(const Vec2d& initPos);
-                //Return the Animal's maximum speed
-                double getStandardMaxSpeed() const;
-                //Returns the Animal's mass
-                double getMass() const;
-                //Returns the Animal's radius
-                double getRadius() const;
-                //Set the Animal's target
-                void setTargetPosition(const Vec2d& target);
-                //Returns the Animal's speed vector
-                Vec2d getSpeedVector() const;
-                //Returns the Animal's view angle
-                double getViewRange() const;
-                //Returns the Animal's view distance
-                double getViewDistance() const;
-                //Returns the direction vector's angle
-                double getRotation() const;
-                //Updates the Animal's direction vector with given angle
-                void setRotation(const double& angle);
-                //Updates the Animal's positing in time
-                void update(sf::Time dt);
-                //Draws the Animal in the given window
-                void drawOn(sf::RenderTarget& targetWindow) const;
-                //Draws the Animal's vision in the given window
-                void drawVision(sf::RenderTarget& targetWindow) const;
-                //Returns the Animal's attraction force to the target
-                Vec2d attractionForce() const;
-                //Returns the Deceleration constant for the Animal
-                //depending on the distance to his target
-                Deceleration getDeceleration(const double& distanceToTarget) const;
+    public:
+        /*!
+         * @brief Constructor.
+         *
+         * @param initPos the Animla's initial position
+         */
+        Animal(const Vec2d& initPos);
+
+        /*!
+         * @brief Gets the Animal's maximum speed.
+         *
+         * @return the Animal's maximum speed (double)
+         */
+        double getStandardMaxSpeed() const;
+
+        /*!
+         * @brief Gets the Animal's mass.
+         *
+         * @return the Animal's mass (double)
+         */
+        double getMass() const;
+
+        /*!
+         * @brief Gets the Animal's radius.
+         *
+         * @return the Animal's radius (double)
+         */
+        double getRadius() const;
+
+        /*!
+         * @brief Sets the Animal's target position.
+         *
+         * @param target the new target position
+         */
+        void setTargetPosition(const Vec2d& target);
+
+        /*!
+         * @brief Gets the Animal's speed vector.
+         *
+         * @return the Animal's speed vector (Vec2d)
+         */
+        Vec2d getSpeedVector() const;
+
+        /*!
+         * @brief Gets the Animal's view range.
+         *
+         * @return the Animal's view range (double)
+         */
+        double getViewRange() const;
+
+        /*!
+         * @brief Gets the Animal's view distance.
+         *
+         * @return the Animal's view distance (double)
+         */
+        double getViewDistance() const;
+
+        /*!
+         * @brief Gets the Animal's view rotation.
+         *
+         * @return the Animal's view rotation (double)
+         */
+        double getRotation() const;
+
+        /*!
+         * @brief Sets the Animal's view rotation.
+         *
+         * @param angle the view rotation angle
+         */
+        void setRotation(const double& angle);
+
+        /*!
+         * @brief Updates the Animal's attributes over time.
+         *
+         * @param dt the time passed
+         */
+        void update(sf::Time dt);
+
+        /*!
+         * @brief Draws the Animal and his target in the given window.
+         *
+         * @param targetWindow the window to draw on
+         */
+        void drawOn(sf::RenderTarget& targetWindow) const;
+
+        /*!
+         * @brief Draws the Animal's vision in the given window.
+         *
+         * @param targetWindow the window to draw on
+         */
+        void drawVision(sf::RenderTarget& targetWindow) const;
+
+        /*!
+         * @brief Gets the Animal's attraction force to his target.
+         *
+         * @return Animal's attraction force to his target (Vec2d)
+         */
+        Vec2d attractionForce() const;
+
+        /*!
+         * @brief Gets the Deceleration constant for the Animal
+         *        depending on the distance to his target.
+         *
+         * @param distanceToTarget the distance to the target
+         *
+         * @return the Deceleration coefficient (Deceleration enum)
+         */
+        Deceleration getDeceleration(const double& distanceToTarget) const;
+
+    private:
+        Vec2d position;
+        Vec2d direction;
+        Vec2d target;
+        double speedNorm;
+        double viewAngle;
+        double viewMaxDistance;
 };
 
 #endif // INFOSV_ANIMAL_HPP

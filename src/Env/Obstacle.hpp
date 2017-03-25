@@ -1,30 +1,76 @@
 #include <Utility/Vec2d.hpp>
 
-/* Represent all obstacle in the simulation with a cercle surounding it.
+/*!
+ * @class Obstacle
+ *
+ * @brief Represent Obstacles in the simulation with a cercle surounding it.
  *
  * Vec2d center: The Obstacle's center
  * double rad: The Obstacle's radius
  */
 class Obstacle {
-        private:
-                Vec2d center;
-                double rad;
+    public:
+        /*!
+         * @brief Constructor.
+         *
+         * @param center the Obstacle's center position
+         * @param rad the Obstacle's radius
+         */
+        Obstacle(Vec2d center, double rad);
 
-        public:
-                //Constructor
-                Obstacle(Vec2d center, double rad);
-                //Remove default constructor
-                Obstacle() = delete;
-                //Returns the Obstacle's center
-                Vec2d getCenter();
-                //Returns the Obtacle's raduis
-                double getRadius();
-                //Returns True if the current Obstacle is colliding with the other
-                bool isColliding(const Obstacle& other);
-                //Returns True if the point p is inside the current Obstacle
-                bool isPointInside(const Vec2d& p);
-                //Operator for collisions
-                bool operator|(Obstacle& other);
-                //Operator to check if point p is inside
-                bool operator>(Vec2d& p);
+        /*!
+         * @brief Remove default constructor
+         */
+        Obstacle() = delete;
+
+        /*!
+         * @brief Gets the Obstacle's center.
+         *
+         * @return the Obstacle's center (Vec2d)
+         */
+        Vec2d getCenter();
+
+        /*!
+         * @brief Gets the Obstacle's radius.
+         *
+         * @return the Obstacle's radius (Vec2d)
+         */
+        double getRadius();
+
+        /*!
+         * @brief Tests if the Obstacle is colliding with an other
+         *
+         * @param other the other Obstacle
+         *
+         * @return True if the current Obstacle is colliding with the other
+         */
+        bool isColliding(const Obstacle& other);
+
+        /*!
+         * @brief Tests a p is inside the current Obstacle
+         *
+         * @param p the point
+         *
+         * @return True if the point p is inside the current Obstacle
+         */
+        bool isPointInside(const Vec2d& p);
+
+        /*!
+         * @brief Operator for collisions.
+         *
+         * @param other the other Obstacle
+         */
+        bool operator|(Obstacle& other);
+
+        /*!
+         * @brief Operator to check if a point is inside the Obstacle.
+         *
+         * @param p the point
+         */
+        bool operator>(Vec2d& p);
+
+    private:
+        Vec2d center;
+        double rad;
+
 };
