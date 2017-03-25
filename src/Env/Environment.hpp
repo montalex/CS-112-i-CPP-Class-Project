@@ -1,8 +1,12 @@
+#ifndef INFOSV_ENVIRONMENT_HPP
+#define INFOSV_ENVIRONMENT_HPP
+
 #include <list>
-#include <Env/Animal.hpp>
 #include <Utility/Vec2d.hpp>
 #include <SFML/Graphics.hpp>
 #include <Utility/Utility.hpp>
+
+class Animal;
 
 /*!
  * @class Environment
@@ -50,7 +54,17 @@ class Environment {
          */
         void reset();
 
+        /*!
+         * @brief Gets all targets that the given Animal see in the Environment.
+         *
+         * @param animal the Animal
+         *
+         * @return all targets that the Animal sees
+         */
+        std::list<Vec2d> getTargetsInSightForAnimal(const Animal* animal) const;
+
     private:
-        std::list<Animal> animals;
+        std::list<Animal*> animals;
         std::list<Vec2d> targets;
 };
+#endif // INFOSV_ENVIRONMENT_HPP

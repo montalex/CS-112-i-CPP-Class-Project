@@ -34,7 +34,14 @@ ou STRONG. La décéleration est calculée en fonction de la distance. Pour moi
 l'utilisation d'un type énuméré ici est redondante. Une simple méthode retournant
 le coefficiant de décélération en rapport à la distance me semble plus clair.
 
-Q2.6: 
+Q2.6: ?? N'existe pas ?
 
 Q2.7: Ajouter l'appel à la methode drawOn de l'animal pour tous les animaux de
 l'environnement dans la méthode du dessin de ce dernier.
+
+Q2.8:
+
+Q2.9: Une liste de Vec2d repertoriant les positions des cibles vu par l'animal.
+
+Q2.10: Appeler la méthode update pour chaque animal de l'Environment dans la
+méthode update de l'Environment.

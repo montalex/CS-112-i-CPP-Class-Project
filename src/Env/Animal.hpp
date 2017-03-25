@@ -7,6 +7,7 @@
 #include <Utility/Utility.hpp>
 #include <Utility/Arc.hpp>
 #include <Config.hpp>
+#include <Application.hpp>
 
 /*!
  * @class Animal
@@ -26,6 +27,27 @@ class Animal {
          * @param initPos the Animla's initial position
          */
         Animal(const Vec2d& initPos);
+
+        /*!
+         * @brief Gets the Animal's position.
+         *
+         * @return the Animal's position (Vec2d)
+         */
+        Vec2d getPosition() const;
+
+        /*!
+         * @brief Gets the Animal's direction.
+         *
+         * @return the Animal's direction (Vec2d)
+         */
+        Vec2d getDirection() const;
+
+        /*!
+         * @brief Gets the Animal's target position.
+         *
+         * @return the Animal's target position (Vec2d)
+         */
+        Vec2d getTarget() const;
 
         /*!
          * @brief Gets the Animal's maximum speed.
@@ -128,13 +150,20 @@ class Animal {
          */
         Deceleration getDeceleration(const double& distanceToTarget) const;
 
+        /*!
+         * @brief Tests if target is in sight.
+         *
+         * @param target the target position
+         *
+         * @return True if target is in sight
+         */
+        bool isTargetInSight(const Vec2d& target) const;
+
     private:
         Vec2d position;
         Vec2d direction;
         Vec2d target;
         double speedNorm;
-        double viewAngle;
-        double viewMaxDistance;
 };
 
 #endif // INFOSV_ANIMAL_HPP

@@ -1,3 +1,6 @@
+#ifndef INFOSV_GENOME_HPP
+#define INFOSV_GENOME_HPP
+
 #include <stdlib.h>
 #include <Random/Random.hpp>
 #include <iostream>
@@ -84,3 +87,5 @@ class Genome {
  * @return the output stream (ostream)
  */
 std::ostream& operator<<(std::ostream& out, const Genome& g);
+
+#endif // INFOSV_GENOME_HPP

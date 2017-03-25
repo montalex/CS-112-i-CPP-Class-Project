@@ -1,3 +1,6 @@
+#ifndef INFOSV_OBSTACLE_HPP
+#define INFOSV_OBSTACLE_HPP
+
 #include <Utility/Vec2d.hpp>
 
 /*!
@@ -74,3 +77,4 @@ class Obstacle {
         double rad;
 
 };
+#endif // INFOSV_OBSTACLE_HPP

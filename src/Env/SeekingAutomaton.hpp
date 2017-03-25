@@ -1,3 +1,6 @@
+#ifndef INFOSV_SEEKING_AUTOMATON_HPP
+#define INFOSV_SEEKING_AUTOMATON_HPP
+
 #include <Utility/Vec2d.hpp>
 #include <Utility/Constants.hpp>
 #include <SFML/Graphics.hpp>
@@ -87,10 +90,11 @@ class SeekingAutomaton {
          * @return the Deceleration coefficient (Deceleration enum)
          */
         Deceleration getDeceleration(const double& distanceToTarget) const;
-        
+
     private:
         Vec2d position;
         Vec2d direction;
         Vec2d target;
         double speedNorm;
 };
+#endif // INFOSV_SEEKING_AUTOMATON_HPP
