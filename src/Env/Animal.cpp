@@ -4,18 +4,60 @@ Animal::Animal(const Vec2d& initPos)
     : position(initPos), speedNorm(0.0) {
         target = Vec2d();
         direction = Vec2d(1.0, 0.0);
+        virtual_target = Vec2d(1.0, 0.0);
     }
 
 Vec2d Animal::getPosition() const {
     return this->position;
 }
 
+void Animal::setPosition(const Vec2d& newPosition) {
+    Vec2d boundedPosition = newPosition;
+    double maxWidth = getAppConfig().window_simulation_width;
+    double maxHeight = getAppConfig().window_simulation_height;
+    if(newPosition.x > maxWidth) {
+        boundedPosition.x = 0;
+    } else if(newPosition.x < 0) {
+        boundedPosition.x = maxWidth;
+    }
+    if(newPosition.y > maxHeight) {
+        boundedPosition.y = 0;
+    } else if(newPosition.y < 0) {
+        boundedPosition.y = maxHeight;
+    }
+    this->position = boundedPosition;
+}
+
 Vec2d Animal::getDirection() const {
     return this->direction;
 }
 
+void Animal::setDirection(const Vec2d& newDirection) {
+    this->direction = newDirection;
+}
+
 Vec2d Animal::getTarget() const {
     return this->target;
+}
+
+void Animal::setTarget(const Vec2d& target) {
+    this->target = target;
+}
+
+Vec2d Animal::getVirtualTarget() const {
+    return this->virtual_target;
+}
+
+void Animal::setVirtualTarget(const Vec2d& target) {
+    this->virtual_target = target;
+}
+
+double Animal::getSpeedNorm() const {
+    return this->speedNorm;
+}
+
+void Animal::setSpeedNorm(const double& newNorm) {
+    this->speedNorm = newNorm;
 }
 
 double Animal::getStandardMaxSpeed() const {
@@ -30,12 +72,8 @@ double Animal::getRadius() const {
     return ANIMAL_RADIUS;
 }
 
-void Animal::setTargetPosition(const Vec2d& target) {
-    this->target = target;
-}
-
 Vec2d Animal::getSpeedVector() const {
-    return this->getDirection() * this->speedNorm;
+    return this->getDirection() * this->getSpeedNorm();
 }
 
 double Animal::getViewRange() const {
@@ -54,20 +92,51 @@ void Animal::setRotation(const double& angle) {
 	this->direction.rotate(angle);
 };
 
+double Animal::getRandomWalkRadius() const {
+    return ANIMAL_RANDOM_WALK_RADIUS;
+}
+
+double Animal::getRandomWalkDistance() const {
+    return ANIMAL_RANDOM_WALK_DISTANCE;
+}
+
+double Animal::getRandomWalkJitter() const {
+    return ANIMAL_RANDOM_WALK_JITTER;
+}
+
 void Animal::update(sf::Time dt) {
     Environment env = INFOSV_APPLICATION_HPP::getAppEnv();
     std::list<Vec2d> targetsList = env.getTargetsInSightForAnimal(this);
+
+    /* If the target list is not empty, pick one (first one) and calculate the
+     * attraction force toward it. If it is empty, create a virtual target to
+     * make the Animal walk randomly.
+     */
     if(!targetsList.empty()) {
-        this->setTargetPosition(targetsList.front());
-        Vec2d acceleration = this->attractionForce() / this->getMass();
-        Vec2d newSpeedVector = this->getSpeedVector() + (acceleration * dt.asSeconds());
-        this->direction = newSpeedVector.normalised();
-        if(newSpeedVector.length() > this->getStandardMaxSpeed()) {
-            newSpeedVector = this->getDirection() * this->getStandardMaxSpeed();
-        }
-        this->speedNorm = newSpeedVector.length();
-        this->position = this->getPosition() + (newSpeedVector * dt.asSeconds());
+        this->setTarget(targetsList.front());
+        this->updatePosition(dt, this->attractionForce());
+    } else {
+        Vec2d current_target = this->getVirtualTarget();
+        Vec2d random_vec = Vec2d(uniform(-1.0,1.0), uniform(-1.0,1.0));
+        current_target += random_vec * getRandomWalkJitter();
+        current_target = current_target.normalised() * getRandomWalkRadius();
+        this->setVirtualTarget(current_target + Vec2d(getRandomWalkDistance(), 0));
+
+        Vec2d attractionForce = this->convertToGlobalCoord(this->getVirtualTarget()) -
+                                this->getPosition();
+        this->updatePosition(dt, attractionForce);
     }
+}
+
+void Animal::updatePosition(sf::Time dt, const Vec2d& attractionForce) {
+    Vec2d acceleration = attractionForce / this->getMass();
+    Vec2d newSpeedVector = this->getSpeedVector() + (acceleration * dt.asSeconds());
+    this->setDirection(newSpeedVector.normalised());
+    if(newSpeedVector.length() > this->getStandardMaxSpeed()) {
+        newSpeedVector = this->getDirection() * this->getStandardMaxSpeed();
+    }
+    this->setSpeedNorm(newSpeedVector.length());
+    this->setPosition(this->getPosition() + (newSpeedVector * dt.asSeconds()));
 }
 
 void Animal::drawOn(sf::RenderTarget& targetWindow) const {
@@ -124,4 +193,11 @@ bool Animal::isTargetInSight(const Vec2d& target) const {
     }
     return isEqual(distanceSquared, 0) || (distanceSquared <= this->getViewDistance()*this->getViewDistance() &&
             dotProd >= cos((this->getViewRange() + 0.001) / 2));
+}
+
+Vec2d Animal::convertToGlobalCoord(const Vec2d& coordinates) const {
+    sf::Transform matTransform;
+    matTransform.translate(this->getPosition());
+    matTransform.rotate(this->getViewRange());
+    return matTransform.transformPoint(coordinates);
 }

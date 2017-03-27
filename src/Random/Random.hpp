@@ -88,4 +88,3 @@ double exponential(double lambda);
 double gamma(double alpha, double beta);
 
 #endif // INFOSV_RANDOM_HPP
-
