@@ -116,15 +116,7 @@ void Animal::update(sf::Time dt) {
         this->setTarget(targetsList.front());
         this->updatePosition(dt, this->attractionForce());
     } else {
-        Vec2d current_target = this->getVirtualTarget();
-        Vec2d random_vec = Vec2d(uniform(-1.0,1.0), uniform(-1.0,1.0));
-        current_target += random_vec * getRandomWalkJitter();
-        current_target = current_target.normalised() * getRandomWalkRadius();
-        this->setVirtualTarget(current_target + Vec2d(getRandomWalkDistance(), 0));
-
-        Vec2d attractionForce = this->convertToGlobalCoord(this->getVirtualTarget()) -
-                                this->getPosition();
-        this->updatePosition(dt, attractionForce);
+        this->updatePosition(dt, this->randomWalk());
     }
 }
 
@@ -139,12 +131,26 @@ void Animal::updatePosition(sf::Time dt, const Vec2d& attractionForce) {
     this->setPosition(this->getPosition() + (newSpeedVector * dt.asSeconds()));
 }
 
+Vec2d Animal::randomWalk() {
+    Vec2d current_target = this->getVirtualTarget();
+    std::cout << "1 : " << current_target << std::endl;
+    Vec2d random_vec = Vec2d(uniform(-1.0, 1.0), uniform(-1.0, 1.0));
+    current_target += random_vec * getRandomWalkJitter();
+    current_target = current_target.normalised() * getRandomWalkRadius();
+    this->setVirtualTarget(current_target);
+
+    std::cout << "2 : " << this->getVirtualTarget() << std::endl;
+    return this->convertToGlobalCoord(this->getVirtualTarget()+ Vec2d(getRandomWalkDistance(), 0.0)) - this->getPosition();
+}
+
 void Animal::drawOn(sf::RenderTarget& targetWindow) const {
     sf::CircleShape target = buildCircle(this->getTarget(), 5.0, sf::Color(255, 0, 0));
-    sf::CircleShape animal = buildCircle(this->getPosition(), 15.0, sf::Color(0, 0, 255));
+    auto animalSprite = buildSprite(this->getPosition(), this->getRadius() * 2.0, getAppTexture("wolf-black.png"));
+    animalSprite.setRotation(this->getDirection().angle() / DEG_TO_RAD);
+    targetWindow.draw(animalSprite);
     targetWindow.draw(target);
-    targetWindow.draw(animal);
     this->drawVision(targetWindow);
+    this->drawVirtualTarget(targetWindow);
 }
 
 void Animal::drawVision(sf::RenderTarget& targetWindow) const {
@@ -159,6 +165,18 @@ void Animal::drawVision(sf::RenderTarget& targetWindow) const {
     arcgraphics.setPosition(this->getPosition());
     arcgraphics.rotate(this->getRotation() / DEG_TO_RAD);
     targetWindow.draw(arcgraphics);
+}
+
+void Animal::drawVirtualTarget(sf::RenderTarget& targetWindow) const {
+    sf::CircleShape virtualRadius = buildCircle(Vec2d(0,0), this->getRandomWalkRadius(), sf::Color::Transparent);
+    virtualRadius.setOutlineThickness(-2);
+    virtualRadius.setOutlineColor(sf::Color(0, 255, 0));
+    virtualRadius.setPosition(this->convertToGlobalCoord(Vec2d(this->getRandomWalkDistance(), 0)));
+    targetWindow.draw(virtualRadius);
+
+    sf::CircleShape virtualTarget = buildCircle(Vec2d(0,0), 5.0, sf::Color::Blue);
+    virtualTarget.setPosition(this->convertToGlobalCoord(this->getVirtualTarget()) + Vec2d(this->getRandomWalkDistance(), 0));
+    targetWindow.draw(virtualTarget);
 }
 
 Vec2d Animal::attractionForce() const {
@@ -198,6 +216,6 @@ bool Animal::isTargetInSight(const Vec2d& target) const {
 Vec2d Animal::convertToGlobalCoord(const Vec2d& coordinates) const {
     sf::Transform matTransform;
     matTransform.translate(this->getPosition());
-    matTransform.rotate(this->getViewRange());
+    matTransform.rotate(this->getDirection().angle());
     return matTransform.transformPoint(coordinates);
 }

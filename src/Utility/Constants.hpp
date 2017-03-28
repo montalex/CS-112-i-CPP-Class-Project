@@ -37,7 +37,7 @@ double const DECELERATION_STRONG = 0.3;
 
 
 /// Random walk jitter
-double const ANIMAL_RANDOM_WALK_JITTER = 2;
+double const ANIMAL_RANDOM_WALK_JITTER = 7;
 
 /// Random walk radius
 double const ANIMAL_RANDOM_WALK_RADIUS = 50;

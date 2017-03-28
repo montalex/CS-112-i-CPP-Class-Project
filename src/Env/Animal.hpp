@@ -212,6 +212,13 @@ class Animal {
         void drawVision(sf::RenderTarget& targetWindow) const;
 
         /*!
+         * @brief Draws the Animal's virtual target in the given window.
+         *
+         * @param targetWindow the window to draw on
+         */
+        void drawVirtualTarget(sf::RenderTarget& targetWindow) const;
+
+        /*!
          * @brief Gets the Animal's attraction force to his target.
          *
          * @return Animal's attraction force to his target (Vec2d)
@@ -236,6 +243,14 @@ class Animal {
          * @return True if target is in sight
          */
         bool isTargetInSight(const Vec2d& target) const;
+
+        /*!
+         * @brief Compute the Animal's random movement according to its virtual
+         *        target and returns its attraction force.
+         *
+         * @return Vec2 the new attraction force
+         */
+        Vec2d randomWalk();
 
         /*!
          * @brief Converts a vector in Animal's coordinates in global coordinates.
