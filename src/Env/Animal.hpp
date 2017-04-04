@@ -7,44 +7,33 @@
 #include <Utility/Utility.hpp>
 #include <Utility/Arc.hpp>
 #include <Config.hpp>
-#include <Application.hpp>
 #include <Random/Random.hpp>
+#include <Env/LivingEntity.hpp>
+#include <Genetics/Genome.hpp>
 
 /*!
  * @class Animal
  *
  * @brief Represent an Animal in the simulation.
  *
- * Vec2d position: the Animal's position
  * Vec2d direction: the Animal's direction in the Animal's coordinate system.
  * Vec2d target: the Animal's target position
  * Vec2d virtual_target: the Animal's virtual target position in the Animal's
  *                       coordinate system.
  * double speedNorm: the norm of the Animal's speed
+ * double genome: the Animal's genetic material
  */
-class Animal {
+class Animal : public LivingEntity {
     public:
         /*!
          * @brief Constructor.
          *
          * @param initPos the Animla's initial position
          */
-        Animal(const Vec2d& initPos);
+        Animal(const Vec2d& initPos, const double& startEnergy,Genome *mother,
+            Genome *father);
 
-        /*!
-         * @brief Gets the Animal's position.
-         *
-         * @return the Animal's position (Vec2d)
-         */
-        Vec2d getPosition() const;
-
-        /*!
-         * @brief Sets the Animal's position to the given one. If the position
-         *             is outside the the window, set it at the other end.
-         *
-         * @param newPosition the new position of the Animal
-         */
-        void setPosition(const Vec2d& newPosition);
+        virtual ~Animal();
 
         /*!
          * @brief Gets the Animal's direction.
@@ -98,30 +87,37 @@ class Animal {
         /*!
          * @brief Sets the Animal's speed norm.
          *
-         * @param newNorm the new speed norm.
+         * @param newNorm the new speed norm
          */
         void setSpeedNorm(const double& newNorm);
+
+        /*!
+         * @brief Gets the Animal's genome.
+         *
+         * @return the Animal's genome (Genome)
+         */
+        Genome getGenome() const;
 
         /*!
          * @brief Gets the Animal's maximum speed.
          *
          * @return the Animal's maximum speed (double)
          */
-        double getStandardMaxSpeed() const;
+        virtual double getStandardMaxSpeed() const;
 
         /*!
          * @brief Gets the Animal's mass.
          *
          * @return the Animal's mass (double)
          */
-        double getMass() const;
+        virtual double getMass() const;
 
         /*!
          * @brief Gets the Animal's radius.
          *
          * @return the Animal's radius (double)
          */
-        double getRadius() const;
+        virtual double getRadius() const;
 
         /*!
          * @brief Gets the Animal's speed vector.
@@ -135,14 +131,14 @@ class Animal {
          *
          * @return the Animal's view range (double)
          */
-        double getViewRange() const;
+        virtual double getViewRange() const;
 
         /*!
          * @brief Gets the Animal's view distance.
          *
          * @return the Animal's view distance (double)
          */
-        double getViewDistance() const;
+        virtual double getViewDistance() const;
 
         /*!
          * @brief Gets the Animal's view rotation.
@@ -163,7 +159,7 @@ class Animal {
          *
          * @return the Animal's virtual target radius (double)
          */
-        double getRandomWalkRadius() const;
+        virtual double getRandomWalkRadius() const;
 
         /*!
          * @brief Gets the Animal's distance to his virtual target circle center
@@ -171,14 +167,14 @@ class Animal {
          * @return the Animal's distance to his virtual target circle center
          *         (double)
          */
-        double getRandomWalkDistance() const;
+        virtual double getRandomWalkDistance() const;
 
         /*!
          * @brief Gets the Animal's virtual target jitter
          *
          * @return the Animal's virtual target jitter (double)
          */
-        double getRandomWalkJitter() const;
+        virtual double getRandomWalkJitter() const;
 
         /*!
          * @brief Updates the Animal's target and calls updatePosition to modify
@@ -262,11 +258,11 @@ class Animal {
         Vec2d convertToGlobalCoord(const Vec2d& coordinates) const ;
 
     private:
-        Vec2d position;
         Vec2d direction;
         Vec2d target;
         Vec2d virtual_target;
         double speedNorm;
+        Genome genome;
 };
 
 #endif // INFOSV_ANIMAL_HPP

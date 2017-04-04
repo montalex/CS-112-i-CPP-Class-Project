@@ -45,3 +45,7 @@ Q2.9: Une liste de Vec2d repertoriant les positions des cibles vu par l'animal.
 
 Q2.10: Appeler la méthode update pour chaque animal de l'Environment dans la
 méthode update de l'Environment.
+
+Q3.1: Aucune des méthodes n'est virtuelle pure car elle ont toutes un type de
+retour. Le mot clà override est à utiliser partout pour ces méthodes dans Sheep
+et Wolf car elles redéfinissent celle de la classe de base.

@@ -81,4 +81,3 @@ if env['CXX'] == 'clang++':
     file_list = ' '.join('"' + str(f) + '"' for f in all_src_files)
     analyze = env.Command("analyze.out", all_src_files, analyze_cmd + file_list, ENV = os.environ)
     env.Alias("analyze", analyze)
-

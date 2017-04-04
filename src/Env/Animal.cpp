@@ -1,32 +1,13 @@
 #include <Env/Animal.hpp>
+#include <Application.hpp>
 
-Animal::Animal(const Vec2d& initPos)
-    : position(initPos), speedNorm(0.0) {
-        target = Vec2d();
-        direction = Vec2d(1.0, 0.0);
-        virtual_target = Vec2d(1.0, 0.0);
-    }
+Animal::Animal(const Vec2d& initPos, const double& startEnergy,
+    Genome *mother = nullptr, Genome *father = nullptr)
+    : LivingEntity(initPos, startEnergy), speedNorm(0.0), target(Vec2d()),
+    direction(Vec2d(1.0, 0.0)), virtual_target(Vec2d(1.0, 0.0)),
+    genome(mother, father) {}
 
-Vec2d Animal::getPosition() const {
-    return this->position;
-}
-
-void Animal::setPosition(const Vec2d& newPosition) {
-    Vec2d boundedPosition = newPosition;
-    double maxWidth = getAppConfig().window_simulation_width;
-    double maxHeight = getAppConfig().window_simulation_height;
-    if(newPosition.x > maxWidth) {
-        boundedPosition.x = 0;
-    } else if(newPosition.x < 0) {
-        boundedPosition.x = maxWidth;
-    }
-    if(newPosition.y > maxHeight) {
-        boundedPosition.y = 0;
-    } else if(newPosition.y < 0) {
-        boundedPosition.y = maxHeight;
-    }
-    this->position = boundedPosition;
-}
+Animal::~Animal() {};
 
 Vec2d Animal::getDirection() const {
     return this->direction;
@@ -58,6 +39,10 @@ double Animal::getSpeedNorm() const {
 
 void Animal::setSpeedNorm(const double& newNorm) {
     this->speedNorm = newNorm;
+}
+
+Genome Animal::getGenome() const {
+    return this->genome;
 }
 
 double Animal::getStandardMaxSpeed() const {
@@ -105,19 +90,19 @@ double Animal::getRandomWalkJitter() const {
 }
 
 void Animal::update(sf::Time dt) {
-    Environment env = INFOSV_APPLICATION_HPP::getAppEnv();
-    std::list<Vec2d> targetsList = env.getTargetsInSightForAnimal(this);
-
-    /* If the target list is not empty, pick one (first one) and calculate the
-     * attraction force toward it. If it is empty, create a virtual target to
-     * make the Animal walk randomly.
-     */
-    if(!targetsList.empty()) {
-        this->setTarget(targetsList.front());
-        this->updatePosition(dt, this->attractionForce());
-    } else {
-        this->updatePosition(dt, this->randomWalk());
-    }
+    // Environment env = INFOSV_APPLICATION_HPP::getAppEnv();
+    // std::list<Vec2d> targetsList = env.getTargetsInSightForAnimal(this);
+    //
+    // /* If the target list is not empty, pick one (first one) and calculate the
+    //  * attraction force toward it. If it is empty, create a virtual target to
+    //  * make the Animal walk randomly.
+    //  */
+    // if(!targetsList.empty()) {
+    //     this->setTarget(targetsList.front());
+    //     this->updatePosition(dt, this->attractionForce());
+    // } else {
+    //     this->updatePosition(dt, this->randomWalk());
+    // }
 }
 
 void Animal::updatePosition(sf::Time dt, const Vec2d& attractionForce) {

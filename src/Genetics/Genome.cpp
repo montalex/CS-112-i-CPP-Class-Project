@@ -1,6 +1,9 @@
 #include <Genetics/Genome.hpp>
+#include <Application.hpp>
 
 Genome::Genome(Genome *mother, Genome *father) {
+    double const MUTABILITY = getAppConfig().genome_mutability_innate_immmune_system;
+    double const ALLELE_PREVALENCE = getAppConfig().genome_black_allelle_prevalence;
     if(INFOSV_RANDOM_HPP::bernoulli(0.5)) {
         sex = MALE;
     } else {
@@ -27,12 +30,12 @@ Genome::Genome(Genome *mother, Genome *father) {
             } else {
                 tempValue = father->immuneProfile[i];
             }
-            tempValue += INFOSV_RANDOM_HPP::uniform(-0.3, 0.3);
+            tempValue += INFOSV_RANDOM_HPP::uniform(-MUTABILITY, MUTABILITY);
             immuneProfile[i] = tempValue;
         }
     } else {
         for(size_t i = 0; i < colorSize; i++) {
-            if(INFOSV_RANDOM_HPP::bernoulli(0.3)) {
+            if(INFOSV_RANDOM_HPP::bernoulli(ALLELE_PREVALENCE)) {
                 color[i] = BLACK;
             } else {
                 color[i] = WHITE;

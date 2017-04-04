@@ -1,10 +1,7 @@
 #include <Env/SeekingAutomaton.hpp>
 
 SeekingAutomaton::SeekingAutomaton(const Vec2d& initPos)
-                : position(initPos), speedNorm(0.0) {
-                        target = Vec2d();
-                        direction = Vec2d(1.0, 0.0);
-                }
+    : position(initPos), speedNorm(0.0), target(Vec2d()), direction(Vec2d(1.0, 0.0)) {}
 
 double SeekingAutomaton::getStandardMaxSpeed() const {
         return SEEKING_AUTOMATON_MAX_SPEED;
