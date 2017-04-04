@@ -1,7 +1,7 @@
 /*
- * prjsv 2017
- * 2014, 2016, 2017
- * Marco Antognini, Ari Sarfatis
+ * prjsv 2016
+ * 2013, 2014, 2016
+ * Marco Antognini
  */
 
 #ifndef INFOSV_APPLICATION_HPP
@@ -9,7 +9,9 @@
 
 #include <Env/Environment.hpp>
 #include <JSON/JSON.hpp>
+//#include <Stats/Stats.hpp>
 #include "Config.hpp"
+//#include <Utility/AnimalTracker.hpp>
 #include <Utility/Vec2d.hpp>
 
 #include <SFML/Graphics.hpp>
@@ -150,8 +152,9 @@ protected:
      *  @param min    y-axis: min value expected
      *  @param max    y-axis: max value expected
      */
+//    void addGraph(std::string const& title, std::vector<std::string> const& series, double min, double max);
 
-private:
+protected:
     /*!
      *  @brief Called once before starting the main loop
      *
@@ -193,6 +196,12 @@ private:
      * @param target a render target
      */
     virtual void onDraw(sf::RenderTarget& target);
+/*!
+     * @brief Subclass can override this method to change the policy for
+	 * background handling
+	 */
+	void chooseBackground();
+	
 
 private:
     /*!
@@ -221,6 +230,13 @@ private:
      */
     void render(sf::Drawable const& simulationBackground, sf::Drawable const& statsBackground);
 
+    /**
+     *  @brief Get access to the stats manager
+     *
+     *  @return the application statistic manager
+     */
+//    Stats& getStats();
+
     /*!
      * @brief Toggle pause
      */
@@ -237,7 +253,7 @@ private:
      * @note the view is centered on the selected entity if on is
      * selected, or on the cursor if none is currently selected.
      */
-    void zoomViewAt(sf::Vector2i /*const& pixel*/, float zoomFactor);
+    void zoomViewAt(sf::Vector2i const& /*pixel*/, float zoomFactor);
 
     /*!
      * @brief Drag the view by the given offset (i.e. src to dest)
@@ -245,16 +261,16 @@ private:
     void dragView(sf::Vector2i const& srcPixel, sf::Vector2i const& destPixel);
 
     /*!
-     * @brief Center the simulation view on the tracked animal,
+     * @brief Center the simulation view on the tracked bee,
      * if selection is active.
      */
     void updateSimulationView();
-
+	
    /*!
      * @brief toggle debug mode
      */
 	void switchDebug();
-
+	
 
 private:
     // The order is important since some fields need other to be initialised
@@ -270,6 +286,7 @@ private:
     sf::RenderWindow mRenderWindow;  ///< SFML window / render target
     sf::View mSimulationView;        ///< View for simulation area
 
+//    Stats*   mStats;                 ///< Statistic manager
     sf::View mStatsView;             ///< View for the stats area
     int      mNextGraphId;           ///< Next ID to be used for the next new graph
     int      mCurrentGraphId;        ///< Current graph ID
@@ -310,9 +327,9 @@ Application& getApp();
 Environment& getAppEnv();
 
 /*!
- * @brief Get the animal tracker helper for the current application
+ * @brief Get the bee tracker helper for the current application
  *
- * @return the app's animal tracker
+ * @return the app's bee tracker
  */
 //AnimalTracker& getAppAnimalTracker();
 

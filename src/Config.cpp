@@ -1,9 +1,8 @@
 #include "Config.hpp"
 #include <JSON/JSONSerialiser.hpp>
-
-Config::Config(std::string path) : mConfig(j::readFromFile(path))
-	, simulation_debug(mConfig["debug"].toBool())							   
 // window
+Config::Config(std::string path) : mConfig(j::readFromFile(path))
+, simulation_debug(mConfig["debug"].toBool())
 ,window_simulation_width(mConfig["window"]["simulation"]["width"].toDouble())
 , window_simulation_height(mConfig["window"]["simulation"]["height"].toDouble())
 , window_stats_height(mConfig["window"]["stats"]["height"].toDouble())
@@ -20,13 +19,12 @@ Config::Config(std::string path) : mConfig(j::readFromFile(path))
 , simulation_time_factor(mConfig["simulation"]["time"]["factor"].toDouble())
 , simulation_time_max_dt(sf::seconds(mConfig["simulation"]["time"]["max dt"].toDouble()))
 
-
 // grass
 , grass_texture(mConfig["simulation"]["grass"]["texture"].toString())
 //, grass_size(mConfig["simulation"]["grass"]["size"].toDouble())
 , grass_initial_energy(mConfig["simulation"]["grass"]["energy"]["initial"].toDouble())
 , grass_max_energy(mConfig["simulation"]["grass"]["energy"]["max"].toDouble())
-, grass_growth_factor(mConfig["simulation"]["grass"]["energy"]["growth"].toDouble())
+, grass_growth_factor(mConfig["simulation"]["grass"]["energy"]["growth factor"].toDouble())
 
 
 // animal
@@ -41,7 +39,7 @@ Config::Config(std::string path) : mConfig(j::readFromFile(path))
 , animal_idle_probability(mConfig["simulation"]["animal"]["idle"]["probability"].toDouble())
 , animal_idle_time_min(mConfig["simulation"]["animal"]["idle"]["min"].toDouble())
 , animal_idle_time_max(mConfig["simulation"]["animal"]["idle"]["max"].toDouble())
-
+, animal_min_energy(mConfig["simulation"]["animal"]["min energy"].toDouble())
 // sheep
 , sheep_max_speed(mConfig["simulation"]["animal"]["sheep"]["max speed"].toDouble())
 , sheep_mass(mConfig["simulation"]["animal"]["sheep"]["mass"].toDouble())
@@ -92,6 +90,8 @@ Config::Config(std::string path) : mConfig(j::readFromFile(path))
 , wolf_idle_probability(mConfig["simulation"]["animal"]["wolf"]["idle"]["probability"].toDouble())
 , wolf_idle_time_min(mConfig["simulation"]["animal"]["wolf"]["idle"]["min"].toDouble())
 , wolf_idle_time_max(mConfig["simulation"]["animal"]["wolf"]["idle"]["max"].toDouble())
+, wolf_satiety_min(mConfig["simulation"]["animal"]["wolf"]["satiety"]["min"].toDouble())
+, wolf_satiety_max(mConfig["simulation"]["animal"]["wolf"]["satiety"]["max"].toDouble())
 
 // Virus
 , virus_sparsity(mConfig["simulation"]["virus"]["sparsity"].toDouble())

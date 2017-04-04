@@ -12,12 +12,35 @@
 #include <iostream>
 
 
+class DummyObstacle : public Obstacle
+{
+	
+  public:
+	DummyObstacle(const Vec2d& pos, double rad)
+		:  center(pos), radius(rad)
+	{}
+	
+	Vec2d getCenter()  const override
+	{
+		return center;
+	}
+	
+	double getRadius() const override
+	{
+		return radius;
+	}
+	
+  private:
+	Vec2d center;
+	double radius;
+};
+
 SCENARIO("Collision", "[Obstacle]")
 {
     GIVEN("Two identical Obstacles")
     {
-        auto o1 = Obstacle({ 1, 1 }, 2);
-        auto o2 = o1;
+        DummyObstacle o1({ 1, 1 }, 2);
+        DummyObstacle o2({ 1, 1 }, 2);
 
         THEN("they collide")
         {
@@ -36,8 +59,8 @@ SCENARIO("Collision", "[Obstacle]")
 
     GIVEN("An obstacle inside the other, with different centers and radius")
     {
-        auto o1 = Obstacle({ 0, 0 }, 4);
-        auto o2 = Obstacle({ 1, 1 }, 3);
+        DummyObstacle o1({ 0, 0 }, 4);
+        DummyObstacle o2({ 1, 1 }, 3);
 
         THEN("the two obstacles collide")
         {
@@ -56,9 +79,9 @@ SCENARIO("Collision", "[Obstacle]")
 
     GIVEN("Obstacles that overlap but are not inside of each other")
     {
-        auto o1 = Obstacle({ 0, 0 }, 4);
-        auto o2 = Obstacle({ 1, 1 }, 3);
-		auto o3 = Obstacle({ 5, 5 }, 4);
+        DummyObstacle o1 ({ 0, 0 }, 4);
+        DummyObstacle o2 ({ 1, 1 }, 3);
+		DummyObstacle o3 ({ 5, 5 }, 4);
 
         THEN("they collide")
         {
@@ -76,10 +99,10 @@ SCENARIO("Collision", "[Obstacle]")
 
 	GIVEN("Obstacles that don't overlap ")
 		{
-        auto o1 = Obstacle({ 0, 0 }, 4);
-        auto o2 = Obstacle({ 1, 1 }, 3);
-		auto o3 = Obstacle({ 5, 5 }, 4);
-		auto o4 = Obstacle({-9,-9 }, 4);
+        DummyObstacle o1({ 0, 0 }, 4);
+        DummyObstacle o2({ 1, 1 }, 3);
+		DummyObstacle o3({ 5, 5 }, 4);
+		DummyObstacle o4({-9,-9 }, 4);
 
         THEN("they don't collide")
         {
@@ -100,7 +123,7 @@ SCENARIO("Collision", "[Obstacle]")
 	
     GIVEN("An Obstacle and two points, one inside and one outside")
     {
-        auto o = Obstacle({ 0, 0 }, 5);
+        DummyObstacle o ({ 0, 0 }, 5);
         auto p1 = Vec2d(0, 0);
         auto p2 = Vec2d(6, 0);
 

@@ -1,7 +1,7 @@
 /*
- * prjsv 2017
- * 2014, 2016, 2017
- * Marco Antognini, Ari Sarfatis
+ * prjsv 2016
+ * 2013, 2014, 2016
+ * Marco Antognini
  */
 
 #include <Application.hpp>
@@ -107,6 +107,7 @@ Application::Application(int argc, char const** argv)
 //, mJSONRead(mAppDirectory + mCfgFile)
 , mConfig(new Config(mAppDirectory + mCfgFile))
 , mEnv(nullptr)
+//, mStats(nullptr)
 , mNextGraphId(0)
 , mCurrentGraphId(-1)
 , mPaused(false)
@@ -134,6 +135,8 @@ Application::Application(int argc, char const** argv)
 
 Application::~Application()
 {
+    // Destroy lab and stats, in reverse order
+//    delete mStats;
     delete mEnv;
 	delete mConfig;
 
@@ -152,6 +155,7 @@ void Application::run()
 {
     // Load lab and stats
     mEnv   = new Environment;
+//    mStats = new Stats;
 
     // Set up subclasses
     onRun();
@@ -184,7 +188,8 @@ void Application::run()
         }
 
         // Set active graph
-        //auto activeIndex = mCurrentGraphId;
+        auto activeIndex = mCurrentGraphId;
+//        getStats().setActive(activeIndex);
 
         // Update logics
         float timeFactor = getAppConfig().simulation_time_factor;
@@ -202,12 +207,14 @@ void Application::run()
                 auto dt = std::min(elapsedTime, maxDt);
                 elapsedTime -= dt;
                 getEnv().update(dt);
+//                getStats().update(dt);
                 onUpdate(dt);
             }
         }
 
         // Render everything
         render(mSimulationBackground, statsBackground);
+
         // In case we were resetting the simulation
         mIsResetting = false;
 
@@ -291,8 +298,8 @@ std::string Application::getResPath() const
 Vec2d Application::getWorldSize() const
 {
     // Not the same as getSimulationSize!
-    auto size  = getAppConfig().simulation_world_size;
-    return Vec2d(size, size);
+    double size(getAppConfig().simulation_world_size);
+    return { size, size };
 }
 
 Vec2d Application::getCentre() const
@@ -303,6 +310,15 @@ Vec2d Application::getCentre() const
 void Application::onRun()
 {
     // By default nothing is done here
+	chooseBackground();
+}
+
+void Application::chooseBackground()
+{
+	mSimulationBackground.setTexture(&getAppTexture(isDebugOn() ?
+													getAppConfig().simulation_world_debug_texture :
+													getAppConfig().simulation_world_texture)
+									 , true);
 }
 
 void Application::onEvent(sf::Event, sf::RenderWindow&)
@@ -323,6 +339,7 @@ void Application::onUpdate(sf::Time)
 void Application::onDraw(sf::RenderTarget&)
 {
     // By default nothing is done here
+
 }
 
 Vec2d Application::getCursorPositionInView() const
@@ -330,6 +347,11 @@ Vec2d Application::getCursorPositionInView() const
     return mRenderWindow.mapPixelToCoords(sf::Mouse::getPosition(mRenderWindow), mSimulationView);
 }
 
+// void Application::addGraph(std::string const& title, std::vector<std::string> const& series, double min, double max)
+// {
+//     getStats().addGraph(++mNextGraphId, title, series, min, max, getStatsSize() );
+//     mCurrentGraphId = mNextGraphId;
+// }
 
 void Application::createWindow(Vec2d const& size)
 {
@@ -410,12 +432,28 @@ void Application::handleEvent(sf::Event event, sf::RenderWindow& window)
         // Reset the simulation
         case sf::Keyboard::R:
             mIsResetting = true;
+            getEnv().reset();
+//            getStats().reset();
             onSimulationStart();
             createViews();
             break;
 
         case sf::Keyboard::Tab:
             // TODO add TAB binding for switching from graphs
+            break;
+
+        // change the simulation focus
+        case sf::Keyboard::Right:
+            mSimulationView.move(100, 0);
+            break;
+        case sf::Keyboard::Left:
+            mSimulationView.move(-100, 0);
+            break;
+        case sf::Keyboard::Up:
+            mSimulationView.move(0, -100);
+            break;
+        case sf::Keyboard::Down:
+            mSimulationView.move(0, 100);
             break;
 
         default:
@@ -453,20 +491,20 @@ void Application::handleEvent(sf::Event event, sf::RenderWindow& window)
 
     // Drag view: initiate drag
     //  - or -
-    // Select an animal to follow
+    // Select a bee to follow
     // case sf::Event::MouseButtonPressed:
     //     if (event.mouseButton.button == sf::Mouse::Left) {
     //         mIsDragging = true;
     //         mLastCursorPosition = { event.mouseButton.x, event.mouseButton.y };
     //     } else if (event.mouseButton.button == sf::Mouse::Right) {
     //         auto pos = getCursorPositionInView();
-    //         auto* animal = getEnv().getAnimalAt(pos);
-    //         if (animal == nullptr) {
+    //         auto* bee = getEnv().getAnimalAt(pos);
+    //         if (bee == nullptr) {
     //             // Stop tracking animal
     //             getAnimalTracker().stopTrackingAnimal();
     //         } else {
     //             // Track the animal
-    //             getAnimalTracker().startTrackingAnimal(animal);
+    //             getAnimalTracker().startTrackingAnimal(bee);
     //         }
     //     }
     //     break;
@@ -486,8 +524,8 @@ void Application::handleEvent(sf::Event event, sf::RenderWindow& window)
 
             mLastCursorPosition = newCurosrPosition;
 
-            // Stop tracking animal
-            //getAnimalTracker().stopTrackingAnimal();
+            // Stop tracking bee
+            //getBeeTracker().stopTrackingBee();
         }
         break;
 
@@ -506,10 +544,11 @@ void Application::render(sf::Drawable const& simulationBackground, sf::Drawable 
     mRenderWindow.setView(mSimulationView);
     mRenderWindow.draw(simulationBackground);
     getEnv().drawOn(mRenderWindow);
-	onDraw(mRenderWindow);
+
        // Render the stats
     mRenderWindow.setView(mStatsView);
     mRenderWindow.draw(statsBackground);
+//    getStats().drawOn(mRenderWindow);
 
     // Finally, publish everything onto the screen
     mRenderWindow.display();
@@ -518,6 +557,11 @@ void Application::render(sf::Drawable const& simulationBackground, sf::Drawable 
     // so that handling event (zoom + move) is easier
     mRenderWindow.setView(mSimulationView);
 }
+
+// Stats& Application::getStats()
+// {
+//     return *mStats;
+// }
 
 void Application::togglePause()
 {
@@ -529,7 +573,7 @@ void Application::togglePause()
 //    j::writeToFile(getConfig().getJsonRead(), mAppDirectory + mCfgFile);
 //}
 
-void Application::zoomViewAt(sf::Vector2i /*const& pixel*/, float zoomFactor)
+void Application::zoomViewAt(sf::Vector2i const& /*pixel*/, float zoomFactor)
 {
     // Note: we know that the simulation view is active
     sf::View& view = mSimulationView;
@@ -540,7 +584,7 @@ void Application::zoomViewAt(sf::Vector2i /*const& pixel*/, float zoomFactor)
     mRenderWindow.setView(view);
 
     // if (!getAnimalTracker().isTrackingAnimal()) {
-    //     // If no animal is selected, center on the cursor position
+    //     // If no bee is selected, center on the cursor position
     //     auto afterCoord = mRenderWindow.mapPixelToCoords(pixel);
     //     auto offsetCoords = beforeCoord - afterCoord;
 
@@ -564,8 +608,8 @@ void Application::dragView(sf::Vector2i const& srcPixel, sf::Vector2i const& des
 
 void Application::updateSimulationView()
 {
-    // if (getAnimalTracker().isTrackingAnimal()) {
-    //     auto pos = getAnimalTracker().getTrackedAnimalPosition();
+    // if (getBeeTracker().isTrackingAnimal()) {
+    //     auto pos = getBeeTracker().getTrackedBeePosition();
     //     mSimulationView.setCenter(pos);
     // }
 }
@@ -573,14 +617,11 @@ void Application::updateSimulationView()
 void Application::switchDebug()
 {
 	getAppConfig().switchDebug();
-	mSimulationBackground.setTexture(&getAppTexture(isDebugOn() ?
-													getAppConfig().simulation_world_debug_texture :
-													getAppConfig().simulation_world_texture)
-									 , true);
+	chooseBackground();
 }
 
-	
-	
+
+
 Application& getApp()
 {
     assert(currentApp != nullptr);
@@ -595,7 +636,7 @@ Environment& getAppEnv()
 
 // AnimalTracker& getAppAnimalTracker()
 // {
-//     return getApp().getAnimalTracker();
+//     return getApp().getBeeTracker();
 // }
 
 Config& getAppConfig()

@@ -9,15 +9,15 @@
          "texture":"food1.png",
          "energy":{
             "initial":50,
-            "max":500,
-            "growth factor":5
+            "max":100,
+            "growth factor":2
         }
       },
       "animal":{
          "random walk low energy":false,
          "meal retention":0.7,
          "feed time":0.4,
-	  "min energy" : 20,
+         "min energy" : 20,
          "reproduction":{
                "delivery time":10,
                "mating time":5
@@ -33,7 +33,7 @@
         },
         "sheep":{
             "mass":1,
-            "size":110,
+            "size":100,
             "longevity":40000,
             "max speed":50,
             "reproduction":{
@@ -43,7 +43,7 @@
             },
             "view":{
                "range":6.283185307,
-               "distance":450
+               "distance":250
             },
             "random walk":{
                "jitter":2.0,
@@ -67,7 +67,7 @@
          },
          "wolf":{
             "mass":1,
-            "size":300,
+            "size":150,
             "longevity":50000,
             "max speed":300,
             "speed":0,
@@ -83,7 +83,7 @@
             },
             "view":{
                "range":4,
-               "distance":550
+               "distance":350
             },
             "random walk":{
                "jitter":50,
@@ -105,9 +105,9 @@
             },
             "satiety":{
             "min":700,
-            "max":1000
+            "max":10000
             },
-            "texture":"wolf-white.png"
+            "texture":"wolf-black.png"
          }
       },
       "virus" : {
@@ -126,13 +126,13 @@
          "adaptive range":5
       },
       "genome" : {
-         "black allele prevalence":.3,
+         "black allele prevalence":0.3,
          "mutability innate immune system":.3
       },
       "world":{
-         "size":6000,
-         "texture":"ground3.png",
-          "debug texture":"sand.png"
+         "size":1000,
+         "texture":"grass.png",
+          "debug texture":"grass.png"
       }
    },
    "stats":{
@@ -146,7 +146,7 @@
          "height":800
       },
       "stats":{
-         "height":200
+         "height":1
       }
    }
 }
