@@ -7,7 +7,7 @@
 #include <Tests/GraphicalTests/PPSTest.hpp>
 #include <Env/Wolf.hpp>
 #include <Env/Sheep.hpp>
-//#include <Env/Grass.hpp> // A DECOMENTER DEPUIS LE TEST 11
+#include <Env/Grass.hpp>
 #include <Utility/Utility.hpp>
 
 IMPLEMENT_MAIN(PPSTest)
@@ -23,10 +23,9 @@ if (event.type == sf::Event::KeyPressed) {
 			getAppEnv().addEntity(new Sheep(getCursorPositionInView()));
 			break;
 		case sf::Keyboard::G:
-			// A DECOMMENTER DEPUIS LE TEST 11
-			//getAppEnv().addEntity(new Grass(getCursorPositionInView()));
+			getAppEnv().addEntity(new Grass(getCursorPositionInView()));
 			break;
-                
+
 		default:
 			break;
 	}
@@ -34,6 +33,3 @@ if (event.type == sf::Event::KeyPressed) {
 }
 
 }
-
-
-

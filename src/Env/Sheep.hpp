@@ -11,46 +11,67 @@
 class Sheep : public Animal {
     public:
         /*!
+         * @brief Constructor.
+         *
+         * @param initPos the Sheep's initial position
+         * @param mother Mother's genome of the Sheep
+         * @param father Father's genome of the Sheep
+         */
+        Sheep(const Vec2d& initPos, Genome *mother = nullptr, Genome *father = nullptr);
+
+        /*!
+         * @brief Destructor.
+         */
+        ~Sheep();
+
+        /*!
          * @brief Gets the Sheep's maximum speed.
          *
          * @return the Sheep's maximum speed (double)
          */
-        virtual double getStandardMaxSpeed() const override;
+        double getStandardMaxSpeed() const override;
 
         /*!
          * @brief Gets the Sheep's mass.
          *
          * @return the Sheep's mass (double)
          */
-        virtual double getMass() const override;
+        double getMass() const override;
 
         /*!
          * @brief Gets the Sheep's radius.
          *
          * @return the Sheep's radius (double)
          */
-        virtual double getRadius() const override;
+        double getRadius() const override;
+
+        /*!
+         * @brief Get's the Sheep's texture.
+         *
+         * @return the Sheep's texture.
+         */
+        sf::Texture& getTexture() const override;
 
         /*!
          * @brief Gets the Sheep's view range in radians.
          *
          * @return the Sheep's view range (double)
          */
-        virtual double getViewRange() const override;
+        double getViewRange() const override;
 
         /*!
          * @brief Gets the Sheep's view distance.
          *
          * @return the Sheep's view distance (double)
          */
-        virtual double getViewDistance() const override;
+        double getViewDistance() const override;
 
         /*!
          * @brief Gets the Sheep's virtual target radius
          *
          * @return the Sheep's virtual target radius (double)
          */
-        virtual double getRandomWalkRadius() const override;
+        double getRandomWalkRadius() const override;
 
         /*!
          * @brief Gets the Sheep's distance to his virtual target circle center
@@ -58,14 +79,14 @@ class Sheep : public Animal {
          * @return the Sheep's distance to his virtual target circle center
          *         (double)
          */
-        virtual double getRandomWalkDistance() const override;
+        double getRandomWalkDistance() const override;
 
         /*!
          * @brief Gets the Sheep's virtual target jitter
          *
          * @return the Sheep's virtual target jitter (double)
          */
-        virtual double getRandomWalkJitter() const override;
+        double getRandomWalkJitter() const override;
 };
 
 #endif // INFOSV_SHEEP_HPP

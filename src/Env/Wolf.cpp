@@ -1,6 +1,11 @@
 #include <Env/Wolf.hpp>
 #include <Application.hpp>
 
+Wolf::Wolf(const Vec2d& initPos, Genome *mother, Genome *father)
+    : Animal(initPos, getAppConfig().sheep_energy_initial, mother, father) {}
+
+Wolf::~Wolf() {}
+
 double Wolf::getStandardMaxSpeed() const {
     return getAppConfig().wolf_max_speed;
 }
@@ -11,6 +16,10 @@ double Wolf::getMass() const {
 
 double Wolf::getRadius() const {
     return getAppConfig().wolf_size / 2.0;
+}
+
+sf::Texture& Wolf::getTexture() const {
+    return getAppTexture(getAppConfig().wolf_texture);
 }
 
 double Wolf::getViewRange() const {

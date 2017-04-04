@@ -2,7 +2,7 @@
    "debug":false,
    "simulation":{
       "time":{
-         "factor":0.5,
+         "factor":3.0,
          "max dt":0.05
       },
       "grass":{
@@ -130,7 +130,7 @@
          "mutability innate immune system":.3
       },
       "world":{
-         "size":1000,
+         "size":600,
          "texture":"grass.png",
           "debug texture":"grass.png"
       }
@@ -142,8 +142,8 @@
       "antialiasing level":4,
       "title":"INFOSV Simulation",
       "simulation":{
-         "width":800,
-         "height":800
+         "width":600,
+         "height":600
       },
       "stats":{
          "height":1

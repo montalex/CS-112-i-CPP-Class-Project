@@ -7,14 +7,14 @@
 #include <Utility/Utility.hpp>
 
 class Animal;
+class LivingEntity;
 
 /*!
  * @class Environment
  *
  * @brief Represents the simulation's Environment.
  *
- * list<Animal> animals: the animal population in the Environment
- * list<Target> targets: position of existing ressources in the Environment
+ * list<LivingEntity> entities: the entity population in the Environment
  */
 class Environment {
 
@@ -22,18 +22,11 @@ class Environment {
         //Using default constructor for now
 
         /*!
-         * @brief Adds an Animal to the Environment.
+         * @brief Adds an entity to the Environment.
          *
-         * @param animal the new Animal
+         * @param entity the new LivingEntity
          */
-        void addAnimal(Animal* animal);
-
-        /*!
-         * @brief Adds a Target to the Environment.
-         *
-         * @param target the new target position
-         */
-        void addTarget(const Vec2d& target);
+        void addEntity(LivingEntity* entity);
 
         /*!
          * @brief Updates the Environment through time.
@@ -55,16 +48,15 @@ class Environment {
         void reset();
 
         /*!
-         * @brief Gets all targets that the given Animal see in the Environment.
+         * @brief Gets all entities that the given Animal see in the Environment.
          *
          * @param animal the Animal
          *
-         * @return all targets that the Animal sees
+         * @return all entities that the Animal sees
          */
-        std::list<Vec2d> getTargetsInSightForAnimal(const Animal* animal) const;
+        std::list<LivingEntity*> getEntitiesInSightForAnimal(const Animal* animal) const;
 
     private:
-        std::list<Animal*> animals;
-        std::list<Vec2d> targets;
+        std::list<LivingEntity*> entities;
 };
 #endif // INFOSV_ENVIRONMENT_HPP

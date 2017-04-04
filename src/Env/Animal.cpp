@@ -1,11 +1,9 @@
 #include <Env/Animal.hpp>
 #include <Application.hpp>
 
-Animal::Animal(const Vec2d& initPos, const double& startEnergy,
-    Genome *mother = nullptr, Genome *father = nullptr)
-    : LivingEntity(initPos, startEnergy), speedNorm(0.0), target(Vec2d()),
-    direction(Vec2d(1.0, 0.0)), virtual_target(Vec2d(1.0, 0.0)),
-    genome(mother, father) {}
+Animal::Animal(const Vec2d& initPos, const double& startEnergy,Genome *mother, Genome *father)
+    : LivingEntity(initPos, startEnergy), direction(Vec2d(1.0, 0.0)), target(Vec2d()),
+    virtual_target(Vec2d(1.0, 0.0)), speedNorm(0.0), genome(mother, father) {}
 
 Animal::~Animal() {};
 
@@ -45,28 +43,8 @@ Genome Animal::getGenome() const {
     return this->genome;
 }
 
-double Animal::getStandardMaxSpeed() const {
-    return ANIMAL_MAX_SPEED;
-}
-
-double Animal::getMass() const {
-    return ANIMAL_MASS;
-}
-
-double Animal::getRadius() const {
-    return ANIMAL_RADIUS;
-}
-
 Vec2d Animal::getSpeedVector() const {
     return this->getDirection() * this->getSpeedNorm();
-}
-
-double Animal::getViewRange() const {
-	return ANIMAL_VIEW_RANGE;
-}
-
-double Animal::getViewDistance() const {
-	return ANIMAL_VIEW_DISTANCE;
 }
 
 double Animal::getRotation() const {
@@ -76,18 +54,6 @@ double Animal::getRotation() const {
 void Animal::setRotation(const double& angle) {
 	this->direction.rotate(angle);
 };
-
-double Animal::getRandomWalkRadius() const {
-    return ANIMAL_RANDOM_WALK_RADIUS;
-}
-
-double Animal::getRandomWalkDistance() const {
-    return ANIMAL_RANDOM_WALK_DISTANCE;
-}
-
-double Animal::getRandomWalkJitter() const {
-    return ANIMAL_RANDOM_WALK_JITTER;
-}
 
 void Animal::update(sf::Time dt) {
     // Environment env = INFOSV_APPLICATION_HPP::getAppEnv();
@@ -118,24 +84,23 @@ void Animal::updatePosition(sf::Time dt, const Vec2d& attractionForce) {
 
 Vec2d Animal::randomWalk() {
     Vec2d current_target = this->getVirtualTarget();
-    std::cout << "1 : " << current_target << std::endl;
     Vec2d random_vec = Vec2d(uniform(-1.0, 1.0), uniform(-1.0, 1.0));
     current_target += random_vec * getRandomWalkJitter();
     current_target = current_target.normalised() * getRandomWalkRadius();
     this->setVirtualTarget(current_target);
-
-    std::cout << "2 : " << this->getVirtualTarget() << std::endl;
     return this->convertToGlobalCoord(this->getVirtualTarget()+ Vec2d(getRandomWalkDistance(), 0.0)) - this->getPosition();
 }
 
 void Animal::drawOn(sf::RenderTarget& targetWindow) const {
     sf::CircleShape target = buildCircle(this->getTarget(), 5.0, sf::Color(255, 0, 0));
-    auto animalSprite = buildSprite(this->getPosition(), this->getRadius() * 2.0, getAppTexture("wolf-black.png"));
+    auto animalSprite = buildSprite(this->getPosition(), this->getRadius(), this->getTexture());
     animalSprite.setRotation(this->getDirection().angle() / DEG_TO_RAD);
     targetWindow.draw(animalSprite);
     targetWindow.draw(target);
-    this->drawVision(targetWindow);
-    this->drawVirtualTarget(targetWindow);
+    if(isDebugOn()) {
+        this->drawVision(targetWindow);
+        this->drawVirtualTarget(targetWindow);
+    }
 }
 
 void Animal::drawVision(sf::RenderTarget& targetWindow) const {

@@ -1,9 +1,7 @@
 #ifndef INFOSV_ANIMAL_HPP
 #define INFOSV_ANIMAL_HPP
 
-#include <Utility/Vec2d.hpp>
 #include <Utility/Constants.hpp>
-#include <SFML/Graphics.hpp>
 #include <Utility/Utility.hpp>
 #include <Utility/Arc.hpp>
 #include <Config.hpp>
@@ -29,10 +27,16 @@ class Animal : public LivingEntity {
          * @brief Constructor.
          *
          * @param initPos the Animla's initial position
+         * @param startEnergy the Animal's starting energy
+         * @param mother Mother's genome of the Animal
+         * @param father Father's genome of the Animal
          */
-        Animal(const Vec2d& initPos, const double& startEnergy,Genome *mother,
-            Genome *father);
+        Animal(const Vec2d& initPos, const double& startEnergy, Genome *mother = nullptr,
+            Genome *father = nullptr);
 
+        /*!
+         * @brief Destructor.
+         */
         virtual ~Animal();
 
         /*!
@@ -103,21 +107,28 @@ class Animal : public LivingEntity {
          *
          * @return the Animal's maximum speed (double)
          */
-        virtual double getStandardMaxSpeed() const;
+        virtual double getStandardMaxSpeed() const = 0;
 
         /*!
          * @brief Gets the Animal's mass.
          *
          * @return the Animal's mass (double)
          */
-        virtual double getMass() const;
+        virtual double getMass() const = 0;
 
         /*!
          * @brief Gets the Animal's radius.
          *
          * @return the Animal's radius (double)
          */
-        virtual double getRadius() const;
+        virtual double getRadius() const = 0;
+
+        /*!
+         * @brief Get's the Animal's texture.
+         *
+         * @return the Animal's texture.
+         */
+        virtual sf::Texture& getTexture() const = 0;
 
         /*!
          * @brief Gets the Animal's speed vector.
@@ -131,14 +142,14 @@ class Animal : public LivingEntity {
          *
          * @return the Animal's view range (double)
          */
-        virtual double getViewRange() const;
+        virtual double getViewRange() const = 0;
 
         /*!
          * @brief Gets the Animal's view distance.
          *
          * @return the Animal's view distance (double)
          */
-        virtual double getViewDistance() const;
+        virtual double getViewDistance() const = 0;
 
         /*!
          * @brief Gets the Animal's view rotation.
@@ -159,7 +170,7 @@ class Animal : public LivingEntity {
          *
          * @return the Animal's virtual target radius (double)
          */
-        virtual double getRandomWalkRadius() const;
+        virtual double getRandomWalkRadius() const = 0;
 
         /*!
          * @brief Gets the Animal's distance to his virtual target circle center
@@ -167,14 +178,14 @@ class Animal : public LivingEntity {
          * @return the Animal's distance to his virtual target circle center
          *         (double)
          */
-        virtual double getRandomWalkDistance() const;
+        virtual double getRandomWalkDistance() const = 0;
 
         /*!
          * @brief Gets the Animal's virtual target jitter
          *
          * @return the Animal's virtual target jitter (double)
          */
-        virtual double getRandomWalkJitter() const;
+        virtual double getRandomWalkJitter() const = 0;
 
         /*!
          * @brief Updates the Animal's target and calls updatePosition to modify
@@ -182,7 +193,7 @@ class Animal : public LivingEntity {
          *
          * @param dt the time passed
          */
-        void update(sf::Time dt);
+        void update(sf::Time dt) override;
 
         /*!
          * @brief Update the Animal's position, direction & speed norm over time
@@ -198,7 +209,7 @@ class Animal : public LivingEntity {
          *
          * @param targetWindow the window to draw on
          */
-        void drawOn(sf::RenderTarget& targetWindow) const;
+        void drawOn(sf::RenderTarget& targetWindow) const override;
 
         /*!
          * @brief Draws the Animal's vision in the given window.

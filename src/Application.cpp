@@ -658,4 +658,3 @@ bool isDebugOn()
 {
     return getAppConfig().getDebug();
 }
-

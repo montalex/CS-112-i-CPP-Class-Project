@@ -2,6 +2,7 @@
 #define INFOSV_LIVING_ENTITY_HPP
 
 #include <Utility/Vec2d.hpp>
+#include <SFML/Graphics.hpp>
 
 /*!
  * @class LivingEntity
@@ -49,6 +50,20 @@ class LivingEntity {
          * @param newEnergy the new energy of the LivingEntity
          */
         void setEnergy(const double& newEnergy);
+
+        /*!
+         * @brief Draws the Entity in the given window.
+         *
+         * @param targetWindow the window to draw on
+         */
+        virtual void drawOn(sf::RenderTarget& targetWindow) const = 0;
+
+        /*!
+         * @brief Updates the Entity's position over time
+         *
+         * @param dt the time passed
+         */
+        virtual void update(sf::Time dt) = 0;
 
     private:
         Vec2d position;
