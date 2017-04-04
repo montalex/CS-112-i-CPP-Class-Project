@@ -45,3 +45,19 @@ double Sheep::getRandomWalkDistance() const {
 double Sheep::getRandomWalkJitter() const {
     return getAppConfig().sheep_random_walk_jitter;
 }
+
+bool Sheep::eatable(LivingEntity const* other) const {
+    return other->eatableBy(this);
+}
+
+bool Sheep::eatableBy(Wolf  const* wolf) const {
+    return true;
+}
+
+bool Sheep::eatableBy(Sheep const* sheep) const {
+    return false;
+}
+
+bool Sheep::eatableBy(Grass const* grass) const {
+    return false;
+}

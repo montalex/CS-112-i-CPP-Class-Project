@@ -4,6 +4,10 @@
 #include <Utility/Vec2d.hpp>
 #include <SFML/Graphics.hpp>
 
+class Sheep;
+class Wolf;
+class Grass;
+
 /*!
  * @class LivingEntity
  *
@@ -59,11 +63,48 @@ class LivingEntity {
         virtual void drawOn(sf::RenderTarget& targetWindow) const = 0;
 
         /*!
-         * @brief Updates the Entity's position over time
+         * @brief Updates the Entity's position over time.
          *
          * @param dt the time passed
          */
         virtual void update(sf::Time dt) = 0;
+
+        /*!
+         * @brief Checks if a LivingEntity is eatable by the current one using
+         * the eatableBy methods
+         *
+         * @param other the LivingEntity to check
+         *
+         * @return True if the  LivingEntity is eatable
+         */
+        virtual bool eatable(LivingEntity const* other) const = 0;
+
+        /*!
+         * @brief Checks if this Entity is eatable by a Wolf
+         *
+         * @param wolf the Wolf
+         *
+         * @return True if this Entity is eatable by a Wolf
+         */
+        virtual bool eatableBy(Wolf  const* wolf) const = 0;
+
+        /*!
+         * @brief Checks if this Entity is eatable by a Sheep
+         *
+         * @param sheep the Sheep
+         *
+         * @return True if this Entity is eatable by a Sheep
+         */
+        virtual bool eatableBy(Sheep const* sheep) const = 0;
+
+        /*!
+         * @brief Checks if this Entity is eatable by a Grass
+         *
+         * @param grass the Grass
+         *
+         * @return True if this Entity is eatable by a Grass
+         */
+        virtual bool eatableBy(Grass const* grass) const = 0;
 
     private:
         Vec2d position;

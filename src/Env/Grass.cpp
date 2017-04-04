@@ -32,3 +32,19 @@ void Grass::update(sf::Time dt) {
         this->setEnergy(currentEnergy + (getAppConfig().grass_growth_factor * dt.asSeconds()));
     }
 }
+
+bool Grass::eatable(LivingEntity const* other) const {
+    return other->eatableBy(this);
+}
+
+bool Grass::eatableBy(Wolf  const* wolf) const {
+    return false;
+}
+
+bool Grass::eatableBy(Sheep const* sheep) const {
+    return true;
+}
+
+bool Grass::eatableBy(Grass const* grass) const {
+    return false;
+}

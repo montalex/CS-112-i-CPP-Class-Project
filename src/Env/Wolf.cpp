@@ -41,3 +41,19 @@ double Wolf::getRandomWalkDistance() const {
 double Wolf::getRandomWalkJitter() const {
     return getAppConfig().wolf_random_walk_jitter;
 }
+
+bool Wolf::eatable(LivingEntity const* other) const {
+    return other->eatableBy(this);
+}
+
+bool Wolf::eatableBy(Wolf  const* wolf) const {
+    return false;
+}
+
+bool Wolf::eatableBy(Sheep const* sheep) const {
+    return false;
+}
+
+bool Wolf::eatableBy(Grass const* grass) const {
+    return false;
+}

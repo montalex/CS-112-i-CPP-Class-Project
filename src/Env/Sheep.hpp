@@ -87,6 +87,43 @@ class Sheep : public Animal {
          * @return the Sheep's virtual target jitter (double)
          */
         double getRandomWalkJitter() const override;
+
+        /*!
+         * @brief Checks if a LivingEntity is eatable by the current one using
+         * the eatableBy methods
+         *
+         * @param other the LivingEntity to check
+         *
+         * @return True if other is eatable by this
+         */
+        bool eatable(LivingEntity const* other) const override;
+
+        /*!
+         * @brief Checks if this Sheep is eatable by a Wolf
+         *
+         * @param wolf the Wolf
+         *
+         * @return True
+         */
+        bool eatableBy(Wolf  const* wolf) const override;
+
+        /*!
+         * @brief Checks if this Sheep is eatable by a Sheep
+         *
+         * @param sheep the Sheep
+         *
+         * @return False
+         */
+        bool eatableBy(Sheep const* sheep) const override;
+
+        /*!
+         * @brief Checks if this Sheep is eatable by a Grass
+         *
+         * @param grass the Grass
+         *
+         * @return False
+         */
+        bool eatableBy(Grass const* grass) const override;
 };
 
 #endif // INFOSV_SHEEP_HPP
