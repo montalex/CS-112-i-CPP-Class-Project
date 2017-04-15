@@ -106,6 +106,15 @@ class LivingEntity {
          */
         virtual bool eatableBy(Grass const* grass) const = 0;
 
+        /*!
+         * @brief Gets the closest entity to the current one from a given list.
+         *
+         * @param  entities the list entities
+         *
+         * @return the LivingEntity closest to current one
+         */
+        const LivingEntity* getClosestEntity(std::list<LivingEntity*> entities) const;
+
     private:
         Vec2d position;
         double energy;

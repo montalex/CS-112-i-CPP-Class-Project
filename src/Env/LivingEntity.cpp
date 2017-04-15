@@ -32,3 +32,16 @@ double LivingEntity::getEnergy() const {
 void LivingEntity::setEnergy(const double& newEnergy) {
     this->energy = newEnergy;
 }
+
+const LivingEntity* LivingEntity::getClosestEntity(std::list<LivingEntity*> entities) const {
+    LivingEntity* closest = entities.front();
+    double currentDistance = distance(this->getPosition(), closest->getPosition());
+    for(auto entity: entities) {
+        double newDistance = distance(this->getPosition(), entity->getPosition());
+        if(newDistance < currentDistance) {
+            closest = entity;
+            currentDistance = newDistance;
+        }
+    }
+    return closest;
+}

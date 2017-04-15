@@ -10,6 +10,20 @@
 #include <Genetics/Genome.hpp>
 
 /*!
+ * @brief Represents an Animal state.
+ */
+enum AnimalState {
+	 FOOD_IN_SIGHT,
+	 FEEDING,
+	 RUNNING_AWAY,
+	 MATE_IN_SIGHT,
+	 MATING,
+	 GIVING_BIRTH,
+	 WANDERING,
+	 IDLE,
+};
+
+/*!
  * @class Animal
  *
  * @brief Represent an Animal in the simulation.
@@ -101,6 +115,32 @@ class Animal : public LivingEntity {
          * @return the Animal's genome (Genome)
          */
         Genome getGenome() const;
+
+        /*!
+         * @brief Gets the Animal's state.
+         *
+         * @return the Animal's state (AnimalState)
+         */
+        AnimalState getState() const;
+
+        /*!
+         * @brief Sets the Animal's state to the given state.
+         *
+         * @param newState the new state.
+         */
+        void setState(const AnimalState& newState);
+
+        /*!
+         * @brief Updates the Animal's state according to its surrounding.
+         */
+        void updateState();
+
+        /*!
+         * @brief Gets the Animal's maximum speed according to its current state.
+         *
+         * @return the Animal's maximum speed (double)
+         */
+        double getMaxSpeed() const;
 
         /*!
          * @brief Gets the Animal's maximum speed.
@@ -274,6 +314,7 @@ class Animal : public LivingEntity {
         Vec2d virtual_target;
         double speedNorm;
         Genome genome;
+        AnimalState state;
 };
 
 #endif // INFOSV_ANIMAL_HPP

@@ -1,9 +1,11 @@
 #include <Env/Animal.hpp>
 #include <Application.hpp>
 
-Animal::Animal(const Vec2d& initPos, const double& startEnergy,Genome *mother, Genome *father)
-    : LivingEntity(initPos, startEnergy), direction(Vec2d(1.0, 0.0)), target(Vec2d()),
-    virtual_target(Vec2d(1.0, 0.0)), speedNorm(0.0), genome(mother, father) {}
+Animal::Animal(const Vec2d& initPos, const double& startEnergy, Genome *mother,
+                Genome *father) :
+    LivingEntity(initPos, startEnergy), direction(Vec2d(1.0, 0.0)),
+    target(Vec2d()), virtual_target(Vec2d(1.0, 0.0)), speedNorm(0.0),
+    genome(mother, father), state(WANDERING) {}
 
 Animal::~Animal() {};
 
@@ -27,8 +29,8 @@ Vec2d Animal::getVirtualTarget() const {
     return this->virtual_target;
 }
 
-void Animal::setVirtualTarget(const Vec2d& target) {
-    this->virtual_target = target;
+void Animal::setVirtualTarget(const Vec2d& newTarget) {
+    this->virtual_target = newTarget;
 }
 
 double Animal::getSpeedNorm() const {
@@ -41,6 +43,46 @@ void Animal::setSpeedNorm(const double& newNorm) {
 
 Genome Animal::getGenome() const {
     return this->genome;
+}
+
+AnimalState Animal::getState() const {
+    return this->state;
+}
+
+void Animal::setState(const AnimalState& newState) {
+    this->state = newState;
+}
+
+void Animal::updateState() {
+    Environment env = INFOSV_APPLICATION_HPP::getAppEnv();
+    std::list<LivingEntity*> eatables;
+    std::list<LivingEntity*> entities = env.getEntitiesInSightForAnimal(this);
+    if(entities.empty()) {
+        this->setState(WANDERING);
+    } else {
+        for(auto entity: entities) {
+            if(this->eatable(entity)) {
+                eatables.push_back(entity);
+            }
+        }
+        if(!eatables.empty()) {
+            this->setState(FOOD_IN_SIGHT);
+            this->setTarget(getClosestEntity(eatables)->getPosition());
+        }
+    }
+}
+
+double Animal::getMaxSpeed() const {
+    switch(this->getState()) {
+        case FOOD_IN_SIGHT:
+            return 3.0 * this->getStandardMaxSpeed();
+        case MATE_IN_SIGHT:
+            return 2.0 * this->getStandardMaxSpeed();
+        case RUNNING_AWAY:
+            return 4.0 * this->getStandardMaxSpeed();
+        default:
+            return getStandardMaxSpeed();
+    }
 }
 
 Vec2d Animal::getSpeedVector() const {
@@ -56,27 +98,25 @@ void Animal::setRotation(const double& angle) {
 };
 
 void Animal::update(sf::Time dt) {
-    // Environment env = INFOSV_APPLICATION_HPP::getAppEnv();
-    // std::list<Vec2d> targetsList = env.getTargetsInSightForAnimal(this);
-    //
-    // /* If the target list is not empty, pick one (first one) and calculate the
-    //  * attraction force toward it. If it is empty, create a virtual target to
-    //  * make the Animal walk randomly.
-    //  */
-    // if(!targetsList.empty()) {
-    //     this->setTarget(targetsList.front());
-    //     this->updatePosition(dt, this->attractionForce());
-    // } else {
-    //     this->updatePosition(dt, this->randomWalk());
-    // }
+    this->updateState();
+    switch(this->getState()) {
+        case FOOD_IN_SIGHT:
+            this->updatePosition(dt, this->attractionForce());
+            break;
+        case WANDERING:
+            this->updatePosition(dt, this->randomWalk());
+            break;
+        default:
+            break;
+    }
 }
 
 void Animal::updatePosition(sf::Time dt, const Vec2d& attractionForce) {
     Vec2d acceleration = attractionForce / this->getMass();
     Vec2d newSpeedVector = this->getSpeedVector() + (acceleration * dt.asSeconds());
     this->setDirection(newSpeedVector.normalised());
-    if(newSpeedVector.length() > this->getStandardMaxSpeed()) {
-        newSpeedVector = this->getDirection() * this->getStandardMaxSpeed();
+    if(newSpeedVector.length() > this->getMaxSpeed()) {
+        newSpeedVector = this->getDirection() * this->getMaxSpeed();
     }
     this->setSpeedNorm(newSpeedVector.length());
     this->setPosition(this->getPosition() + (newSpeedVector * dt.asSeconds()));
@@ -136,7 +176,7 @@ Vec2d Animal::attractionForce() const {
         return Vec2d(0.0, 0.0);
     }
     double coef = getDecelerationCoef(this->getDeceleration(toTargetNorm));
-    double tempSpeed = std::min(toTargetNorm / coef, this->getStandardMaxSpeed());
+    double tempSpeed = std::min(toTargetNorm / coef, this->getMaxSpeed());
     Vec2d wantedSpeed = (toTarget / toTargetNorm) * tempSpeed;
     return wantedSpeed - this->getSpeedVector();
 }
