@@ -31,9 +31,9 @@ double const ANIMAL_VIEW_RANGE = 60 * DEG_TO_RAD;
 double const ANIMAL_VIEW_DISTANCE = 300;
 
 // Deceleration
-double const DECELERATION_WEAK = 0.9;
-double const DECELERATION_MIDRANGE = 1.6;
-double const DECELERATION_STRONG = 1.0;
+double const DECELERATION_WEAK = 1.9;
+double const DECELERATION_MIDRANGE = 1.2;
+double const DECELERATION_STRONG = 1.6;
 
 
 /// Random walk jitter
