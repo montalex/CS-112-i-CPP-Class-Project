@@ -72,4 +72,9 @@ loup, il est plus simple de la modifier séparement dans chacune de ces classes.
 Ce qui permet d'avoir un facteur de ralentissement différent, ainsi qu'un seuil
 critique différent en fonction de l'animal.
 
-Q3.9:
+Q3.9: Simplement retourner la position de la LivingEntity.
+
+Q3.10: Supprimer la classe obstacle et intégrer ses méthodes dans la classe
+LivingEntity.
+
+Q3.11: 

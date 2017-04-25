@@ -138,6 +138,16 @@ class Sheep : public Animal {
          * @param dt the time passed
          */
         void update(sf::Time dt) override;
+
+        /*!
+		 * @brief Feeds the Sheep with the given entity, to regain energy and
+		 * decrease the entity's energy.
+		 *
+		 * @param entity the LivingEntity to be eaten
+		 *
+		 * @return the energy left in the entity after the Sheep ate it.
+		 */
+        double feed(LivingEntity *entity) override;
 };
 
 #endif // INFOSV_SHEEP_HPP

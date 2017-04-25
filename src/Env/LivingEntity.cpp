@@ -48,7 +48,7 @@ void LivingEntity::update(sf::Time dt) {
     this->setAge(newAge);
 }
 
-const LivingEntity* LivingEntity::getClosestEntity(std::list<LivingEntity*> entities) const {
+LivingEntity* LivingEntity::getClosestEntity(std::list<LivingEntity*> entities) const {
     LivingEntity* closest = entities.front();
     double currentDistance = distance(this->getPosition(), closest->getPosition());
     for(auto entity: entities) {
@@ -62,5 +62,9 @@ const LivingEntity* LivingEntity::getClosestEntity(std::list<LivingEntity*> enti
 }
 
 bool LivingEntity::isDead() const {
-    return this->getAge() > sf::seconds(1E9);
+    return this->getAge() > sf::seconds(1E9) || this->getEnergy() <= 0.0;
+}
+
+Vec2d LivingEntity::getCenter() const {
+    return this->getPosition();
 }

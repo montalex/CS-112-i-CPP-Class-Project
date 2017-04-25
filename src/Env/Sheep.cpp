@@ -76,3 +76,10 @@ void Sheep::update(sf::Time dt) {
     this->setEnergy(this->getEnergy() - (getAppConfig().animal_base_energy_consumption
                     + this->getSpeedNorm() * getAppConfig().sheep_energy_loss_factor * dt.asSeconds()));
 }
+
+double Sheep::feed(LivingEntity *entity) {
+    double bite = getAppConfig().sheep_energy_bite;
+    this->setEnergy(this->getEnergy() +  getAppConfig().animal_meal_retention * entity->getEnergy());
+    entity->setEnergy(entity->getEnergy() - bite);
+    return entity->getEnergy();
+}

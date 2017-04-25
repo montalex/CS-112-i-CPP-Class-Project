@@ -87,6 +87,13 @@ class Grass : public LivingEntity {
          * @return True if the Grass ran out of energy or is too old
          */
         bool isDead() const override;
+
+        /*!
+         * @brief Gets the Grass radius, which is half its energy level.
+         *
+         * @return the Grass radius (double)
+         */
+        double getRadius() const override;
 };
 
 #endif // INFOSV_GRASS_HPP

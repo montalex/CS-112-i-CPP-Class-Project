@@ -3,7 +3,6 @@
 
 #include <Utility/Constants.hpp>
 #include <Utility/Utility.hpp>
-#include <Utility/Arc.hpp>
 #include <Config.hpp>
 #include <Random/Random.hpp>
 #include <Env/LivingEntity.hpp>
@@ -143,13 +142,6 @@ class Animal : public LivingEntity {
         virtual double getMass() const = 0;
 
         /*!
-         * @brief Gets the Animal's radius.
-         *
-         * @return the Animal's radius (double)
-         */
-        virtual double getRadius() const = 0;
-
-        /*!
          * @brief Get's the Animal's texture.
          *
          * @return the Animal's texture.
@@ -251,6 +243,14 @@ class Animal : public LivingEntity {
          */
         void drawVirtualTarget(sf::RenderTarget& targetWindow) const;
 
+		/*!
+		 * @brief Draws the Animal's debug text, showing on the screen some of
+		 * his attributes.
+		 *
+		 * @param targetWindow the window to draw on
+		 */
+		void drawDebugText(sf::RenderTarget& targetWindow) const;
+
         /*!
          * @brief Gets the Animal's attraction force to his target.
          *
@@ -301,12 +301,35 @@ class Animal : public LivingEntity {
 		 */
 		std::string getDebugString() const override;
 
+		/*!
+		 * @brief Updates the Animal's hunger status.
+		 */
+		void updateHunger();
+
+		/*!
+		 * @brief Checks if the Animal is hungry.
+		 *
+		 * @return True if the Animal is hungry
+		 */
+		bool isHungry() const;
+
+		/*!
+		 * @brief Feeds the Animal with the given entity, to regain energy and
+		 * decrease the entity's energy.
+		 *
+		 * @param entity the LivingEntity to be eaten
+		 *
+		 * @return the energy left in the entity after the Animal ate it.
+		 */
+		virtual double feed(LivingEntity *entity) = 0;
+
     private:
         Vec2d direction;
         Vec2d target;
         double speedNorm;
         Genome genome;
         AnimalState state;
+		bool hungry;
 };
 
 /*!

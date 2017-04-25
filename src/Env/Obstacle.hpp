@@ -1,6 +1,8 @@
 #ifndef INFOSV_OBSTACLE_HPP
 #define INFOSV_OBSTACLE_HPP
 
+#include <SFML/Graphics.hpp>
+#include <Utility/Arc.hpp>
 #include <Utility/Vec2d.hpp>
 
 /*!
@@ -14,31 +16,25 @@
 class Obstacle {
     public:
         /*!
-         * @brief Constructor.
-         *
-         * @param center the Obstacle's center position
-         * @param rad the Obstacle's radius
-         */
-        Obstacle(Vec2d center, double rad);
-
-        /*!
-         * @brief Remove default constructor
-         */
-        Obstacle() = delete;
-
-        /*!
          * @brief Gets the Obstacle's center.
          *
          * @return the Obstacle's center (Vec2d)
          */
-        Vec2d getCenter();
+        virtual Vec2d getCenter() const = 0;
 
         /*!
          * @brief Gets the Obstacle's radius.
          *
          * @return the Obstacle's radius (Vec2d)
          */
-        double getRadius();
+        virtual double getRadius() const  = 0;
+
+        /*!
+         * @brief Draws the Obstacle circle for debug mode.
+         *
+         * @param targetWindow the window to draw on
+         */
+        void drawObstacle(sf::RenderTarget& targetWindow) const;
 
         /*!
          * @brief Tests if the Obstacle is colliding with an other
@@ -47,7 +43,7 @@ class Obstacle {
          *
          * @return True if the current Obstacle is colliding with the other
          */
-        bool isColliding(const Obstacle& other);
+        bool isColliding(const Obstacle& other) const;
 
         /*!
          * @brief Tests a p is inside the current Obstacle
@@ -56,25 +52,20 @@ class Obstacle {
          *
          * @return True if the point p is inside the current Obstacle
          */
-        bool isPointInside(const Vec2d& p);
+        bool isPointInside(const Vec2d& p) const;
 
         /*!
          * @brief Operator for collisions.
          *
          * @param other the other Obstacle
          */
-        bool operator|(Obstacle& other);
+        bool operator|(Obstacle& other) const;
 
         /*!
          * @brief Operator to check if a point is inside the Obstacle.
          *
          * @param p the point
          */
-        bool operator>(Vec2d& p);
-
-    private:
-        Vec2d center;
-        double rad;
-
+        bool operator>(Vec2d& p) const;
 };
 #endif // INFOSV_OBSTACLE_HPP

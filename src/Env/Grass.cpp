@@ -28,12 +28,12 @@ void Grass::drawOn(sf::RenderTarget& targetWindow) const {
     targetWindow.draw(grassSprite);
 
     if(isDebugOn()) {
+        Obstacle::drawObstacle(targetWindow);
         auto text = buildText(this->getDebugString(),
                               this->getPosition(),
                               getAppFont(),
                               getAppConfig().default_debug_text_size,
                               sf::Color::White);
-        //text.setRotation(this->getRotation() / DEG_TO_RAD + 90); // si nécessaire
         targetWindow.draw(text);
     }
 }
@@ -68,4 +68,8 @@ std::string Grass::getDebugString() const {
 
 bool Grass::isDead() const {
     return LivingEntity::isDead();
+}
+
+double Grass::getRadius() const {
+    return this->getEnergy() / 2.0;
 }

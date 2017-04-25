@@ -1,3 +1,414 @@
+CS-112(i) - C++ Class Project	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/README.md	/^# CS-112(i) - C++ Class Project$/;"	function	line:1
+INFOSV_GRASS_HPP	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Grass.hpp	/^#define INFOSV_GRASS_HPP$/;"	macro	line:2
+Grass	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Grass.hpp	/^class Grass : public LivingEntity {$/;"	class	line:12
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Grass.hpp	/^        void drawOn(sf::RenderTarget& targetWindow) const override;$/;"	member	line:31	class:Grass
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Grass.hpp	/^        void update(sf::Time dt) override;$/;"	member	line:38	class:Grass
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Grass.hpp	/^        bool eatable(LivingEntity const* other) const override;$/;"	member	line:48	class:Grass
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Grass.hpp	/^        bool eatableBy(Wolf  const* wolf) const override;$/;"	member	line:57	class:Grass
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Grass.hpp	/^        bool eatableBy(Sheep const* sheep) const override;$/;"	member	line:66	class:Grass
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Grass.hpp	/^        bool eatableBy(Grass const* grass) const override;$/;"	member	line:75	class:Grass
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Grass.hpp	/^		std::string getDebugString() const override;$/;"	member	line:82	class:Grass
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Grass.hpp	/^        bool isDead() const override;$/;"	member	line:89	class:Grass
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Grass.hpp	/^        double getRadius() const override;$/;"	member	line:96	class:Grass
+Grass	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Grass.cpp	/^Grass::Grass(const Vec2d& initPos)$/;"	function	line:4	class:Grass	signature:(const Vec2d& initPos)
+~Grass	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Grass.cpp	/^Grass::~Grass() {}$/;"	function	line:23	class:Grass	signature:()
+drawOn	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Grass.cpp	/^void Grass::drawOn(sf::RenderTarget& targetWindow) const {$/;"	function	line:25	class:Grass	signature:(sf::RenderTarget& targetWindow) const
+update	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Grass.cpp	/^void Grass::update(sf::Time dt) {$/;"	function	line:41	class:Grass	signature:(sf::Time dt)
+eatable	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Grass.cpp	/^bool Grass::eatable(LivingEntity const* other) const {$/;"	function	line:49	class:Grass	signature:(LivingEntity const* other) const
+eatableBy	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Grass.cpp	/^bool Grass::eatableBy(Wolf  const* wolf) const {$/;"	function	line:53	class:Grass	signature:(Wolf const* wolf) const
+eatableBy	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Grass.cpp	/^bool Grass::eatableBy(Sheep const* sheep) const {$/;"	function	line:57	class:Grass	signature:(Sheep const* sheep) const
+eatableBy	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Grass.cpp	/^bool Grass::eatableBy(Grass const* grass) const {$/;"	function	line:61	class:Grass	signature:(Grass const* grass) const
+getDebugString	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Grass.cpp	/^std::string Grass::getDebugString() const {$/;"	function	line:65	class:Grass	signature:() const
+isDead	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Grass.cpp	/^bool Grass::isDead() const {$/;"	function	line:69	class:Grass	signature:() const
+getRadius	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Grass.cpp	/^double Grass::getRadius() const {$/;"	function	line:73	class:Grass	signature:() const
+debug	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^   "debug":true,$/;"	function	line:2
+simulation	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^   "simulation":{$/;"	function	line:3
+time	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^      "time":{$/;"	function	line:4
+factor	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^         "factor":0.5,$/;"	function	line:5
+max dt	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^         "max dt":0.05$/;"	function	line:6
+grass	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^      "grass":{$/;"	function	line:8
+texture	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^         "texture":"food1.png",$/;"	function	line:9
+energy	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^         "energy":{$/;"	function	line:10
+initial	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^            "initial":50,$/;"	function	line:11
+max	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^            "max":200,$/;"	function	line:12
+growth factor	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^            "growth factor":2$/;"	function	line:13
+animal	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^      "animal":{$/;"	function	line:16
+random walk low energy	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^         "random walk low energy":false,$/;"	function	line:17
+meal retention	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^         "meal retention":0.7,$/;"	function	line:18
+feed time	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^         "feed time":0.4,$/;"	function	line:19
+min energy	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^         "min energy" : 20,$/;"	function	line:20
+reproduction	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^         "reproduction":{$/;"	function	line:21
+delivery time	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "delivery time":10,$/;"	function	line:22
+mating time	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "mating time":5$/;"	function	line:23
+idle	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^        "idle":{$/;"	function	line:25
+min	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^            "min":5,$/;"	function	line:26
+max	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^            "max":10,$/;"	function	line:27
+probability	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^            "probability":0.01$/;"	function	line:28
+satiety	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^        "satiety":{$/;"	function	line:30
+min	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^            "min":600,$/;"	function	line:31
+max	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^            "max":700$/;"	function	line:32
+sheep	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^        "sheep":{$/;"	function	line:34
+mass	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^            "mass":1,$/;"	function	line:35
+size	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^            "size":100,$/;"	function	line:36
+longevity	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^            "longevity":40000,$/;"	function	line:37
+max speed	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^            "max speed":50,$/;"	function	line:38
+reproduction	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^            "reproduction":{$/;"	function	line:39
+gestation time	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "gestation time":10,$/;"	function	line:40
+min children	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "min children":1,$/;"	function	line:41
+max children	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "max children":2$/;"	function	line:42
+view	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^            "view":{$/;"	function	line:44
+range	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "range":6.283185307,$/;"	function	line:45
+distance	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "distance":250$/;"	function	line:46
+random walk	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^            "random walk":{$/;"	function	line:48
+jitter	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "jitter":2.0,$/;"	function	line:49
+radius	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "radius":20,$/;"	function	line:50
+distance	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "distance":160$/;"	function	line:51
+energy	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^            "energy":{$/;"	function	line:53
+initial	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "initial":500,$/;"	function	line:54
+min mating male	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "min mating male":450,$/;"	function	line:55
+min mating female	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "min mating female":600,$/;"	function	line:56
+loss mating male	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "loss mating male":250,$/;"	function	line:57
+loss female per child	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "loss female per child":100,$/;"	function	line:58
+loss factor	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "loss factor":0.07,$/;"	function	line:59
+bite	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "bite":15$/;"	function	line:60
+texture	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^            "texture":{$/;"	function	line:62
+white	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "white":"sheep-white.png",$/;"	function	line:63
+black	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "black":"sheep-gray.png",$/;"	function	line:64
+leader	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "leader":"sheep-leader.png"$/;"	function	line:65
+wolf	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^         "wolf":{$/;"	function	line:68
+mass	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^            "mass":1,$/;"	function	line:69
+size	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^            "size":150,$/;"	function	line:70
+longevity	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^            "longevity":50000,$/;"	function	line:71
+max speed	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^            "max speed":300,$/;"	function	line:72
+speed	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^            "speed":0,$/;"	function	line:73
+rotation	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^            "rotation":{$/;"	function	line:74
+speed	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "speed":1.570796327,$/;"	function	line:75
+angle precision	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "angle precision":.125663706$/;"	function	line:76
+score for action	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^            "score for action":50,$/;"	function	line:78
+reproduction	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^            "reproduction":{$/;"	function	line:79
+gestation time	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "gestation time":10,$/;"	function	line:80
+min children	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "min children":1,$/;"	function	line:81
+max children	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "max children":1$/;"	function	line:82
+view	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^            "view":{$/;"	function	line:84
+range	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "range":4,$/;"	function	line:85
+distance	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "distance":350$/;"	function	line:86
+random walk	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^            "random walk":{$/;"	function	line:88
+jitter	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "jitter":50,$/;"	function	line:89
+radius	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "radius":100,$/;"	function	line:90
+distance	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "distance":100$/;"	function	line:91
+energy	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^            "energy":{$/;"	function	line:93
+initial	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "initial":650,$/;"	function	line:94
+min mating male	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "min mating male":400,$/;"	function	line:95
+min mating female	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "min mating female":400,$/;"	function	line:96
+loss mating male	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "loss mating male":100,$/;"	function	line:97
+loss female per child	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "loss female per child":50,$/;"	function	line:98
+loss factor	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "loss factor":0.08$/;"	function	line:99
+idle	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^            "idle":{$/;"	function	line:101
+min	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "min":5,$/;"	function	line:102
+max	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "max":10,$/;"	function	line:103
+probability	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^               "probability":0.05$/;"	function	line:104
+satiety	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^            "satiety":{$/;"	function	line:106
+min	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^            "min":700,$/;"	function	line:107
+max	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^            "max":10000$/;"	function	line:108
+texture	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^            "texture":"wolf-black.png"$/;"	function	line:110
+virus	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^      "virus" : {$/;"	function	line:113
+sparsity	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^         "sparsity":.3,$/;"	function	line:114
+initial quantity	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^         "initial quantity":5,$/;"	function	line:115
+min quantity for infection	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^         "min quantity for infection":7,$/;"	function	line:116
+infection probaility	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^         "infection probaility":.001,$/;"	function	line:117
+texture	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^         "texture":"virus.png",$/;"	function	line:118
+infection range	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^         "infection range":250$/;"	function	line:119
+immune system	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^      "immune system" : {$/;"	function	line:121
+health recovery	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^         "health recovery":1,$/;"	function	line:122
+health penalty	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^         "health penalty":0.1,$/;"	function	line:123
+defense effectiveness	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^         "defense effectiveness":0.12,$/;"	function	line:124
+defense variability	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^         "defense variability":0.2,$/;"	function	line:125
+adaptive range	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^         "adaptive range":5$/;"	function	line:126
+genome	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^      "genome" : {$/;"	function	line:128
+black allele prevalence	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^         "black allele prevalence":.3,$/;"	function	line:129
+mutability innate immune system	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^         "mutability innate immune system":.3$/;"	function	line:130
+world	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^      "world":{$/;"	function	line:132
+size	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^         "size":1200,$/;"	function	line:133
+texture	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^         "texture":"grass.png",$/;"	function	line:134
+debug texture	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^          "debug texture":"grass.png"$/;"	function	line:135
+stats	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^   "stats":{$/;"	function	line:138
+refresh rate	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^      "refresh rate":1$/;"	function	line:139
+window	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^   "window":{$/;"	function	line:141
+antialiasing level	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^      "antialiasing level":4,$/;"	function	line:142
+title	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^      "title":"INFOSV Simulation",$/;"	function	line:143
+simulation	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^      "simulation":{$/;"	function	line:144
+width	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^         "width":800,$/;"	function	line:145
+height	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^         "height":800$/;"	function	line:146
+stats	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^      "stats":{$/;"	function	line:148
+height	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/app3.json	/^         "height":1$/;"	function	line:149
+debug	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^   "debug":true,$/;"	function	line:2
+simulation	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^   "simulation":{$/;"	function	line:3
+time	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^      "time":{$/;"	function	line:4
+factor	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^         "factor":0.5,$/;"	function	line:5
+max dt	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^         "max dt":0.05$/;"	function	line:6
+grass	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^      "grass":{$/;"	function	line:8
+texture	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^         "texture":"food1.png",$/;"	function	line:9
+energy	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^         "energy":{$/;"	function	line:10
+initial	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^            "initial":50,$/;"	function	line:11
+max	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^            "max":100,$/;"	function	line:12
+growth factor	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^            "growth factor":2$/;"	function	line:13
+animal	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^      "animal":{$/;"	function	line:16
+random walk low energy	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^         "random walk low energy":false,$/;"	function	line:17
+meal retention	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^         "meal retention":0.7,$/;"	function	line:18
+feed time	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^         "feed time":0.4,$/;"	function	line:19
+min energy	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^         "min energy" : 20,$/;"	function	line:20
+reproduction	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^         "reproduction":{$/;"	function	line:21
+delivery time	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "delivery time":10,$/;"	function	line:22
+mating time	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "mating time":5$/;"	function	line:23
+idle	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^        "idle":{$/;"	function	line:25
+min	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^            "min":5,$/;"	function	line:26
+max	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^            "max":10,$/;"	function	line:27
+probability	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^            "probability":0.01$/;"	function	line:28
+satiety	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^        "satiety":{$/;"	function	line:30
+min	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^            "min":600,$/;"	function	line:31
+max	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^            "max":700$/;"	function	line:32
+sheep	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^        "sheep":{$/;"	function	line:34
+mass	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^            "mass":1,$/;"	function	line:35
+size	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^            "size":100,$/;"	function	line:36
+longevity	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^            "longevity":40000,$/;"	function	line:37
+max speed	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^            "max speed":50,$/;"	function	line:38
+reproduction	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^            "reproduction":{$/;"	function	line:39
+gestation time	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "gestation time":10,$/;"	function	line:40
+min children	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "min children":1,$/;"	function	line:41
+max children	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "max children":2$/;"	function	line:42
+view	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^            "view":{$/;"	function	line:44
+range	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "range":6.283185307,$/;"	function	line:45
+distance	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "distance":250$/;"	function	line:46
+random walk	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^            "random walk":{$/;"	function	line:48
+jitter	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "jitter":2.0,$/;"	function	line:49
+radius	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "radius":20,$/;"	function	line:50
+distance	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "distance":160$/;"	function	line:51
+energy	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^            "energy":{$/;"	function	line:53
+initial	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "initial":500,$/;"	function	line:54
+min mating male	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "min mating male":450,$/;"	function	line:55
+min mating female	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "min mating female":600,$/;"	function	line:56
+loss mating male	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "loss mating male":250,$/;"	function	line:57
+loss female per child	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "loss female per child":100,$/;"	function	line:58
+loss factor	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "loss factor":0.07,$/;"	function	line:59
+bite	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "bite":15$/;"	function	line:60
+texture	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^            "texture":{$/;"	function	line:62
+white	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "white":"sheep-white.png",$/;"	function	line:63
+black	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "black":"sheep-black.png",$/;"	function	line:64
+leader	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "leader":"sheep-leader.png"$/;"	function	line:65
+wolf	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^         "wolf":{$/;"	function	line:68
+mass	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^            "mass":1,$/;"	function	line:69
+size	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^            "size":150,$/;"	function	line:70
+longevity	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^            "longevity":50000,$/;"	function	line:71
+max speed	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^            "max speed":300,$/;"	function	line:72
+speed	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^            "speed":0,$/;"	function	line:73
+rotation	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^            "rotation":{$/;"	function	line:74
+speed	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "speed":1.570796327,$/;"	function	line:75
+angle precision	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "angle precision":.125663706$/;"	function	line:76
+score for action	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^            "score for action":50,$/;"	function	line:78
+reproduction	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^            "reproduction":{$/;"	function	line:79
+gestation time	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "gestation time":10,$/;"	function	line:80
+min children	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "min children":1,$/;"	function	line:81
+max children	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "max children":1$/;"	function	line:82
+view	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^            "view":{$/;"	function	line:84
+range	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "range":4,$/;"	function	line:85
+distance	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "distance":350$/;"	function	line:86
+random walk	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^            "random walk":{$/;"	function	line:88
+jitter	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "jitter":50,$/;"	function	line:89
+radius	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "radius":100,$/;"	function	line:90
+distance	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "distance":100$/;"	function	line:91
+energy	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^            "energy":{$/;"	function	line:93
+initial	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "initial":650,$/;"	function	line:94
+min mating male	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "min mating male":400,$/;"	function	line:95
+min mating female	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "min mating female":400,$/;"	function	line:96
+loss mating male	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "loss mating male":100,$/;"	function	line:97
+loss female per child	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "loss female per child":50,$/;"	function	line:98
+loss factor	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "loss factor":0.08$/;"	function	line:99
+idle	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^            "idle":{$/;"	function	line:101
+min	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "min":5,$/;"	function	line:102
+max	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "max":10,$/;"	function	line:103
+probability	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^               "probability":0.05$/;"	function	line:104
+satiety	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^            "satiety":{$/;"	function	line:106
+min	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^            "min":700,$/;"	function	line:107
+max	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^            "max":10000$/;"	function	line:108
+texture	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^            "texture":"wolf-black.png"$/;"	function	line:110
+virus	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^      "virus" : {$/;"	function	line:113
+sparsity	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^         "sparsity":.3,$/;"	function	line:114
+initial quantity	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^         "initial quantity":5,$/;"	function	line:115
+min quantity for infection	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^         "min quantity for infection":7,$/;"	function	line:116
+infection probaility	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^         "infection probaility":.001,$/;"	function	line:117
+texture	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^         "texture":"virus.png",$/;"	function	line:118
+infection range	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^         "infection range":250$/;"	function	line:119
+immune system	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^      "immune system" : {$/;"	function	line:121
+health recovery	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^         "health recovery":1,$/;"	function	line:122
+health penalty	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^         "health penalty":0.1,$/;"	function	line:123
+defense effectiveness	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^         "defense effectiveness":0.12,$/;"	function	line:124
+defense variability	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^         "defense variability":0.2,$/;"	function	line:125
+adaptive range	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^         "adaptive range":5$/;"	function	line:126
+genome	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^      "genome" : {$/;"	function	line:128
+black allele prevalence	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^         "black allele prevalence":0.3,$/;"	function	line:129
+mutability innate immune system	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^         "mutability innate immune system":.3$/;"	function	line:130
+world	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^      "world":{$/;"	function	line:132
+size	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^         "size":800,$/;"	function	line:133
+texture	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^         "texture":"grass.png",$/;"	function	line:134
+debug texture	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^          "debug texture":"grass.png"$/;"	function	line:135
+stats	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^   "stats":{$/;"	function	line:138
+refresh rate	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^      "refresh rate":1$/;"	function	line:139
+window	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^   "window":{$/;"	function	line:141
+antialiasing level	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^      "antialiasing level":4,$/;"	function	line:142
+title	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^      "title":"INFOSV Simulation",$/;"	function	line:143
+simulation	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^      "simulation":{$/;"	function	line:144
+width	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^         "width":800,$/;"	function	line:145
+height	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^         "height":800$/;"	function	line:146
+stats	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^      "stats":{$/;"	function	line:148
+height	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/res/appTest.json	/^         "height":1$/;"	function	line:149
+isColliding	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Obstacle.cpp	/^bool Obstacle::isColliding(const Obstacle& other) const {$/;"	function	line:3	class:Obstacle	signature:(const Obstacle& other) const
+isPointInside	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Obstacle.cpp	/^bool Obstacle::isPointInside(const Vec2d& p) const {$/;"	function	line:8	class:Obstacle	signature:(const Vec2d& p) const
+operator |	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Obstacle.cpp	/^bool Obstacle::operator|(Obstacle& other) const {$/;"	function	line:13	class:Obstacle	signature:(Obstacle& other) const
+operator >	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Obstacle.cpp	/^bool Obstacle::operator>(Vec2d& p) const {$/;"	function	line:17	class:Obstacle	signature:(Vec2d& p) const
+drawObstacle	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Obstacle.cpp	/^void Obstacle::drawObstacle(sf::RenderTarget& targetWindow) const {$/;"	function	line:21	class:Obstacle	signature:(sf::RenderTarget& targetWindow) const
+INFOSV_ANIMAL_HPP	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.hpp	/^#define INFOSV_ANIMAL_HPP$/;"	macro	line:2
+AnimalState	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.hpp	/^enum AnimalState {$/;"	enum	line:14
+FOOD_IN_SIGHT	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.hpp	/^	 FOOD_IN_SIGHT,$/;"	enumerator	line:15	enum:AnimalState
+FEEDING	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.hpp	/^	 FEEDING,$/;"	enumerator	line:16	enum:AnimalState
+RUNNING_AWAY	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.hpp	/^	 RUNNING_AWAY,$/;"	enumerator	line:17	enum:AnimalState
+MATE_IN_SIGHT	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.hpp	/^	 MATE_IN_SIGHT,$/;"	enumerator	line:18	enum:AnimalState
+MATING	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.hpp	/^	 MATING,$/;"	enumerator	line:19	enum:AnimalState
+GIVING_BIRTH	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.hpp	/^	 GIVING_BIRTH,$/;"	enumerator	line:20	enum:AnimalState
+WANDERING	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.hpp	/^	 WANDERING,$/;"	enumerator	line:21	enum:AnimalState
+IDLE	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.hpp	/^	 IDLE,$/;"	enumerator	line:22	enum:AnimalState
+Animal	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.hpp	/^class Animal : public LivingEntity {$/;"	class	line:37
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.hpp	/^        virtual void update(sf::Time dt) override;$/;"	member	line:214	class:Animal
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.hpp	/^        void drawOn(sf::RenderTarget& targetWindow) const override;$/;"	member	line:230	class:Animal
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.hpp	/^		std::string getDebugString() const override;$/;"	member	line:302	class:Animal
+direction	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.hpp	/^        Vec2d direction;$/;"	member	line:327	class:Animal
+target	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.hpp	/^        Vec2d target;$/;"	member	line:328	class:Animal
+speedNorm	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.hpp	/^        double speedNorm;$/;"	member	line:329	class:Animal
+genome	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.hpp	/^        Genome genome;$/;"	member	line:330	class:Animal
+state	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.hpp	/^        AnimalState state;$/;"	member	line:331	class:Animal
+hungry	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.hpp	/^		bool hungry;$/;"	member	line:332	class:Animal
+INFOSV_SHEEP_HPP	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Sheep.hpp	/^#define INFOSV_SHEEP_HPP$/;"	macro	line:2
+Sheep	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Sheep.hpp	/^class Sheep : public Animal {$/;"	class	line:11
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Sheep.hpp	/^        double getStandardMaxSpeed() const override;$/;"	member	line:32	class:Sheep
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Sheep.hpp	/^        double getMass() const override;$/;"	member	line:39	class:Sheep
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Sheep.hpp	/^        double getRadius() const override;$/;"	member	line:46	class:Sheep
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Sheep.hpp	/^        sf::Texture& getTexture() const override;$/;"	member	line:53	class:Sheep
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Sheep.hpp	/^        double getViewRange() const override;$/;"	member	line:60	class:Sheep
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Sheep.hpp	/^        double getViewDistance() const override;$/;"	member	line:67	class:Sheep
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Sheep.hpp	/^        double getRandomWalkRadius() const override;$/;"	member	line:74	class:Sheep
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Sheep.hpp	/^        double getRandomWalkDistance() const override;$/;"	member	line:82	class:Sheep
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Sheep.hpp	/^        double getRandomWalkJitter() const override;$/;"	member	line:89	class:Sheep
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Sheep.hpp	/^        bool eatable(LivingEntity const* other) const override;$/;"	member	line:99	class:Sheep
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Sheep.hpp	/^        bool eatableBy(Wolf  const* wolf) const override;$/;"	member	line:108	class:Sheep
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Sheep.hpp	/^        bool eatableBy(Sheep const* sheep) const override;$/;"	member	line:117	class:Sheep
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Sheep.hpp	/^        bool eatableBy(Grass const* grass) const override;$/;"	member	line:126	class:Sheep
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Sheep.hpp	/^        bool isDead() const override;$/;"	member	line:133	class:Sheep
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Sheep.hpp	/^        void update(sf::Time dt) override;$/;"	member	line:140	class:Sheep
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Sheep.hpp	/^        double feed(LivingEntity *entity) override;$/;"	member	line:150	class:Sheep
+INFOSV_WOLF_HPP	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Wolf.hpp	/^#define INFOSV_WOLF_HPP$/;"	macro	line:2
+Wolf	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Wolf.hpp	/^class Wolf : public Animal {$/;"	class	line:11
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Wolf.hpp	/^        double getStandardMaxSpeed() const override;$/;"	member	line:32	class:Wolf
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Wolf.hpp	/^        double getMass() const override;$/;"	member	line:39	class:Wolf
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Wolf.hpp	/^        double getRadius() const override;$/;"	member	line:46	class:Wolf
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Wolf.hpp	/^        sf::Texture& getTexture() const override;$/;"	member	line:53	class:Wolf
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Wolf.hpp	/^        double getViewRange() const override;$/;"	member	line:60	class:Wolf
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Wolf.hpp	/^        double getViewDistance() const override;$/;"	member	line:67	class:Wolf
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Wolf.hpp	/^        double getRandomWalkRadius() const override;$/;"	member	line:74	class:Wolf
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Wolf.hpp	/^        double getRandomWalkDistance() const override;$/;"	member	line:82	class:Wolf
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Wolf.hpp	/^        double getRandomWalkJitter() const override;$/;"	member	line:89	class:Wolf
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Wolf.hpp	/^        bool eatable(LivingEntity const* other) const override;$/;"	member	line:99	class:Wolf
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Wolf.hpp	/^        bool eatableBy(Wolf  const* wolf) const override;$/;"	member	line:108	class:Wolf
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Wolf.hpp	/^        bool eatableBy(Sheep const* sheep) const override;$/;"	member	line:117	class:Wolf
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Wolf.hpp	/^        bool eatableBy(Grass const* grass) const override;$/;"	member	line:126	class:Wolf
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Wolf.hpp	/^        bool isDead() const override;$/;"	member	line:133	class:Wolf
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Wolf.hpp	/^        void update(sf::Time dt) override;$/;"	member	line:140	class:Wolf
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Wolf.hpp	/^        double feed(LivingEntity *entity) override;$/;"	member	line:150	class:Wolf
+Sheep	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Sheep.cpp	/^Sheep::Sheep(const Vec2d& initPos, Genome *mother, Genome *father)$/;"	function	line:4	class:Sheep	signature:(const Vec2d& initPos, Genome *mother, Genome *father)
+~Sheep	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Sheep.cpp	/^Sheep::~Sheep() {}$/;"	function	line:7	class:Sheep	signature:()
+getStandardMaxSpeed	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Sheep.cpp	/^double Sheep::getStandardMaxSpeed() const {$/;"	function	line:9	class:Sheep	signature:() const
+getMass	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Sheep.cpp	/^double Sheep::getMass() const {$/;"	function	line:17	class:Sheep	signature:() const
+getRadius	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Sheep.cpp	/^double Sheep::getRadius() const {$/;"	function	line:21	class:Sheep	signature:() const
+getTexture	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Sheep.cpp	/^sf::Texture& Sheep::getTexture() const {$/;"	function	line:25	class:Sheep	signature:() const
+getViewRange	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Sheep.cpp	/^double Sheep::getViewRange() const {$/;"	function	line:33	class:Sheep	signature:() const
+getViewDistance	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Sheep.cpp	/^double Sheep::getViewDistance() const {$/;"	function	line:37	class:Sheep	signature:() const
+getRandomWalkRadius	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Sheep.cpp	/^double Sheep::getRandomWalkRadius() const {$/;"	function	line:41	class:Sheep	signature:() const
+getRandomWalkDistance	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Sheep.cpp	/^double Sheep::getRandomWalkDistance() const {$/;"	function	line:45	class:Sheep	signature:() const
+getRandomWalkJitter	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Sheep.cpp	/^double Sheep::getRandomWalkJitter() const {$/;"	function	line:49	class:Sheep	signature:() const
+eatable	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Sheep.cpp	/^bool Sheep::eatable(LivingEntity const* other) const {$/;"	function	line:53	class:Sheep	signature:(LivingEntity const* other) const
+eatableBy	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Sheep.cpp	/^bool Sheep::eatableBy(Wolf  const* wolf) const {$/;"	function	line:57	class:Sheep	signature:(Wolf const* wolf) const
+eatableBy	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Sheep.cpp	/^bool Sheep::eatableBy(Sheep const* sheep) const {$/;"	function	line:61	class:Sheep	signature:(Sheep const* sheep) const
+eatableBy	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Sheep.cpp	/^bool Sheep::eatableBy(Grass const* grass) const {$/;"	function	line:65	class:Sheep	signature:(Grass const* grass) const
+isDead	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Sheep.cpp	/^bool Sheep::isDead() const {$/;"	function	line:69	class:Sheep	signature:() const
+update	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Sheep.cpp	/^void Sheep::update(sf::Time dt) {$/;"	function	line:74	class:Sheep	signature:(sf::Time dt)
+feed	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Sheep.cpp	/^double Sheep::feed(LivingEntity *entity) {$/;"	function	line:80	class:Sheep	signature:(LivingEntity *entity)
+INFOSV_LIVING_ENTITY_HPP	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/LivingEntity.hpp	/^#define INFOSV_LIVING_ENTITY_HPP$/;"	macro	line:2
+LivingEntity	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/LivingEntity.hpp	/^class LivingEntity : public Obstacle {$/;"	class	line:19
+override	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/LivingEntity.hpp	/^        Vec2d getCenter() const override;$/;"	member	line:157	class:LivingEntity
+position	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/LivingEntity.hpp	/^        Vec2d position;$/;"	member	line:160	class:LivingEntity
+energy	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/LivingEntity.hpp	/^        double energy;$/;"	member	line:161	class:LivingEntity
+age	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/LivingEntity.hpp	/^        sf::Time age;$/;"	member	line:162	class:LivingEntity
+INFOSV_OBSTACLE_HPP	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Obstacle.hpp	/^#define INFOSV_OBSTACLE_HPP$/;"	macro	line:2
+Obstacle	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Obstacle.hpp	/^class Obstacle {$/;"	class	line:16
+Animal	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.cpp	/^Animal::Animal(const Vec2d& initPos, const double& startEnergy, Genome *mother,$/;"	function	line:4	class:Animal	signature:(const Vec2d& initPos, const double& startEnergy, Genome *mother, Genome *father)
+~Animal	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.cpp	/^Animal::~Animal() {};$/;"	function	line:10	class:Animal	signature:()
+getDirection	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.cpp	/^Vec2d Animal::getDirection() const {$/;"	function	line:12	class:Animal	signature:() const
+setDirection	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.cpp	/^void Animal::setDirection(const Vec2d& newDirection) {$/;"	function	line:16	class:Animal	signature:(const Vec2d& newDirection)
+getTarget	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.cpp	/^Vec2d Animal::getTarget() const {$/;"	function	line:20	class:Animal	signature:() const
+setTarget	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.cpp	/^void Animal::setTarget(const Vec2d& target) {$/;"	function	line:24	class:Animal	signature:(const Vec2d& target)
+getSpeedNorm	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.cpp	/^double Animal::getSpeedNorm() const {$/;"	function	line:28	class:Animal	signature:() const
+setSpeedNorm	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.cpp	/^void Animal::setSpeedNorm(const double& newNorm) {$/;"	function	line:32	class:Animal	signature:(const double& newNorm)
+getGenome	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.cpp	/^Genome Animal::getGenome() const {$/;"	function	line:36	class:Animal	signature:() const
+getState	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.cpp	/^AnimalState Animal::getState() const {$/;"	function	line:40	class:Animal	signature:() const
+setState	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.cpp	/^void Animal::setState(const AnimalState& newState) {$/;"	function	line:44	class:Animal	signature:(const AnimalState& newState)
+updateState	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.cpp	/^void Animal::updateState() {$/;"	function	line:48	class:Animal	signature:()
+getMaxSpeed	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.cpp	/^double Animal::getMaxSpeed() const {$/;"	function	line:73	class:Animal	signature:() const
+getSpeedVector	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.cpp	/^Vec2d Animal::getSpeedVector() const {$/;"	function	line:86	class:Animal	signature:() const
+getRotation	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.cpp	/^double Animal::getRotation() const {$/;"	function	line:90	class:Animal	signature:() const
+setRotation	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.cpp	/^void Animal::setRotation(const double& angle) {$/;"	function	line:94	class:Animal	signature:(const double& angle)
+update	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.cpp	/^void Animal::update(sf::Time dt) {$/;"	function	line:98	class:Animal	signature:(sf::Time dt)
+updatePosition	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.cpp	/^void Animal::updatePosition(sf::Time dt, const Vec2d& attractionForce) {$/;"	function	line:114	class:Animal	signature:(sf::Time dt, const Vec2d& attractionForce)
+randomWalk	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.cpp	/^Vec2d Animal::randomWalk() {$/;"	function	line:125	class:Animal	signature:()
+drawOn	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.cpp	/^void Animal::drawOn(sf::RenderTarget& targetWindow) const {$/;"	function	line:133	class:Animal	signature:(sf::RenderTarget& targetWindow) const
+drawVision	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.cpp	/^void Animal::drawVision(sf::RenderTarget& targetWindow) const {$/;"	function	line:145	class:Animal	signature:(sf::RenderTarget& targetWindow) const
+drawDebugText	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.cpp	/^void Animal::drawDebugText(sf::RenderTarget& targetWindow) const {$/;"	function	line:159	class:Animal	signature:(sf::RenderTarget& targetWindow) const
+drawVirtualTarget	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.cpp	/^void Animal::drawVirtualTarget(sf::RenderTarget& targetWindow) const {$/;"	function	line:169	class:Animal	signature:(sf::RenderTarget& targetWindow) const
+attractionForce	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.cpp	/^Vec2d Animal::attractionForce() const {$/;"	function	line:181	class:Animal	signature:() const
+getDeceleration	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.cpp	/^Deceleration Animal::getDeceleration(const double& distanceToTarget) const {$/;"	function	line:193	class:Animal	signature:(const double& distanceToTarget) const
+isTargetInSight	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.cpp	/^bool Animal::isTargetInSight(const Vec2d& target) const {$/;"	function	line:203	class:Animal	signature:(const Vec2d& target) const
+convertToGlobalCoord	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.cpp	/^Vec2d Animal::convertToGlobalCoord(const Vec2d& coordinates) const {$/;"	function	line:215	class:Animal	signature:(const Vec2d& coordinates) const
+stateToString	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.cpp	/^std::string stateToString(const AnimalState state) {$/;"	function	line:222	signature:(const AnimalState state)
+getDebugString	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.cpp	/^std::string Animal::getDebugString() const {$/;"	function	line:245	class:Animal	signature:() const
+updateHunger	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.cpp	/^void Animal::updateHunger() {$/;"	function	line:259	class:Animal	signature:()
+isHungry	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Animal.cpp	/^bool Animal::isHungry() const {$/;"	function	line:268	class:Animal	signature:() const
+Wolf	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Wolf.cpp	/^Wolf::Wolf(const Vec2d& initPos, Genome *mother, Genome *father)$/;"	function	line:4	class:Wolf	signature:(const Vec2d& initPos, Genome *mother, Genome *father)
+~Wolf	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Wolf.cpp	/^Wolf::~Wolf() {}$/;"	function	line:7	class:Wolf	signature:()
+getStandardMaxSpeed	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Wolf.cpp	/^double Wolf::getStandardMaxSpeed() const {$/;"	function	line:9	class:Wolf	signature:() const
+getMass	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Wolf.cpp	/^double Wolf::getMass() const {$/;"	function	line:17	class:Wolf	signature:() const
+getRadius	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Wolf.cpp	/^double Wolf::getRadius() const {$/;"	function	line:21	class:Wolf	signature:() const
+getTexture	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Wolf.cpp	/^sf::Texture& Wolf::getTexture() const {$/;"	function	line:25	class:Wolf	signature:() const
+getViewRange	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Wolf.cpp	/^double Wolf::getViewRange() const {$/;"	function	line:29	class:Wolf	signature:() const
+getViewDistance	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Wolf.cpp	/^double Wolf::getViewDistance() const {$/;"	function	line:33	class:Wolf	signature:() const
+getRandomWalkRadius	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Wolf.cpp	/^double Wolf::getRandomWalkRadius() const {$/;"	function	line:37	class:Wolf	signature:() const
+getRandomWalkDistance	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Wolf.cpp	/^double Wolf::getRandomWalkDistance() const {$/;"	function	line:41	class:Wolf	signature:() const
+getRandomWalkJitter	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Wolf.cpp	/^double Wolf::getRandomWalkJitter() const {$/;"	function	line:45	class:Wolf	signature:() const
+eatable	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Wolf.cpp	/^bool Wolf::eatable(LivingEntity const* other) const {$/;"	function	line:49	class:Wolf	signature:(LivingEntity const* other) const
+eatableBy	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Wolf.cpp	/^bool Wolf::eatableBy(Wolf  const* wolf) const {$/;"	function	line:53	class:Wolf	signature:(Wolf const* wolf) const
+eatableBy	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Wolf.cpp	/^bool Wolf::eatableBy(Sheep const* sheep) const {$/;"	function	line:57	class:Wolf	signature:(Sheep const* sheep) const
+eatableBy	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Wolf.cpp	/^bool Wolf::eatableBy(Grass const* grass) const {$/;"	function	line:61	class:Wolf	signature:(Grass const* grass) const
+isDead	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Wolf.cpp	/^bool Wolf::isDead() const {$/;"	function	line:65	class:Wolf	signature:() const
+update	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Wolf.cpp	/^void Wolf::update(sf::Time dt) {$/;"	function	line:70	class:Wolf	signature:(sf::Time dt)
+feed	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/Wolf.cpp	/^double Wolf::feed(LivingEntity *entity) {$/;"	function	line:76	class:Wolf	signature:(LivingEntity *entity)
+LivingEntity	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/LivingEntity.cpp	/^LivingEntity::LivingEntity(const Vec2d& initPos, const double& startEnergy)$/;"	function	line:4	class:LivingEntity	signature:(const Vec2d& initPos, const double& startEnergy)
+~LivingEntity	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/LivingEntity.cpp	/^LivingEntity::~LivingEntity() {};$/;"	function	line:7	class:LivingEntity	signature:()
+getPosition	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/LivingEntity.cpp	/^Vec2d LivingEntity::getPosition() const {$/;"	function	line:9	class:LivingEntity	signature:() const
+setPosition	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/LivingEntity.cpp	/^void LivingEntity::setPosition(const Vec2d& newPosition) {$/;"	function	line:13	class:LivingEntity	signature:(const Vec2d& newPosition)
+getEnergy	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/LivingEntity.cpp	/^double LivingEntity::getEnergy() const {$/;"	function	line:30	class:LivingEntity	signature:() const
+setEnergy	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/LivingEntity.cpp	/^void LivingEntity::setEnergy(const double& newEnergy) {$/;"	function	line:34	class:LivingEntity	signature:(const double& newEnergy)
+getAge	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/LivingEntity.cpp	/^sf::Time LivingEntity::getAge() const {$/;"	function	line:38	class:LivingEntity	signature:() const
+setAge	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/LivingEntity.cpp	/^void LivingEntity::setAge(const sf::Time& newAge) {$/;"	function	line:42	class:LivingEntity	signature:(const sf::Time& newAge)
+update	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/LivingEntity.cpp	/^void LivingEntity::update(sf::Time dt) {$/;"	function	line:46	class:LivingEntity	signature:(sf::Time dt)
+getClosestEntity	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/LivingEntity.cpp	/^LivingEntity* LivingEntity::getClosestEntity(std::list<LivingEntity*> entities) const {$/;"	function	line:51	class:LivingEntity	signature:(std::list<LivingEntity*> entities) const
+isDead	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/LivingEntity.cpp	/^bool LivingEntity::isDead() const {$/;"	function	line:64	class:LivingEntity	signature:() const
+getCenter	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/src/Env/LivingEntity.cpp	/^Vec2d LivingEntity::getCenter() const {$/;"	function	line:68	class:LivingEntity	signature:() const
 CS-112(i) Programmation II C++ - Journal	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/JOURNAL.md	/^# CS-112(i) Programmation II C++ - Journal$/;"	function	line:1
 JOURNAL du groupe 51 (Vincenzo Bazzucchi, Alexis Montavon)	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/JOURNAL.md	/^## JOURNAL du groupe 51 (Vincenzo Bazzucchi, Alexis Montavon)$/;"	function	line:3
 14.03 (mardi)	/Users/Alexis/Documents/GitHub/CS-112-i-CPP-Class-Project/JOURNAL.md	/^### 14.03 (mardi)$/;"	function	line:6

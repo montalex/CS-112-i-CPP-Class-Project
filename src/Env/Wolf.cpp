@@ -72,3 +72,9 @@ void Wolf::update(sf::Time dt) {
     this->setEnergy(this->getEnergy() - (getAppConfig().animal_base_energy_consumption
                     + this->getSpeedNorm() * getAppConfig().wolf_energy_loss_factor * dt.asSeconds()));
 }
+
+double Wolf::feed(LivingEntity *entity) {
+    this->setEnergy(this->getEnergy() +  getAppConfig().animal_meal_retention * entity->getEnergy());
+    entity->setEnergy(0.0);
+    return 0.0;
+}

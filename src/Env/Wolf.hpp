@@ -139,6 +139,15 @@ class Wolf : public Animal {
          */
         void update(sf::Time dt) override;
 
+        /*!
+		 * @brief Feeds the Wolf with the given entity, to regain energy and
+		 * decrease the entity's energy.
+		 *
+		 * @param entity the LivingEntity to be eaten
+		 *
+		 * @return the energy left in the entity after the Wolf ate it.
+		 */
+        double feed(LivingEntity *entity) override;
 };
 
 #endif // INFOSV_WOLF_HPP

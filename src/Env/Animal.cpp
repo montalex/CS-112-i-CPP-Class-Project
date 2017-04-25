@@ -4,8 +4,8 @@
 Animal::Animal(const Vec2d& initPos, const double& startEnergy, Genome *mother,
                 Genome *father) :
     LivingEntity(initPos, startEnergy), direction(Vec2d(1.0, 0.0)),
-    target(Vec2d()), speedNorm(0.0),
-    genome(mother, father), state(WANDERING) {}
+    target(Vec2d()), speedNorm(0.0), genome(mother, father), state(WANDERING),
+    hungry(false) {}
 
 Animal::~Animal() {};
 
@@ -49,7 +49,7 @@ void Animal::updateState() {
     Environment env = INFOSV_APPLICATION_HPP::getAppEnv();
     std::list<LivingEntity*> eatables;
     std::list<LivingEntity*> entities = env.getEntitiesInSightForAnimal(this);
-    if(entities.empty()) {
+    if(!this->isHungry() || entities.empty()) {
         this->setState(WANDERING);
     } else {
         for(auto entity: entities) {
@@ -58,8 +58,14 @@ void Animal::updateState() {
             }
         }
         if(!eatables.empty()) {
-            this->setState(FOOD_IN_SIGHT);
-            this->setTarget(getClosestEntity(eatables)->getPosition());
+            LivingEntity *closestEntity = getClosestEntity(eatables);
+            this->setTarget(closestEntity->getPosition());
+            if(this->isColliding(*closestEntity)) {
+                this->setState(FEEDING);
+                this->feed(closestEntity);
+            } else {
+                this->setState(FOOD_IN_SIGHT);
+            }
         }
     }
 }
@@ -92,6 +98,7 @@ void Animal::setRotation(const double& angle) {
 void Animal::update(sf::Time dt) {
     LivingEntity::update(dt);
     this->updateState();
+    this->updateHunger();
     switch(this->getState()) {
         case FOOD_IN_SIGHT:
             this->updatePosition(dt, this->attractionForce());
@@ -130,6 +137,8 @@ void Animal::drawOn(sf::RenderTarget& targetWindow) const {
     if(isDebugOn()) {
         this->drawVision(targetWindow);
         this->drawVirtualTarget(targetWindow);
+        this->drawDebugText(targetWindow);
+        Obstacle::drawObstacle(targetWindow);
     }
 }
 
@@ -145,14 +154,15 @@ void Animal::drawVision(sf::RenderTarget& targetWindow) const {
     arcgraphics.setPosition(this->getPosition());
     arcgraphics.rotate(this->getRotation() / DEG_TO_RAD);
     targetWindow.draw(arcgraphics);
+}
 
-
+void Animal::drawDebugText(sf::RenderTarget& targetWindow) const {
     auto text = buildText(this->getDebugString(),
                           convertToGlobalCoord(Vec2d(150.0, 0)),
                           getAppFont(),
                           getAppConfig().default_debug_text_size,
                           sf::Color::White);
-    text.setRotation(this->getRotation() / DEG_TO_RAD + 90); // si nécessaire
+    text.setRotation(this->getRotation() / DEG_TO_RAD + 90);
     targetWindow.draw(text);
 }
 
@@ -237,7 +247,24 @@ std::string Animal::getDebugString() const {
     std::string state = stateToString(this->getState());
     std::string speed = to_nice_string(this->getSpeedNorm());
     std::string energy = to_nice_string(this->getEnergy());
+    std::string hungry = "NOT HUNGRY";
+    if(this->isHungry()) {
+        hungry = "HUNGRY";
+    }
     std::string debugStr = state + "    " + sex + "\n" + "Speed: " + speed + "\n"
-                            + "Energy: " + energy + "\n";
+                            + "Energy: " + energy + "\n" + hungry + "\n";
     return debugStr;
+}
+
+void Animal::updateHunger() {
+    if(this->getEnergy() < getAppConfig().animal_satiety_min ||
+        (this->getState() == FEEDING && this->getEnergy() < getAppConfig().animal_satiety_max)) {
+        this->hungry = true;
+    } else {
+        this->hungry = false;
+    }
+}
+
+bool Animal::isHungry() const {
+    return this->hungry;
 }

@@ -1,8 +1,7 @@
 #ifndef INFOSV_LIVING_ENTITY_HPP
 #define INFOSV_LIVING_ENTITY_HPP
 
-#include <Utility/Vec2d.hpp>
-#include <SFML/Graphics.hpp>
+#include <Env/Obstacle.hpp>
 
 class Sheep;
 class Wolf;
@@ -17,7 +16,7 @@ class Grass;
  * double energy: the LivingEntity's energy
  * sf::Time age: the LivingEntity's age
  */
-class LivingEntity {
+class LivingEntity : public Obstacle {
     public:
         /*!
          * @brief Constructor.
@@ -133,7 +132,7 @@ class LivingEntity {
          *
          * @return the LivingEntity closest to current one
          */
-        const LivingEntity* getClosestEntity(std::list<LivingEntity*> entities) const;
+        LivingEntity* getClosestEntity(std::list<LivingEntity*> entities) const;
 
         /*!
          * @brief Returns the debug string of this LivingEntity to be print on screen.
@@ -148,6 +147,14 @@ class LivingEntity {
          * @return True if the LivingEntity ran out of energy or is too old
          */
         virtual bool isDead() const;
+
+        /*!
+         * @brief Overrides the Obstacle's getCenter method. Returns the position
+         * of the LivingEntity.
+         *
+         * @return the Obstacle's center (Vec2d)
+         */
+        Vec2d getCenter() const override;
 
     private:
         Vec2d position;
