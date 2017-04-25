@@ -27,6 +27,11 @@ class LivingEntity {
         LivingEntity(const Vec2d& initPos, const double& startEnergy);
 
         /*!
+         * @brief Destructor.
+         */
+        virtual ~LivingEntity();
+
+        /*!
          * @brief Gets the LivingEntity's position.
          *
          * @return the LivingEntity's position (Vec2d)
@@ -114,6 +119,13 @@ class LivingEntity {
          * @return the LivingEntity closest to current one
          */
         const LivingEntity* getClosestEntity(std::list<LivingEntity*> entities) const;
+
+        /*!
+         * @brief Returns the debug string of this LivingEntity to be print on screen.
+         *
+         * @return the debug string (std::string)
+         */
+        virtual std::string getDebugString() const = 0;
 
     private:
         Vec2d position;

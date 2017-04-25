@@ -4,6 +4,8 @@
 LivingEntity::LivingEntity(const Vec2d& initPos, const double& startEnergy)
     : position(initPos), energy(startEnergy) {}
 
+LivingEntity::~LivingEntity() {};
+
 Vec2d LivingEntity::getPosition() const {
     return this->position;
 }

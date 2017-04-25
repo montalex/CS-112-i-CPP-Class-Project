@@ -23,7 +23,17 @@ Grass::Grass(const Vec2d& initPos)
 void Grass::drawOn(sf::RenderTarget& targetWindow) const {
     auto grassSprite = buildSprite(this->getPosition(), this->getEnergy() / 2.0,
                 getAppTexture(getAppConfig().grass_texture));
-        targetWindow.draw(grassSprite);
+    targetWindow.draw(grassSprite);
+
+    if(isDebugOn()) {
+        auto text = buildText(this->getDebugString(),
+                              this->getPosition(),
+                              getAppFont(),
+                              getAppConfig().default_debug_text_size,
+                              sf::Color::White);
+        //text.setRotation(this->getRotation() / DEG_TO_RAD + 90); // si nécessaire
+        targetWindow.draw(text);
+    }
 }
 
 void Grass::update(sf::Time dt) {
@@ -47,4 +57,8 @@ bool Grass::eatableBy(Sheep const* sheep) const {
 
 bool Grass::eatableBy(Grass const* grass) const {
     return false;
+}
+
+std::string Grass::getDebugString() const {
+    return to_nice_string(this->getEnergy());
 }

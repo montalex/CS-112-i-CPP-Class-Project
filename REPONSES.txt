@@ -57,3 +57,6 @@ ensuite de presser sur la touche 'L' pour que l'Application le relise.
 Q3.3: La méthode update.
 
 Q3.4:
+
+Q3.5: Au niveau de la classe LivingEntity car toutes les entitées peuvent hériter
+de celle-ci et avoir un message de debuging.

@@ -68,6 +68,13 @@ class Grass : public LivingEntity {
          * @return False
          */
         bool eatableBy(Grass const* grass) const override;
+
+        /*!
+		 * @brief Returns the debug string of this Grass to be print on screen.
+		 *
+		 * @return the debug string (std::string)
+		 */
+		std::string getDebugString() const override;
 };
 
 #endif // INFOSV_GRASS_HPP

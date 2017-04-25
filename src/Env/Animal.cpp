@@ -4,7 +4,7 @@
 Animal::Animal(const Vec2d& initPos, const double& startEnergy, Genome *mother,
                 Genome *father) :
     LivingEntity(initPos, startEnergy), direction(Vec2d(1.0, 0.0)),
-    target(Vec2d()), virtual_target(Vec2d(1.0, 0.0)), speedNorm(0.0),
+    target(Vec2d()), speedNorm(0.0),
     genome(mother, father), state(WANDERING) {}
 
 Animal::~Animal() {};
@@ -23,14 +23,6 @@ Vec2d Animal::getTarget() const {
 
 void Animal::setTarget(const Vec2d& target) {
     this->target = target;
-}
-
-Vec2d Animal::getVirtualTarget() const {
-    return this->virtual_target;
-}
-
-void Animal::setVirtualTarget(const Vec2d& newTarget) {
-    this->virtual_target = newTarget;
 }
 
 double Animal::getSpeedNorm() const {
@@ -123,20 +115,17 @@ void Animal::updatePosition(sf::Time dt, const Vec2d& attractionForce) {
 }
 
 Vec2d Animal::randomWalk() {
-    Vec2d current_target = this->getVirtualTarget();
     Vec2d random_vec = Vec2d(uniform(-1.0, 1.0), uniform(-1.0, 1.0));
-    current_target += random_vec * getRandomWalkJitter();
-    current_target = current_target.normalised() * getRandomWalkRadius();
-    this->setVirtualTarget(current_target);
-    return this->convertToGlobalCoord(this->getVirtualTarget()+ Vec2d(getRandomWalkDistance(), 0.0)) - this->getPosition();
+    Vec2d current_target = this->getTarget() + random_vec * this->getRandomWalkJitter();
+    current_target = current_target.normalised() * this->getRandomWalkRadius();
+    this->setTarget(current_target);
+    return this->convertToGlobalCoord(this->getTarget() + Vec2d(getRandomWalkDistance(), 0.0)) - this->getPosition();
 }
 
 void Animal::drawOn(sf::RenderTarget& targetWindow) const {
-    sf::CircleShape target = buildCircle(this->getTarget(), 5.0, sf::Color(255, 0, 0));
     auto animalSprite = buildSprite(this->getPosition(), this->getRadius(), this->getTexture());
     animalSprite.setRotation(this->getDirection().angle() / DEG_TO_RAD);
     targetWindow.draw(animalSprite);
-    targetWindow.draw(target);
     if(isDebugOn()) {
         this->drawVision(targetWindow);
         this->drawVirtualTarget(targetWindow);
@@ -155,6 +144,15 @@ void Animal::drawVision(sf::RenderTarget& targetWindow) const {
     arcgraphics.setPosition(this->getPosition());
     arcgraphics.rotate(this->getRotation() / DEG_TO_RAD);
     targetWindow.draw(arcgraphics);
+
+
+    auto text = buildText(this->getDebugString(),
+                          convertToGlobalCoord(Vec2d(150.0, 0)),
+                          getAppFont(),
+                          getAppConfig().default_debug_text_size,
+                          sf::Color::White);
+    text.setRotation(this->getRotation() / DEG_TO_RAD + 90); // si nécessaire
+    targetWindow.draw(text);
 }
 
 void Animal::drawVirtualTarget(sf::RenderTarget& targetWindow) const {
@@ -165,7 +163,7 @@ void Animal::drawVirtualTarget(sf::RenderTarget& targetWindow) const {
     targetWindow.draw(virtualRadius);
 
     sf::CircleShape virtualTarget = buildCircle(Vec2d(0,0), 5.0, sf::Color::Blue);
-    virtualTarget.setPosition(this->convertToGlobalCoord(this->getVirtualTarget()) + Vec2d(this->getRandomWalkDistance(), 0));
+    virtualTarget.setPosition(this->convertToGlobalCoord(this->getTarget()) + Vec2d(this->getRandomWalkDistance(), 0));
     targetWindow.draw(virtualTarget);
 }
 
@@ -208,4 +206,35 @@ Vec2d Animal::convertToGlobalCoord(const Vec2d& coordinates) const {
     matTransform.translate(this->getPosition());
     matTransform.rotate(this->getDirection().angle());
     return matTransform.transformPoint(coordinates);
+}
+
+std::string stateToString(const AnimalState state) {
+    switch(state) {
+        case FOOD_IN_SIGHT:
+            return "FOOD IN SIGHT";
+        case FEEDING:
+            return "FEEDING";
+        case RUNNING_AWAY:
+            return "RUNNING AWAY";
+        case MATE_IN_SIGHT:
+            return "MATE IN SIGHT";
+        case MATING:
+            return "MATING";
+        case GIVING_BIRTH:
+            return "GIVING BIRTH";
+        case WANDERING:
+            return "WANDERING";
+        case IDLE:
+            return "IDLE";
+        default:
+            return "---";
+    }
+}
+
+std::string Animal::getDebugString() const {
+    std::string sex = sexToString(this->getGenome().getSex());
+    std::string state = stateToString(this->getState());
+    std::string speed = to_nice_string(this->getSpeedNorm());
+    std::string debugStr = state + "    " + sex + "\n" + speed + "\n";
+    return debugStr;
 }

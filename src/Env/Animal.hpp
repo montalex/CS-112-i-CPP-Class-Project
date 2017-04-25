@@ -82,20 +82,6 @@ class Animal : public LivingEntity {
         void setTarget(const Vec2d& target);
 
         /*!
-         * @brief Gets the Animal's virtual target position.
-         *
-         * @return the Animal's virtual target position (Vec2d)
-         */
-        Vec2d getVirtualTarget() const;
-
-        /*!
-         * @brief Sets the Animal's virtual target position.
-         *
-         * @param target the new virtual target position
-         */
-        void setVirtualTarget(const Vec2d& target);
-
-        /*!
          * @brief Gets the Animal's speed norm.
          *
          * @return the Animal's speed norm (double)
@@ -306,15 +292,30 @@ class Animal : public LivingEntity {
          *
          * @return the vector in global coordinates (Vec2d)
          */
-        Vec2d convertToGlobalCoord(const Vec2d& coordinates) const ;
+        Vec2d convertToGlobalCoord(const Vec2d& coordinates) const;
+
+		/*!
+		 * @brief Returns the debug string of this Animal to be print on screen.
+		 *
+		 * @return the debug string (std::string)
+		 */
+		std::string getDebugString() const override;
 
     private:
         Vec2d direction;
         Vec2d target;
-        Vec2d virtual_target;
         double speedNorm;
         Genome genome;
         AnimalState state;
 };
+
+/*!
+ * @brief Converts the given Animal's state to a string.
+ *
+ * @param  animal the Animal which state is to be converted
+ *
+ * @return the string description of the state (std::string)
+ */
+std::string stateToString(const AnimalState state);
 
 #endif // INFOSV_ANIMAL_HPP
