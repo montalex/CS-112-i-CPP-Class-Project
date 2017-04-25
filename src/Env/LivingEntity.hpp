@@ -15,6 +15,7 @@ class Grass;
  *
  * Vec2d position: the LivingEntity's position
  * double energy: the LivingEntity's energy
+ * sf::Time age: the LivingEntity's age
  */
 class LivingEntity {
     public:
@@ -61,6 +62,20 @@ class LivingEntity {
         void setEnergy(const double& newEnergy);
 
         /*!
+         * @brief Gets the LivingEntity's age.
+         *
+         * @return the LivingEntity's age (sf::Time)
+         */
+        sf::Time getAge() const;
+
+        /*!
+         * @brief Sets the LivingEntity's age to the given one.
+         *
+         * @param newAge the new age of the LivingEntity
+         */
+        void setAge(const sf::Time& newAge);
+
+        /*!
          * @brief Draws the Entity in the given window.
          *
          * @param targetWindow the window to draw on
@@ -72,7 +87,7 @@ class LivingEntity {
          *
          * @param dt the time passed
          */
-        virtual void update(sf::Time dt) = 0;
+        virtual void update(sf::Time dt);
 
         /*!
          * @brief Checks if a LivingEntity is eatable by the current one using
@@ -127,9 +142,17 @@ class LivingEntity {
          */
         virtual std::string getDebugString() const = 0;
 
+        /*!
+         * @brief Checks if the LivingEntity is dead or not.
+         *
+         * @return True if the LivingEntity ran out of energy or is too old
+         */
+        virtual bool isDead() const;
+
     private:
         Vec2d position;
         double energy;
+        sf::Time age;
 };
 
 #endif // INFOSV_LIVING_ENTITY_HPP

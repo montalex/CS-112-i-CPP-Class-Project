@@ -29,6 +29,13 @@ class Environment {
         void addEntity(LivingEntity* entity);
 
         /*!
+         * @brief Removes an entity to the Environment and destroys it.
+         *
+         * @param entity the LivingEntity to remove
+         */
+        void removeEntity(LivingEntity* entity);
+
+        /*!
          * @brief Updates the Environment through time.
          *
          * @param dt the time passed

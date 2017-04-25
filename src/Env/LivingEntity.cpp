@@ -2,7 +2,7 @@
 #include <Application.hpp>
 
 LivingEntity::LivingEntity(const Vec2d& initPos, const double& startEnergy)
-    : position(initPos), energy(startEnergy) {}
+    : position(initPos), energy(startEnergy), age(sf::Time::Zero) {}
 
 LivingEntity::~LivingEntity() {};
 
@@ -35,6 +35,19 @@ void LivingEntity::setEnergy(const double& newEnergy) {
     this->energy = newEnergy;
 }
 
+sf::Time LivingEntity::getAge() const {
+    return this->age;
+}
+
+void LivingEntity::setAge(const sf::Time& newAge) {
+    this->age = newAge;
+}
+
+void LivingEntity::update(sf::Time dt) {
+    sf::Time newAge = this->getAge() + dt;
+    this->setAge(newAge);
+}
+
 const LivingEntity* LivingEntity::getClosestEntity(std::list<LivingEntity*> entities) const {
     LivingEntity* closest = entities.front();
     double currentDistance = distance(this->getPosition(), closest->getPosition());
@@ -46,4 +59,8 @@ const LivingEntity* LivingEntity::getClosestEntity(std::list<LivingEntity*> enti
         }
     }
     return closest;
+}
+
+bool LivingEntity::isDead() const {
+    return this->getAge() > sf::seconds(1E9);
 }

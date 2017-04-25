@@ -90,6 +90,7 @@ void Animal::setRotation(const double& angle) {
 };
 
 void Animal::update(sf::Time dt) {
+    LivingEntity::update(dt);
     this->updateState();
     switch(this->getState()) {
         case FOOD_IN_SIGHT:
@@ -235,6 +236,8 @@ std::string Animal::getDebugString() const {
     std::string sex = sexToString(this->getGenome().getSex());
     std::string state = stateToString(this->getState());
     std::string speed = to_nice_string(this->getSpeedNorm());
-    std::string debugStr = state + "    " + sex + "\n" + speed + "\n";
+    std::string energy = to_nice_string(this->getEnergy());
+    std::string debugStr = state + "    " + sex + "\n" + "Speed: " + speed + "\n"
+                            + "Energy: " + energy + "\n";
     return debugStr;
 }

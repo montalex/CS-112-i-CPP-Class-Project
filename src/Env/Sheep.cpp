@@ -7,7 +7,11 @@ Sheep::Sheep(const Vec2d& initPos, Genome *mother, Genome *father)
 Sheep::~Sheep() {}
 
 double Sheep::getStandardMaxSpeed() const {
-    return getAppConfig().sheep_max_speed;
+    if(this->getEnergy() < getAppConfig().sheep_energy_initial / 2.0) {
+        return getAppConfig().sheep_max_speed / 2.0;
+    } else {
+        return getAppConfig().sheep_max_speed;
+    }
 }
 
 double Sheep::getMass() const {
@@ -60,4 +64,15 @@ bool Sheep::eatableBy(Sheep const* sheep) const {
 
 bool Sheep::eatableBy(Grass const* grass) const {
     return false;
+}
+
+bool Sheep::isDead() const {
+    return this->getAge() > getAppConfig().sheep_longevity ||
+            this->getEnergy() < getAppConfig().animal_min_energy;
+}
+
+void Sheep::update(sf::Time dt) {
+    Animal::update(dt);
+    this->setEnergy(this->getEnergy() - (getAppConfig().animal_base_energy_consumption
+                    + this->getSpeedNorm() * getAppConfig().sheep_energy_loss_factor * dt.asSeconds()));
 }

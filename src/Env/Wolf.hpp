@@ -125,6 +125,20 @@ class Wolf : public Animal {
          */
         bool eatableBy(Grass const* grass) const override;
 
+        /*!
+         * @brief Checks if the Wolf is dead or not.
+         *
+         * @return True if the Wolf ran out of energy or is too old
+         */
+        bool isDead() const override;
+
+        /*!
+         * @brief Updates the Wolf's target and modify its attribute over time.
+         *
+         * @param dt the time passed
+         */
+        void update(sf::Time dt) override;
+
 };
 
 #endif // INFOSV_WOLF_HPP

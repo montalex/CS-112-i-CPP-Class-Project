@@ -219,7 +219,7 @@ class Animal : public LivingEntity {
          *
          * @param dt the time passed
          */
-        void update(sf::Time dt) override;
+        virtual void update(sf::Time dt) override;
 
         /*!
          * @brief Update the Animal's position, direction & speed norm over time

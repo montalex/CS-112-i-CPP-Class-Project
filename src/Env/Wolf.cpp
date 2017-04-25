@@ -7,7 +7,11 @@ Wolf::Wolf(const Vec2d& initPos, Genome *mother, Genome *father)
 Wolf::~Wolf() {}
 
 double Wolf::getStandardMaxSpeed() const {
-    return getAppConfig().wolf_max_speed;
+    if(this->getEnergy() < getAppConfig().wolf_energy_initial / 2.0) {
+        return getAppConfig().wolf_max_speed / 2.0;
+    } else {
+        return getAppConfig().wolf_max_speed;
+    }
 }
 
 double Wolf::getMass() const {
@@ -56,4 +60,15 @@ bool Wolf::eatableBy(Sheep const* sheep) const {
 
 bool Wolf::eatableBy(Grass const* grass) const {
     return false;
+}
+
+bool Wolf::isDead() const {
+    return this->getAge() > getAppConfig().wolf_longevity ||
+            this->getEnergy() < getAppConfig().animal_min_energy;
+}
+
+void Wolf::update(sf::Time dt) {
+    Animal::update(dt);
+    this->setEnergy(this->getEnergy() - (getAppConfig().animal_base_energy_consumption
+                    + this->getSpeedNorm() * getAppConfig().wolf_energy_loss_factor * dt.asSeconds()));
 }

@@ -19,6 +19,11 @@ class Grass : public LivingEntity {
         Grass(const Vec2d& initPos);
 
         /*!
+         * @brief Destructor.
+         */
+        ~Grass();
+
+        /*!
          * @brief Draws the Grass in the given window.
          *
          * @param targetWindow the window to draw on
@@ -75,6 +80,13 @@ class Grass : public LivingEntity {
 		 * @return the debug string (std::string)
 		 */
 		std::string getDebugString() const override;
+
+        /*!
+         * @brief Checks if the Grass is dead or not.
+         *
+         * @return True if the Grass ran out of energy or is too old
+         */
+        bool isDead() const override;
 };
 
 #endif // INFOSV_GRASS_HPP

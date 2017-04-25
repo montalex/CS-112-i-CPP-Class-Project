@@ -124,6 +124,20 @@ class Sheep : public Animal {
          * @return False
          */
         bool eatableBy(Grass const* grass) const override;
+
+        /*!
+         * @brief Checks if the Sheep is dead or not.
+         *
+         * @return True if the Sheep ran out of energy or is too old
+         */
+        bool isDead() const override;
+
+        /*!
+         * @brief Updates the Sheep's target and modify its attribute over time.
+         *
+         * @param dt the time passed
+         */
+        void update(sf::Time dt) override;
 };
 
 #endif // INFOSV_SHEEP_HPP

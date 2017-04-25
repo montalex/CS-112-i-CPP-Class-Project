@@ -60,3 +60,16 @@ Q3.4:
 
 Q3.5: Au niveau de la classe LivingEntity car toutes les entitées peuvent hériter
 de celle-ci et avoir un message de debuging.
+
+Q3.6: Ecrire la méthode isDead() dans la classe LivingEntity avec les valeurs par
+défaut, puis override cette méthode où nécessaire.
+
+Q3.7: Appeler la méthode sur chaque entitée dans la classe Environment et les
+retirer de la liste si elle sont morte, puis les détruire.
+
+Q3.8: Comme la méthode getStandardMaxSpeed varie si l'Animal est un mouton ou un
+loup, il est plus simple de la modifier séparement dans chacune de ces classes.
+Ce qui permet d'avoir un facteur de ralentissement différent, ainsi qu'un seuil
+critique différent en fonction de l'animal.
+
+Q3.9:
