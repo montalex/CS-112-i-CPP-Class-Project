@@ -1,7 +1,8 @@
 #include <Genetics/Genome.hpp>
 #include <Application.hpp>
 
-Genome::Genome(Genome *mother, Genome *father) {
+Genome::Genome(Genome *mother, Genome *father)
+{
     double const MUTABILITY = getAppConfig().genome_mutability_innate_immmune_system;
     double const ALLELE_PREVALENCE = getAppConfig().genome_black_allelle_prevalence;
     if(INFOSV_RANDOM_HPP::bernoulli(0.5)) {
@@ -48,19 +49,23 @@ Genome::Genome(Genome *mother, Genome *father) {
     }
 }
 
-Sex Genome::getSex() const {
+Sex Genome::getSex() const
+{
     return sex;
 }
 
-ColorAllele Genome::getFirstColorAllele() const {
+ColorAllele Genome::getFirstColorAllele() const
+{
     return color[0];
 }
 
-ColorAllele Genome::getSecondColorAllele() const {
+ColorAllele Genome::getSecondColorAllele() const
+{
     return color[1];
 }
 
-ColorAllele Genome::getColorPhenotype() const {
+ColorAllele Genome::getColorPhenotype() const
+{
     if(getFirstColorAllele() == BLACK && getSecondColorAllele() == BLACK) {
         return BLACK;
     } else {
@@ -68,11 +73,13 @@ ColorAllele Genome::getColorPhenotype() const {
     }
 }
 
-double Genome::getImmuneGenes(size_t idx) const {
+double Genome::getImmuneGenes(size_t idx) const
+{
     return immuneProfile[idx];
 }
 
-std::ostream& Genome::print(std::ostream& out) const {
+std::ostream& Genome::print(std::ostream& out) const
+{
     out << "Genome (" << sexToString(getSex()) << ") :" << std::endl;
     out << "Color phenotype = " << colorAlleleToString(getColorPhenotype()) << std::endl;
     out << "First color allele = " << colorAlleleToString(getFirstColorAllele()) << std::endl;
@@ -85,7 +92,8 @@ std::ostream& Genome::print(std::ostream& out) const {
     return out;
 }
 
-std::ostream& operator<<(std::ostream& out, const Genome& g) {
+std::ostream& operator<<(std::ostream& out, const Genome& g)
+{
     g.print(out);
     return out;
 }

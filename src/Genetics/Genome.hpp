@@ -18,64 +18,65 @@
  * ColorAllele color: the Genome's color attributes
  * double immuneProfile: the Genome's immune system profile
  */
-class Genome {
-    public:
-        /*!
-         * @brief Constructor.
-         *
-         * @param mother the Genome's mother
-         * @param father the Genome's father
-         */
-        Genome(Genome *mother = nullptr, Genome *father = nullptr);
+class Genome
+{
+public:
+    /*!
+     * @brief Constructor.
+     *
+     * @param mother the Genome's mother
+     * @param father the Genome's father
+     */
+    Genome(Genome *mother = nullptr, Genome *father = nullptr);
 
-        /*!
-         * @brief Gets the Genome's sex.
-         *
-         * @return the sex of the Genome (Sex enum)
-         */
-        Sex getSex() const;
+    /*!
+     * @brief Gets the Genome's sex.
+     *
+     * @return the sex of the Genome (Sex enum)
+     */
+    Sex getSex() const;
 
-        /*!
-         * @brief Gets the Genome's first color attribute.
-         *
-         * @return the first color of the Genome (ColorAllele enum)
-         */
-        ColorAllele getFirstColorAllele() const;
+    /*!
+     * @brief Gets the Genome's first color attribute.
+     *
+     * @return the first color of the Genome (ColorAllele enum)
+     */
+    ColorAllele getFirstColorAllele() const;
 
-        /*!
-         * @brief Gets the Genome's second color attribute.
-         *
-         * @return the second color of the Genome (ColorAllele enum)
-         */
-        ColorAllele getSecondColorAllele() const;
+    /*!
+     * @brief Gets the Genome's second color attribute.
+     *
+     * @return the second color of the Genome (ColorAllele enum)
+     */
+    ColorAllele getSecondColorAllele() const;
 
-        /*!
-         * @brief Gets the Genome's visible color.
-         *
-         * @return the visible color of the Genome (ColorAllele enum)
-         */
-        ColorAllele getColorPhenotype() const;
+    /*!
+     * @brief Gets the Genome's visible color.
+     *
+     * @return the visible color of the Genome (ColorAllele enum)
+     */
+    ColorAllele getColorPhenotype() const;
 
-        /*!
-         * @brief Gets the Genome's immune profile
-         *
-         * @return the Genome's immune profile (double)
-         */
-        double getImmuneGenes(size_t idx) const;
+    /*!
+     * @brief Gets the Genome's immune profile
+     *
+     * @return the Genome's immune profile (double)
+     */
+    double getImmuneGenes(size_t idx) const;
 
-        /*!
-         * @brief Priting method for << operator
-         *
-         * @param out the output stream
-         *
-         * @return the output stream (ostream)
-         */
-        std::ostream& print(std::ostream& out) const;
+    /*!
+     * @brief Priting method for << operator
+     *
+     * @param out the output stream
+     *
+     * @return the output stream (ostream)
+     */
+    std::ostream& print(std::ostream& out) const;
 
-    private:
-        Sex sex;
-        ColorAllele color[colorSize];
-        double immuneProfile[immuneSize];
+private:
+    Sex sex;
+    ColorAllele color[colorSize];
+    double immuneProfile[immuneSize];
 };
 
 /*!

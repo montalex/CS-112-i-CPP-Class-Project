@@ -6,11 +6,13 @@ LivingEntity::LivingEntity(const Vec2d& initPos, const double& startEnergy)
 
 LivingEntity::~LivingEntity() {};
 
-Vec2d LivingEntity::getPosition() const {
+Vec2d LivingEntity::getPosition() const
+{
     return this->position;
 }
 
-void LivingEntity::setPosition(const Vec2d& newPosition) {
+void LivingEntity::setPosition(const Vec2d& newPosition)
+{
     Vec2d boundedPosition = newPosition;
     double maxWidth = getAppConfig().window_simulation_width;
     double maxHeight = getAppConfig().window_simulation_height;
@@ -27,28 +29,34 @@ void LivingEntity::setPosition(const Vec2d& newPosition) {
     this->position = boundedPosition;
 }
 
-double LivingEntity::getEnergy() const {
+double LivingEntity::getEnergy() const
+{
     return this->energy;
 }
 
-void LivingEntity::setEnergy(const double& newEnergy) {
+void LivingEntity::setEnergy(const double& newEnergy)
+{
     this->energy = newEnergy;
 }
 
-sf::Time LivingEntity::getAge() const {
+sf::Time LivingEntity::getAge() const
+{
     return this->age;
 }
 
-void LivingEntity::setAge(const sf::Time& newAge) {
+void LivingEntity::setAge(const sf::Time& newAge)
+{
     this->age = newAge;
 }
 
-void LivingEntity::update(sf::Time dt) {
+void LivingEntity::update(sf::Time dt)
+{
     sf::Time newAge = this->getAge() + dt;
     this->setAge(newAge);
 }
 
-LivingEntity* LivingEntity::getClosestEntity(std::list<LivingEntity*> entities) const {
+LivingEntity* LivingEntity::getClosestEntity(std::list<LivingEntity*> entities) const
+{
     LivingEntity* closest = entities.front();
     double currentDistance = distance(this->getPosition(), closest->getPosition());
     for(auto entity: entities) {
@@ -61,10 +69,12 @@ LivingEntity* LivingEntity::getClosestEntity(std::list<LivingEntity*> entities) 
     return closest;
 }
 
-bool LivingEntity::isDead() const {
+bool LivingEntity::isDead() const
+{
     return this->getAge() > sf::seconds(1E9) || this->getEnergy() <= 0.0;
 }
 
-Vec2d LivingEntity::getCenter() const {
+Vec2d LivingEntity::getCenter() const
+{
     return this->getPosition();
 }

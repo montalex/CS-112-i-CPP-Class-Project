@@ -6,7 +6,8 @@ Wolf::Wolf(const Vec2d& initPos, Genome *mother, Genome *father)
 
 Wolf::~Wolf() {}
 
-double Wolf::getStandardMaxSpeed() const {
+double Wolf::getStandardMaxSpeed() const
+{
     if(this->getEnergy() < getAppConfig().wolf_energy_initial / 2.0) {
         return getAppConfig().wolf_max_speed / 2.0;
     } else {
@@ -14,66 +15,81 @@ double Wolf::getStandardMaxSpeed() const {
     }
 }
 
-double Wolf::getMass() const {
+double Wolf::getMass() const
+{
     return getAppConfig().wolf_mass;
 }
 
-double Wolf::getRadius() const {
+double Wolf::getRadius() const
+{
     return getAppConfig().wolf_size / 2.0;
 }
 
-sf::Texture& Wolf::getTexture() const {
+sf::Texture& Wolf::getTexture() const
+{
     return getAppTexture(getAppConfig().wolf_texture);
 }
 
-double Wolf::getViewRange() const {
+double Wolf::getViewRange() const
+{
     return getAppConfig().wolf_view_range;
 }
 
-double Wolf::getViewDistance() const {
+double Wolf::getViewDistance() const
+{
     return getAppConfig().wolf_view_distance;
 }
 
-double Wolf::getRandomWalkRadius() const {
+double Wolf::getRandomWalkRadius() const
+{
     return getAppConfig().wolf_random_walk_radius;
 }
 
-double Wolf::getRandomWalkDistance() const {
+double Wolf::getRandomWalkDistance() const
+{
     return getAppConfig().wolf_random_walk_distance;
 }
 
-double Wolf::getRandomWalkJitter() const {
+double Wolf::getRandomWalkJitter() const
+{
     return getAppConfig().wolf_random_walk_jitter;
 }
 
-bool Wolf::eatable(LivingEntity const* other) const {
+bool Wolf::eatable(LivingEntity const* other) const
+{
     return other->eatableBy(this);
 }
 
-bool Wolf::eatableBy(Wolf  const* wolf) const {
+bool Wolf::eatableBy(Wolf  const* wolf) const
+{
     return false;
 }
 
-bool Wolf::eatableBy(Sheep const* sheep) const {
+bool Wolf::eatableBy(Sheep const* sheep) const
+{
     return false;
 }
 
-bool Wolf::eatableBy(Grass const* grass) const {
+bool Wolf::eatableBy(Grass const* grass) const
+{
     return false;
 }
 
-bool Wolf::isDead() const {
+bool Wolf::isDead() const
+{
     return this->getAge() > getAppConfig().wolf_longevity ||
-            this->getEnergy() < getAppConfig().animal_min_energy;
+           this->getEnergy() < getAppConfig().animal_min_energy;
 }
 
-void Wolf::update(sf::Time dt) {
+void Wolf::update(sf::Time dt)
+{
     Animal::update(dt);
     this->setEnergy(this->getEnergy() - (getAppConfig().animal_base_energy_consumption
-                    + this->getSpeedNorm() * getAppConfig().wolf_energy_loss_factor * dt.asSeconds()));
+                                         + this->getSpeedNorm() * getAppConfig().wolf_energy_loss_factor * dt.asSeconds()));
 }
 
-double Wolf::feed(LivingEntity *entity) {
+double Wolf::feed(LivingEntity *entity)
+{
     this->setEnergy(this->getEnergy() +  getAppConfig().animal_meal_retention * entity->getEnergy());
     entity->setEnergy(0.0);
     return 0.0;

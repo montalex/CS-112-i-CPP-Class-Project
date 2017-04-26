@@ -2,7 +2,8 @@
 #include <Application.hpp>
 
 Grass::Grass(const Vec2d& initPos)
-    : LivingEntity(initPos, getAppConfig().grass_initial_energy) {
+    : LivingEntity(initPos, getAppConfig().grass_initial_energy)
+{
     Vec2d currentPosition = this->getPosition();
     double maxWidth = getAppConfig().window_simulation_width;
     double maxHeight = getAppConfig().window_simulation_height;
@@ -22,9 +23,10 @@ Grass::Grass(const Vec2d& initPos)
 
 Grass::~Grass() {}
 
-void Grass::drawOn(sf::RenderTarget& targetWindow) const {
+void Grass::drawOn(sf::RenderTarget& targetWindow) const
+{
     auto grassSprite = buildSprite(this->getPosition(), this->getEnergy() / 2.0,
-                getAppTexture(getAppConfig().grass_texture));
+                                   getAppTexture(getAppConfig().grass_texture));
     targetWindow.draw(grassSprite);
 
     if(isDebugOn()) {
@@ -38,7 +40,8 @@ void Grass::drawOn(sf::RenderTarget& targetWindow) const {
     }
 }
 
-void Grass::update(sf::Time dt) {
+void Grass::update(sf::Time dt)
+{
     LivingEntity::update(dt);
     double currentEnergy = this->getEnergy();
     if(currentEnergy <= getAppConfig().grass_max_energy) {
@@ -46,30 +49,37 @@ void Grass::update(sf::Time dt) {
     }
 }
 
-bool Grass::eatable(LivingEntity const* other) const {
+bool Grass::eatable(LivingEntity const* other) const
+{
     return other->eatableBy(this);
 }
 
-bool Grass::eatableBy(Wolf  const* wolf) const {
+bool Grass::eatableBy(Wolf  const* wolf) const
+{
     return false;
 }
 
-bool Grass::eatableBy(Sheep const* sheep) const {
+bool Grass::eatableBy(Sheep const* sheep) const
+{
     return true;
 }
 
-bool Grass::eatableBy(Grass const* grass) const {
+bool Grass::eatableBy(Grass const* grass) const
+{
     return false;
 }
 
-std::string Grass::getDebugString() const {
+std::string Grass::getDebugString() const
+{
     return to_nice_string(this->getEnergy());
 }
 
-bool Grass::isDead() const {
+bool Grass::isDead() const
+{
     return LivingEntity::isDead();
 }
 
-double Grass::getRadius() const {
+double Grass::getRadius() const
+{
     return this->getEnergy() / 2.0;
 }
