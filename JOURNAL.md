@@ -37,3 +37,8 @@
 ### 25.04 (mardi)
 
 - étape 3.3 presque finie.
+
+*************************************************
+### 08.05 (lundi)
+
+- étape 3 terminée, commencement de l'étape 4.
