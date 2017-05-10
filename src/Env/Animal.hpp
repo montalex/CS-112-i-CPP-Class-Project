@@ -33,6 +33,9 @@ enum AnimalState {
  *                       coordinate system.
  * double speedNorm: the norm of the Animal's speed
  * double genome: the Animal's genetic material
+ * AnimalState state: the Animal's current state
+ * bool hungry: define if the Animal is hungry or not
+ * sf::Time feedingTime: the time during which the Animal's is feeding
  */
 class Animal : public LivingEntity
 {
@@ -115,6 +118,20 @@ public:
      * @param newState the new state.
      */
     void setState(const AnimalState& newState);
+
+    /*!
+     * @brief Gets the Animal's feeding time.
+     *
+     * @return the Animal's feeding time (sf::Time)
+     */
+    sf::Time getFeedingTime() const;
+
+    /*!
+     * @brief Sets the Animal's feeding time.
+     *
+     * @param newTime the new feeding time.
+     */
+    void setFeedingTime(const sf::Time& newTime);
 
     /*!
      * @brief Updates the Animal's state according to its surrounding.
@@ -331,6 +348,7 @@ private:
     Genome genome;
     AnimalState state;
     bool hungry;
+    sf::Time feedingTime;
 };
 
 /*!

@@ -5,7 +5,7 @@ Animal::Animal(const Vec2d& initPos, const double& startEnergy, Genome *mother,
                Genome *father) :
     LivingEntity(initPos, startEnergy), direction(Vec2d(1.0, 0.0)),
     target(Vec2d()), speedNorm(0.0), genome(mother, father), state(WANDERING),
-    hungry(false) {}
+    hungry(false), feedingTime(sf::seconds(getAppConfig().animal_feed_time)) {}
 
 Animal::~Animal() {};
 
@@ -54,6 +54,16 @@ void Animal::setState(const AnimalState& newState)
     this->state = newState;
 }
 
+sf::Time Animal::getFeedingTime() const
+{
+    return this->feedingTime;
+}
+
+void Animal::setFeedingTime(const sf::Time& newTime)
+{
+    this->feedingTime = newTime;
+}
+
 void Animal::updateState()
 {
     Environment env = INFOSV_APPLICATION_HPP::getAppEnv();
@@ -72,6 +82,7 @@ void Animal::updateState()
             this->setTarget(closestEntity->getPosition());
             if(this->isColliding(*closestEntity)) {
                 this->setState(FEEDING);
+                this->setFeedingTime(sf::seconds(getAppConfig().animal_feed_time));
                 this->feed(closestEntity);
             } else {
                 this->setState(FOOD_IN_SIGHT);
@@ -112,8 +123,8 @@ void Animal::setRotation(const double& angle)
 void Animal::update(sf::Time dt)
 {
     LivingEntity::update(dt);
-    this->updateState();
     this->updateHunger();
+    this->updateState();
     switch(this->getState()) {
     case FOOD_IN_SIGHT:
         this->updatePosition(dt, this->attractionForce());
@@ -121,6 +132,12 @@ void Animal::update(sf::Time dt)
     case WANDERING:
         this->updatePosition(dt, this->randomWalk());
         break;
+    case FEEDING:
+        if(this->getFeedingTime().asSeconds() > 0) {
+            this->setFeedingTime(this->getFeedingTime() - dt);
+        } else {
+            this->setState(WANDERING);
+        }
     default:
         break;
     }
