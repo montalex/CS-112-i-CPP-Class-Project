@@ -51,7 +51,7 @@
                "distance":160
             },
             "energy":{
-               "initial":500,
+               "initial":800,
                "min mating male":450,
                "min mating female":600,
                "loss mating male":250,
@@ -86,12 +86,12 @@
                "distance":350
             },
             "random walk":{
-               "jitter":50,
+               "jitter":20,
                "radius":100,
                "distance":100
             },
             "energy":{
-               "initial":650,
+               "initial":700,
                "min mating male":400,
                "min mating female":400,
                "loss mating male":100,

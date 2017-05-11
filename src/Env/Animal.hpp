@@ -31,11 +31,15 @@ enum AnimalState {
  * Vec2d target: the Animal's target position
  * Vec2d virtual_target: the Animal's virtual target position in the Animal's
  *                       coordinate system.
- * double speedNorm: the norm of the Animal's speed
- * double genome: the Animal's genetic material
- * AnimalState state: the Animal's current state
- * bool hungry: define if the Animal is hungry or not
- * sf::Time feedingTime: the time during which the Animal's is feeding
+ * double speedNorm: the norm of the Animal's speed.
+ * double genome: the Animal's genetic material.
+ * AnimalState state: the Animal's current state.
+ * bool hungry: define if the Animal is hungry or not.
+ * sf::Time feedingTime: the time during which the Animal is feeding.
+ * sf::Time matingTime: the time during which the Animal is mating.
+ * bool pregnant: define if the Animal is pregnant or not.
+ * int nBabies: the amount of babies the Animal is having once pregnant.
+ * sf::Time gestationTime: the time the Animal is pregnant before giving birth.
  */
 class Animal : public LivingEntity
 {
@@ -49,7 +53,7 @@ public:
      * @param father Father's genome of the Animal
      */
     Animal(const Vec2d& initPos, const double& startEnergy, Genome *mother = nullptr,
-           Genome *father = nullptr);
+           Genome *father = nullptr, const sf::Time& gesTime = sf::seconds(0));
 
     /*!
      * @brief Destructor.
@@ -132,6 +136,62 @@ public:
      * @param newTime the new feeding time.
      */
     void setFeedingTime(const sf::Time& newTime);
+
+    /*!
+     * @brief Gets the Animal's mating time.
+     *
+     * @return the Animal's mating time (sf::Time)
+     */
+    sf::Time getMatingTime() const;
+
+    /*!
+     * @brief Sets the Animal's mating time.
+     *
+     * @param newTime the new mating time.
+     */
+    void setMatingTime(const sf::Time& newTime);
+
+    /*!
+     * @brief Checks if the Animal is pregnant.
+     *
+     * @return True if the Animal is pregnant
+     */
+    bool isPregnant() const;
+
+    /*!
+     * @brief Sets the Animal's pregnancy state.
+     *
+     * @param preg the pregnancy state of the Animal
+     */
+    void setPregnant(const bool& preg);
+
+    /*!
+     * @brief Gets the number of babies the Animal will have.
+     *
+     * @return the amount of babies the Animal will have (int)
+     */
+    int getNBabies() const;
+
+    /*!
+     * @brief Sets the amount of babies the Animal will have.
+     *
+     * @param nbBabies the amount of babies the Animal will have
+     */
+    void setNBabies(const int& nbBabies);
+
+    /*!
+     * @brief Gets the Animal's gestation time.
+     *
+     * @return the Animal's gestation time (sf::Time)
+     */
+    sf::Time getGestationTime() const;
+
+    /*!
+     * @brief Sets the Animal's gestation time.
+     *
+     * @param newTime the new gestation time.
+     */
+    void setGestationTime(const sf::Time& newTime);
 
     /*!
      * @brief Updates the Animal's state according to its surrounding.
@@ -341,14 +401,26 @@ public:
      */
     virtual double feed(LivingEntity *entity) = 0;
 
+    /*!
+     * @brief Checks if the Animal is a female.
+     *
+     * @return True if the Animal is a female
+     */
+    bool isFemale() const;
+
 private:
     Vec2d direction;
     Vec2d target;
+    Vec2d current_target;
     double speedNorm;
     Genome genome;
     AnimalState state;
     bool hungry;
     sf::Time feedingTime;
+    sf::Time matingTime;
+    bool pregnant;
+    int nBabies;
+    sf::Time gestationTime;
 };
 
 /*!

@@ -39,7 +39,7 @@ public:
     void update(sf::Time dt) override;
 
     /*!
-     * @brief Checks if a LivingEntity is eatable by the current one using
+     * @brief Checks if a LivingEntity is eatable by the current Grass using
      * the eatableBy methods
      *
      * @param other the LivingEntity to check
@@ -95,6 +95,71 @@ public:
      * @return the Grass radius (double)
      */
     double getRadius() const override;
+
+    /*!
+     * @brief Checks if a LivingEntity is matable by the current Grass using
+     * the canMate methods
+     *
+     * @param other the LivingEntity to check
+     *
+     * @return True if the  LivingEntity is matable
+     */
+    bool matable(LivingEntity const* other) const override;
+
+    /*!
+     * @brief Checks if this Grass can mate a Wolf
+     *
+     * @param wolf the Wolf
+     *
+     * @return False
+     */
+    bool canMate(Wolf const* wolf) const override;
+
+    /*!
+     * @brief Checks if this Grass can mate a Sheep
+     *
+     * @param sheep the Sheep
+     *
+     * @return False
+     */
+    bool canMate(Sheep const* sheep) const override;
+
+    /*!
+     * @brief Checks if this Grass can mate a Grass
+     *
+     * @param grass the other Grass
+     *
+     * @return False
+     */
+    bool canMate(Grass const* grass) const override;
+
+    /*!
+     * @brief Breeds the Grass with the given entity.
+     *
+     * @param entity the LivingEntity mate with
+     */
+    void meet(LivingEntity* mate) override;
+
+    /*!
+     * @brief Doesn't do anything as GRass can't mate.
+     *
+     * @param wolf the Wolf to mate with.
+     */
+    void breed(Wolf* wolf) override;
+
+    /*!
+     * @brief Doesn't do anything as GRass can't mate.
+     *
+     * @param sheep the Sheep to mate with.
+     */
+    void breed(Sheep* sheep) override;
+
+    /*!
+     * @brief Doesn't do anything as GRass can't mate.
+     *
+     * @param grass the Grass to mate with
+     */
+    void breed(Grass* grass) override;
 };
 
 #endif // INFOSV_GRASS_HPP

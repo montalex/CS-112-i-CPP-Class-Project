@@ -2,13 +2,14 @@
 #include <Application.hpp>
 
 Sheep::Sheep(const Vec2d& initPos, Genome *mother, Genome *father)
-    : Animal(initPos, getAppConfig().sheep_energy_initial, mother, father) {}
+    : Animal(initPos, getAppConfig().sheep_energy_initial, mother, father,
+            sf::seconds(getAppConfig().sheep_reproduction_gestation_time)) {}
 
 Sheep::~Sheep() {}
 
 double Sheep::getStandardMaxSpeed() const
 {
-    if(this->getEnergy() < getAppConfig().sheep_energy_initial / 2.0) {
+    if(getEnergy() < getAppConfig().sheep_energy_initial / 2.0) {
         return getAppConfig().sheep_max_speed / 2.0;
     } else {
         return getAppConfig().sheep_max_speed;
@@ -27,7 +28,7 @@ double Sheep::getRadius() const
 
 sf::Texture& Sheep::getTexture() const
 {
-    if(this->getGenome().getColorPhenotype() == WHITE) {
+    if(getGenome().getColorPhenotype() == WHITE) {
         return getAppTexture(getAppConfig().sheep_texture_white);
     } else {
         return getAppTexture(getAppConfig().sheep_texture_black);
@@ -81,21 +82,83 @@ bool Sheep::eatableBy(Grass const* grass) const
 
 bool Sheep::isDead() const
 {
-    return this->getAge() > getAppConfig().sheep_longevity ||
-           this->getEnergy() < getAppConfig().animal_min_energy;
+    return getAge() > getAppConfig().sheep_longevity ||
+           getEnergy() < getAppConfig().animal_min_energy;
 }
 
 void Sheep::update(sf::Time dt)
 {
     Animal::update(dt);
-    this->setEnergy(this->getEnergy() - (getAppConfig().animal_base_energy_consumption
-                                         + this->getSpeedNorm() * getAppConfig().sheep_energy_loss_factor * dt.asSeconds()));
+    setEnergy(getEnergy() - (getAppConfig().animal_base_energy_consumption
+                                         + getSpeedNorm() * getAppConfig().sheep_energy_loss_factor * dt.asSeconds()));
 }
 
 double Sheep::feed(LivingEntity *entity)
 {
     double bite = getAppConfig().sheep_energy_bite;
-    this->setEnergy(this->getEnergy() +  getAppConfig().animal_meal_retention * entity->getEnergy());
+    setEnergy(getEnergy() +  getAppConfig().animal_meal_retention * entity->getEnergy());
     entity->setEnergy(entity->getEnergy() - bite);
     return entity->getEnergy();
+}
+
+bool Sheep::matable(LivingEntity const* other) const
+{
+    return other->canMate(this);
+}
+
+bool Sheep::canMate(Wolf const* wolf) const
+{
+    return false;
+}
+
+bool Sheep::canMate(Sheep const* sheep) const
+{
+    if(sheep->isFemale()) {
+        return !isFemale() && !sheep->isPregnant()
+            && sheep->getEnergy() >= getAppConfig().sheep_energy_min_mating_female;
+    } else {
+        return isFemale() && !isPregnant()
+            && sheep->getEnergy() >= getAppConfig().sheep_energy_min_mating_male;
+    }
+}
+
+bool Sheep::canMate(Grass const* grass) const
+{
+    return false;
+}
+
+void Sheep::meet(LivingEntity* mate)
+{
+    mate->breed(this);
+}
+
+void Sheep::breed(Wolf* wolf)
+{
+    return;
+}
+
+void Sheep::breed(Sheep* sheep)
+{
+    Sheep *female;
+    Sheep *male;
+    if(isFemale()) {
+        female = this;
+        male = sheep;
+    } else {
+        female = sheep;
+        male = this;
+    }
+
+    female->setPregnant(true);
+    int nbBabies = uniform(getAppConfig().sheep_reproduction_min_children, getAppConfig().sheep_reproduction_max_children);
+    female->setNBabies(nbBabies);
+    female->setEnergy(female->getEnergy() - (getAppConfig().sheep_energy_loss_female_per_child * nbBabies));
+    female->setGestationTime(sf::seconds(getAppConfig().sheep_reproduction_gestation_time));
+    male->setEnergy(male->getEnergy() - getAppConfig().sheep_energy_loss_mating_male);
+}
+
+
+void Sheep::breed(Grass* grass)
+{
+    return;
 }

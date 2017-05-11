@@ -3,6 +3,10 @@
 #include <Env/LivingEntity.hpp>
 #include <algorithm>
 
+Environment::~Environment() {
+
+}
+
 void Environment::addEntity(LivingEntity* entity)
 {
     entities.push_back(entity);
@@ -17,7 +21,7 @@ void Environment::update(sf::Time dt)
             entity = nullptr;
         }
     }
-    this->entities.erase(std::remove(this->entities.begin(), this->entities.end(), nullptr), this->entities.end());
+    entities.erase(std::remove(entities.begin(), entities.end(), nullptr), entities.end());
 }
 
 void Environment::drawOn(sf::RenderTarget& targetWindow) const
@@ -29,6 +33,9 @@ void Environment::drawOn(sf::RenderTarget& targetWindow) const
 
 void Environment::reset()
 {
+    for(auto& entity: entities) {
+        delete entity;
+    }
     entities.clear();
 }
 

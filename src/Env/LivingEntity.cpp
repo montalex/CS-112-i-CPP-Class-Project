@@ -8,14 +8,14 @@ LivingEntity::~LivingEntity() {};
 
 Vec2d LivingEntity::getPosition() const
 {
-    return this->position;
+    return position;
 }
 
 void LivingEntity::setPosition(const Vec2d& newPosition)
 {
     Vec2d boundedPosition = newPosition;
-    double maxWidth = getAppConfig().window_simulation_width;
-    double maxHeight = getAppConfig().window_simulation_height;
+    double maxWidth = getAppConfig().simulation_world_size;
+    double maxHeight = getAppConfig().simulation_world_size;
     if(newPosition.x > maxWidth) {
         boundedPosition.x = 0;
     } else if(newPosition.x < 0) {
@@ -26,41 +26,41 @@ void LivingEntity::setPosition(const Vec2d& newPosition)
     } else if(newPosition.y < 0) {
         boundedPosition.y = maxHeight;
     }
-    this->position = boundedPosition;
+    position = boundedPosition;
 }
 
 double LivingEntity::getEnergy() const
 {
-    return this->energy;
+    return energy;
 }
 
 void LivingEntity::setEnergy(const double& newEnergy)
 {
-    this->energy = newEnergy;
+    energy = newEnergy;
 }
 
 sf::Time LivingEntity::getAge() const
 {
-    return this->age;
+    return age;
 }
 
 void LivingEntity::setAge(const sf::Time& newAge)
 {
-    this->age = newAge;
+    age = newAge;
 }
 
 void LivingEntity::update(sf::Time dt)
 {
-    sf::Time newAge = this->getAge() + dt;
-    this->setAge(newAge);
+    sf::Time newAge = getAge() + dt;
+    setAge(newAge);
 }
 
 LivingEntity* LivingEntity::getClosestEntity(std::list<LivingEntity*> entities) const
 {
     LivingEntity* closest = entities.front();
-    double currentDistance = distance(this->getPosition(), closest->getPosition());
+    double currentDistance = distance(getPosition(), closest->getPosition());
     for(auto entity: entities) {
-        double newDistance = distance(this->getPosition(), entity->getPosition());
+        double newDistance = distance(getPosition(), entity->getPosition());
         if(newDistance < currentDistance) {
             closest = entity;
             currentDistance = newDistance;
@@ -71,10 +71,10 @@ LivingEntity* LivingEntity::getClosestEntity(std::list<LivingEntity*> entities) 
 
 bool LivingEntity::isDead() const
 {
-    return this->getAge() > sf::seconds(1E9) || this->getEnergy() <= 0.0;
+    return getAge() > sf::seconds(1E9) || getEnergy() <= 0.0;
 }
 
 Vec2d LivingEntity::getCenter() const
 {
-    return this->getPosition();
+    return getPosition();
 }

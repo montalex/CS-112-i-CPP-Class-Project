@@ -23,6 +23,11 @@ public:
     //Using default constructor for now
 
     /*!
+     * @brief Destructor
+     */
+    ~Environment();
+
+    /*!
      * @brief Adds an entity to the Environment.
      *
      * @param entity the new LivingEntity

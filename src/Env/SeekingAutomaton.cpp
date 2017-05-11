@@ -1,7 +1,7 @@
 #include <Env/SeekingAutomaton.hpp>
 
 SeekingAutomaton::SeekingAutomaton(const Vec2d& initPos)
-    : position(initPos), speedNorm(0.0), target(Vec2d()), direction(Vec2d(1.0, 0.0)) {}
+    : position(initPos), direction(Vec2d(1.0, 0.0)), target(Vec2d()), speedNorm(0.0) {}
 
 double SeekingAutomaton::getStandardMaxSpeed() const
 {
@@ -25,40 +25,40 @@ void SeekingAutomaton::setTargetPosition(const Vec2d& target)
 
 Vec2d SeekingAutomaton::getSpeedVector() const
 {
-    return this->direction * this->speedNorm;
+    return direction * speedNorm;
 }
 
 void SeekingAutomaton::update(sf::Time dt)
 {
-    Vec2d acceleration = this->attractionForce() / this->getMass();
-    Vec2d newSpeedVector = this->getSpeedVector() + (acceleration * dt.asSeconds());
-    this->direction = newSpeedVector.normalised();
-    if(newSpeedVector.length() > this->getStandardMaxSpeed()) {
-        newSpeedVector = this->direction * this->getStandardMaxSpeed();
+    Vec2d acceleration = attractionForce() / getMass();
+    Vec2d newSpeedVector = getSpeedVector() + (acceleration * dt.asSeconds());
+    direction = newSpeedVector.normalised();
+    if(newSpeedVector.length() > getStandardMaxSpeed()) {
+        newSpeedVector = direction * getStandardMaxSpeed();
     }
-    this->speedNorm = newSpeedVector.length();
-    this->position = this->position + (newSpeedVector * dt.asSeconds());
+    speedNorm = newSpeedVector.length();
+    position = position + (newSpeedVector * dt.asSeconds());
 }
 
 void SeekingAutomaton::drawOn(sf::RenderTarget& targetWindow) const
 {
-    sf::CircleShape target = buildCircle(this->target, 5.0, sf::Color(255, 0, 0));
-    sf::CircleShape automate = buildCircle(this->position, 15.0, sf::Color(0, 0, 255));
-    targetWindow.draw(target);
+    sf::CircleShape target_circle = buildCircle(target, 5.0, sf::Color(255, 0, 0));
+    sf::CircleShape automate = buildCircle(position, 15.0, sf::Color(0, 0, 255));
+    targetWindow.draw(target_circle);
     targetWindow.draw(automate);
 }
 
 Vec2d SeekingAutomaton::attractionForce() const
 {
-    Vec2d toTarget = this->target - this->position;
+    Vec2d toTarget = target - position;
     double toTargetNorm = toTarget.length();
     if(toTargetNorm == 0.0) {
         return Vec2d(0.0, 0.0);
     }
-    double coef = getDecelerationCoef(this->getDeceleration(toTargetNorm));
-    double tempSpeed = std::min(toTargetNorm / coef, this->getStandardMaxSpeed());
+    double coef = getDecelerationCoef(getDeceleration(toTargetNorm));
+    double tempSpeed = std::min(toTargetNorm / coef, getStandardMaxSpeed());
     Vec2d wantedSpeed = (toTarget / toTargetNorm) * tempSpeed;
-    return wantedSpeed - this->getSpeedVector();
+    return wantedSpeed - getSpeedVector();
 }
 
 Deceleration SeekingAutomaton::getDeceleration(const double& distanceToTarget) const

@@ -77,4 +77,14 @@ Q3.9: Simplement retourner la position de la LivingEntity.
 Q3.10: Supprimer la classe obstacle et intégrer ses méthodes dans la classe
 LivingEntity.
 
-Q3.11: 
+Q3.11: Le "double dispatch" sera géré de la même façon qu'à chaque fois mais
+uniquementpour les animaux car une plante n'aura jamais de "mate in sight" et
+donc ne fera jamais de rencontre.
+
+Q3.12: Avec une variable de classe propre à tous les animaux, initialisée au
+début dans le constructeur propre à chaque type d'animaux, puis réinitialisée
+à chanque 'meeting'.
+
+Q3.13:
+
+Q3.14: Avec une variable de classe propre à tous les animaux.

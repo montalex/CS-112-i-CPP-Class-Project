@@ -157,6 +157,71 @@ public:
      */
     Vec2d getCenter() const override;
 
+    /*!
+     * @brief Checks if a LivingEntity is matable by the current one using
+     * the canMate methods
+     *
+     * @param other the LivingEntity to check
+     *
+     * @return True if the  LivingEntity is matable
+     */
+    virtual bool matable(LivingEntity const* other) const = 0;
+
+    /*!
+     * @brief Checks if this Entity can mate a Wolf
+     *
+     * @param wolf the Wolf
+     *
+     * @return True if this Entity can mate a Wolf
+     */
+    virtual bool canMate(Wolf const* wolf) const = 0;
+
+    /*!
+     * @brief Checks if this Entity can mate a Sheep
+     *
+     * @param sheep the Sheep
+     *
+     * @return True if this Entity can mate a Sheep
+     */
+    virtual bool canMate(Sheep const* sheep) const = 0;
+
+    /*!
+     * @brief Checks if this Entity can mate a Grass
+     *
+     * @param grass the Grass
+     *
+     * @return True if this Entity can mate a Grass
+     */
+    virtual bool canMate(Grass const* grass) const = 0;
+
+    /*!
+     * @brief Breeds the LivingEntity with the given entity using the breed methods.
+     *
+     * @param mate the LivingEntity to mate with.
+     */
+    virtual void meet(LivingEntity* mate) = 0;
+
+    /*!
+     * @brief Breeds the LivingEntity with the given Wolf.
+     *
+     * @param wolf the Wolf to mate with.
+     */
+    virtual void breed(Wolf* wolf) = 0;
+
+    /*!
+     * @brief Breeds the LivingEntity with the given Sheep.
+     *
+     * @param sheep the Sheep to mate with.
+     */
+    virtual void breed(Sheep* sheep) = 0;
+
+    /*!
+     * @brief Breeds the LivingEntity with Grass.
+     *
+     * @param grass the Grass to mate with
+     */
+    virtual void breed(Grass* grass) = 0;
+
 private:
     Vec2d position;
     double energy;

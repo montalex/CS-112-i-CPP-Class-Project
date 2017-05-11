@@ -149,6 +149,71 @@ public:
      * @return the energy left in the entity after the Sheep ate it.
      */
     double feed(LivingEntity *entity) override;
+
+    /*!
+     * @brief Checks if a LivingEntity is matable by the current sheep using
+     * the canMate methods
+     *
+     * @param other the LivingEntity to check
+     *
+     * @return True if the  LivingEntity is matable
+     */
+    bool matable(LivingEntity const* other) const override;
+
+    /*!
+     * @brief Checks if this Sheep can mate a Wolf
+     *
+     * @param wolf the Wolf
+     *
+     * @return False
+     */
+    bool canMate(Wolf const* wolf) const override;
+
+    /*!
+     * @brief Checks if this Sheep can mate a Sheep
+     *
+     * @param sheep the Sheep
+     *
+     * @return True if the two Sheep are of opposite sex.
+     */
+    bool canMate(Sheep const* sheep) const override;
+
+    /*!
+     * @brief Checks if this Sheep can mate a Grass
+     *
+     * @param grass the Grass
+     *
+     * @return False
+     */
+    bool canMate(Grass const* grass) const override;
+
+    /*!
+     * @brief Breeds the Sheep with the given entity.
+     *
+     * @param mate the LivingEntity to mate with
+     */
+    void meet(LivingEntity* mate) override;
+
+    /*!
+     * @brief Doesn't do anything as Sheep can't mate with Wolfs.
+     *
+     * @param wolf the Wolf to mate with.
+     */
+    void breed(Wolf* wolf) override;
+
+    /*!
+     * @brief Breeds the Sheep with the given Sheep.
+     *
+     * @param sheep the Sheep to mate with.
+     */
+    void breed(Sheep* sheep) override;
+
+    /*!
+     * @brief Doesn't do anything as Sheep can't mate with Grass.
+     *
+     * @param grass the Grass to mate with
+     */
+    void breed(Grass* grass) override;
 };
 
 #endif // INFOSV_SHEEP_HPP

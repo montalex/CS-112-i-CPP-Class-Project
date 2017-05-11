@@ -2,13 +2,14 @@
 #include <Application.hpp>
 
 Wolf::Wolf(const Vec2d& initPos, Genome *mother, Genome *father)
-    : Animal(initPos, getAppConfig().sheep_energy_initial, mother, father) {}
+    : Animal(initPos, getAppConfig().wolf_energy_initial, mother, father,
+            sf::seconds(getAppConfig().wolf_reproduction_gestation_time)) {}
 
 Wolf::~Wolf() {}
 
 double Wolf::getStandardMaxSpeed() const
 {
-    if(this->getEnergy() < getAppConfig().wolf_energy_initial / 2.0) {
+    if(getEnergy() < getAppConfig().wolf_energy_initial / 2.0) {
         return getAppConfig().wolf_max_speed / 2.0;
     } else {
         return getAppConfig().wolf_max_speed;
@@ -77,20 +78,81 @@ bool Wolf::eatableBy(Grass const* grass) const
 
 bool Wolf::isDead() const
 {
-    return this->getAge() > getAppConfig().wolf_longevity ||
-           this->getEnergy() < getAppConfig().animal_min_energy;
+    return getAge() > getAppConfig().wolf_longevity ||
+           getEnergy() < getAppConfig().animal_min_energy;
 }
 
 void Wolf::update(sf::Time dt)
 {
     Animal::update(dt);
-    this->setEnergy(this->getEnergy() - (getAppConfig().animal_base_energy_consumption
-                                         + this->getSpeedNorm() * getAppConfig().wolf_energy_loss_factor * dt.asSeconds()));
+    setEnergy(getEnergy() - (getAppConfig().animal_base_energy_consumption
+                                         + getSpeedNorm() * getAppConfig().wolf_energy_loss_factor * dt.asSeconds()));
 }
 
 double Wolf::feed(LivingEntity *entity)
 {
-    this->setEnergy(this->getEnergy() +  getAppConfig().animal_meal_retention * entity->getEnergy());
+    setEnergy(getEnergy() +  getAppConfig().animal_meal_retention * entity->getEnergy());
     entity->setEnergy(0.0);
     return 0.0;
+}
+
+bool Wolf::matable(LivingEntity const* other) const
+{
+    return other->canMate(this);
+}
+
+bool Wolf::canMate(Wolf const* wolf) const
+{
+    if(wolf->isFemale()) {
+        return !isFemale() && !wolf->isPregnant()
+            && wolf->getEnergy() >= getAppConfig().wolf_energy_min_mating_female;
+    } else {
+        return isFemale() && !isPregnant()
+            && wolf->getEnergy() >= getAppConfig().wolf_energy_min_mating_male;
+    }
+}
+
+bool Wolf::canMate(Sheep const* sheep) const
+{
+    return false;
+}
+
+bool Wolf::canMate(Grass const* grass) const
+{
+    return false;
+}
+
+void Wolf::meet(LivingEntity* mate)
+{
+    mate->breed(this);
+}
+
+void Wolf::breed(Wolf* wolf)
+{
+    Wolf *female;
+    Wolf *male;
+    if(isFemale()) {
+        female = this;
+        male = wolf;
+    } else {
+        female = wolf;
+        male = this;
+    }
+
+    female->setPregnant(true);
+    int nbBabies = uniform(getAppConfig().wolf_reproduction_min_children, getAppConfig().wolf_reproduction_max_children);
+    female->setNBabies(nbBabies);
+    female->setEnergy(female->getEnergy() - (getAppConfig().wolf_energy_loss_female_per_child * nbBabies));
+    female->setGestationTime(sf::seconds(getAppConfig().wolf_reproduction_gestation_time));
+    male->setEnergy(male->getEnergy() - getAppConfig().wolf_energy_loss_mating_male);
+}
+
+void Wolf::breed(Sheep* sheep)
+{
+    return;
+}
+
+void Wolf::breed(Grass* grass)
+{
+    return;
 }

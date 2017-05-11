@@ -4,7 +4,7 @@
 Grass::Grass(const Vec2d& initPos)
     : LivingEntity(initPos, getAppConfig().grass_initial_energy)
 {
-    Vec2d currentPosition = this->getPosition();
+    Vec2d currentPosition = getPosition();
     double maxWidth = getAppConfig().window_simulation_width;
     double maxHeight = getAppConfig().window_simulation_height;
     /* Keeps grass in window bounds */
@@ -18,21 +18,21 @@ Grass::Grass(const Vec2d& initPos)
     } else if(currentPosition.y > maxHeight) {
         currentPosition.y -= maxHeight;
     }
-    this->setPosition(currentPosition);
+    setPosition(currentPosition);
 }
 
 Grass::~Grass() {}
 
 void Grass::drawOn(sf::RenderTarget& targetWindow) const
 {
-    auto grassSprite = buildSprite(this->getPosition(), this->getEnergy() / 2.0,
+    auto grassSprite = buildSprite(getPosition(), getEnergy() / 2.0,
                                    getAppTexture(getAppConfig().grass_texture));
     targetWindow.draw(grassSprite);
 
     if(isDebugOn()) {
         Obstacle::drawObstacle(targetWindow);
-        auto text = buildText(this->getDebugString(),
-                              this->getPosition(),
+        auto text = buildText(getDebugString(),
+                              getPosition(),
                               getAppFont(),
                               getAppConfig().default_debug_text_size,
                               sf::Color::White);
@@ -43,9 +43,9 @@ void Grass::drawOn(sf::RenderTarget& targetWindow) const
 void Grass::update(sf::Time dt)
 {
     LivingEntity::update(dt);
-    double currentEnergy = this->getEnergy();
+    double currentEnergy = getEnergy();
     if(currentEnergy <= getAppConfig().grass_max_energy) {
-        this->setEnergy(currentEnergy + (getAppConfig().grass_growth_factor * dt.asSeconds()));
+        setEnergy(currentEnergy + (getAppConfig().grass_growth_factor * dt.asSeconds()));
     }
 }
 
@@ -54,7 +54,7 @@ bool Grass::eatable(LivingEntity const* other) const
     return other->eatableBy(this);
 }
 
-bool Grass::eatableBy(Wolf  const* wolf) const
+bool Grass::eatableBy(Wolf const* wolf) const
 {
     return false;
 }
@@ -71,7 +71,7 @@ bool Grass::eatableBy(Grass const* grass) const
 
 std::string Grass::getDebugString() const
 {
-    return to_nice_string(this->getEnergy());
+    return to_nice_string(getEnergy());
 }
 
 bool Grass::isDead() const
@@ -81,5 +81,44 @@ bool Grass::isDead() const
 
 double Grass::getRadius() const
 {
-    return this->getEnergy() / 2.0;
+    return getEnergy() / 2.0;
+}
+
+bool Grass::matable(LivingEntity const* other) const
+{
+    return other->canMate(this);
+}
+
+bool Grass::canMate(Wolf const* wolf) const
+{
+    return false;
+}
+
+bool Grass::canMate(Sheep const* sheep) const
+{
+    return false;
+}
+
+bool Grass::canMate(Grass const* grass) const
+{
+    return false;
+}
+void Grass::meet(LivingEntity* mate)
+{
+    mate->breed(this);
+}
+
+void Grass::breed(Wolf* wolf)
+{
+    return;
+}
+
+void Grass::breed(Sheep* sheep)
+{
+    return;
+}
+
+void Grass::breed(Grass* grass)
+{
+    return;
 }

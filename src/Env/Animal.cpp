@@ -2,26 +2,28 @@
 #include <Application.hpp>
 
 Animal::Animal(const Vec2d& initPos, const double& startEnergy, Genome *mother,
-               Genome *father) :
+               Genome *father, const sf::Time& gesTime) :
     LivingEntity(initPos, startEnergy), direction(Vec2d(1.0, 0.0)),
-    target(Vec2d()), speedNorm(0.0), genome(mother, father), state(WANDERING),
-    hungry(false), feedingTime(sf::seconds(getAppConfig().animal_feed_time)) {}
+    target(Vec2d()), current_target(Vec2d(1, 0)), speedNorm(0.0), genome(mother, father), state(WANDERING),
+    hungry(false), feedingTime(sf::seconds(getAppConfig().animal_feed_time)),
+    matingTime(sf::seconds(0)),pregnant(false),
+    nBabies(0), gestationTime(gesTime) {}
 
 Animal::~Animal() {};
 
 Vec2d Animal::getDirection() const
 {
-    return this->direction;
+    return direction;
 }
 
 void Animal::setDirection(const Vec2d& newDirection)
 {
-    this->direction = newDirection;
+    direction = newDirection;
 }
 
 Vec2d Animal::getTarget() const
 {
-    return this->target;
+    return target;
 }
 
 void Animal::setTarget(const Vec2d& target)
@@ -31,75 +33,132 @@ void Animal::setTarget(const Vec2d& target)
 
 double Animal::getSpeedNorm() const
 {
-    return this->speedNorm;
+    return speedNorm;
 }
 
 void Animal::setSpeedNorm(const double& newNorm)
 {
-    this->speedNorm = newNorm;
+    speedNorm = newNorm;
 }
 
 Genome Animal::getGenome() const
 {
-    return this->genome;
+    return genome;
 }
 
 AnimalState Animal::getState() const
 {
-    return this->state;
+    return state;
 }
 
 void Animal::setState(const AnimalState& newState)
 {
-    this->state = newState;
+    state = newState;
 }
 
 sf::Time Animal::getFeedingTime() const
 {
-    return this->feedingTime;
+    return feedingTime;
 }
 
 void Animal::setFeedingTime(const sf::Time& newTime)
 {
-    this->feedingTime = newTime;
+    feedingTime = newTime;
+}
+
+sf::Time Animal::getMatingTime() const
+{
+    return matingTime;
+}
+
+void Animal::setMatingTime(const sf::Time& newTime)
+{
+    matingTime = newTime;
+}
+
+int Animal::getNBabies() const
+{
+    return nBabies;
+}
+
+void Animal::setNBabies(const int& nbBabies)
+{
+    nBabies = nbBabies;
+}
+
+sf::Time Animal::getGestationTime() const
+{
+    return gestationTime;
+}
+
+void Animal::setGestationTime(const sf::Time& newTime)
+{
+    gestationTime = newTime;
 }
 
 void Animal::updateState()
 {
     Environment env = INFOSV_APPLICATION_HPP::getAppEnv();
     std::list<LivingEntity*> eatables;
+    std::list<LivingEntity*> matables;
     std::list<LivingEntity*> entities = env.getEntitiesInSightForAnimal(this);
-    if(!this->isHungry() || entities.empty()) {
-        this->setState(WANDERING);
+    if(isPregnant() && getGestationTime().asSeconds() <= 0) {
+        setState(GIVING_BIRTH);
+        return;
+    }
+
+    if(getMatingTime().asSeconds() > 0) {
+        return;
+    }
+
+    if(entities.empty()) {
+        setState(WANDERING);
     } else {
         for(auto entity: entities) {
-            if(this->eatable(entity)) {
+            if(matable(entity) && entity->matable(this)) {
+                matables.push_back(entity);
+            }
+            if(eatable(entity)) {
                 eatables.push_back(entity);
             }
         }
-        if(!eatables.empty()) {
-            LivingEntity *closestEntity = getClosestEntity(eatables);
-            this->setTarget(closestEntity->getPosition());
-            if(this->isColliding(*closestEntity)) {
-                this->setState(FEEDING);
-                this->setFeedingTime(sf::seconds(getAppConfig().animal_feed_time));
-                this->feed(closestEntity);
+
+        if(!isPregnant() && !matables.empty()) { /*Checks for Mates in priority if not pregnant*/
+            std::cout<<"YOLO"<<std::endl;
+            LivingEntity *closestEntity = getClosestEntity(matables);
+            setTarget(closestEntity->getPosition());
+            if(isColliding(*closestEntity)) {
+                setState(MATING);
+                setMatingTime(sf::seconds(getAppConfig().animal_mating_time));
+                meet(closestEntity);
             } else {
-                this->setState(FOOD_IN_SIGHT);
+                setState(MATE_IN_SIGHT);
             }
+        } else if(isHungry() && !eatables.empty()) { /*If no mates checks for food if hungry */
+            LivingEntity *closestEntity = getClosestEntity(eatables);
+            setTarget(closestEntity->getPosition());
+            if(isColliding(*closestEntity)) {
+                setState(FEEDING);
+                setFeedingTime(sf::seconds(getAppConfig().animal_feed_time));
+                feed(closestEntity);
+            } else {
+                setState(FOOD_IN_SIGHT);
+            }
+        } else { /* If noone is interesting --> WANDERING*/
+            setState(WANDERING);
         }
     }
 }
 
 double Animal::getMaxSpeed() const
 {
-    switch(this->getState()) {
+    switch(getState()) {
     case FOOD_IN_SIGHT:
-        return 3.0 * this->getStandardMaxSpeed();
+        return 3.0 * getStandardMaxSpeed();
     case MATE_IN_SIGHT:
-        return 2.0 * this->getStandardMaxSpeed();
+        return 2.0 * getStandardMaxSpeed();
     case RUNNING_AWAY:
-        return 4.0 * this->getStandardMaxSpeed();
+        return 4.0 * getStandardMaxSpeed();
     default:
         return getStandardMaxSpeed();
     }
@@ -107,37 +166,47 @@ double Animal::getMaxSpeed() const
 
 Vec2d Animal::getSpeedVector() const
 {
-    return this->getDirection() * this->getSpeedNorm();
+    return getDirection() * getSpeedNorm();
 }
 
 double Animal::getRotation() const
 {
-    return this->getDirection().angle();
+    return getDirection().angle();
 }
 
 void Animal::setRotation(const double& angle)
 {
-    this->direction.rotate(angle);
+    direction.rotate(angle);
 };
 
 void Animal::update(sf::Time dt)
 {
     LivingEntity::update(dt);
-    this->updateHunger();
-    this->updateState();
-    switch(this->getState()) {
+    if(isPregnant() && getGestationTime().asSeconds() > 0) {
+        setGestationTime(getGestationTime() - dt);
+    }
+    updateHunger();
+    updateState();
+    switch(getState()) {
     case FOOD_IN_SIGHT:
-        this->updatePosition(dt, this->attractionForce());
+    case MATE_IN_SIGHT:
+        updatePosition(dt, attractionForce());
         break;
     case WANDERING:
-        this->updatePosition(dt, this->randomWalk());
+        updatePosition(dt, randomWalk());
         break;
     case FEEDING:
-        if(this->getFeedingTime().asSeconds() > 0) {
-            this->setFeedingTime(this->getFeedingTime() - dt);
+        if(getFeedingTime().asSeconds() > 0) {
+            setFeedingTime(getFeedingTime() - dt);
         } else {
-            this->setState(WANDERING);
+            setState(WANDERING);
         }
+    case MATING:
+    if(getMatingTime().asSeconds() > 0) {
+        setMatingTime(getMatingTime() - dt);
+    } else {
+        setState(WANDERING);
+    }
     default:
         break;
     }
@@ -145,34 +214,34 @@ void Animal::update(sf::Time dt)
 
 void Animal::updatePosition(sf::Time dt, const Vec2d& attractionForce)
 {
-    Vec2d acceleration = attractionForce / this->getMass();
-    Vec2d newSpeedVector = this->getSpeedVector() + (acceleration * dt.asSeconds());
-    this->setDirection(newSpeedVector.normalised());
-    if(newSpeedVector.length() > this->getMaxSpeed()) {
-        newSpeedVector = this->getDirection() * this->getMaxSpeed();
+    Vec2d acceleration = attractionForce / getMass();
+    Vec2d newSpeedVector = getSpeedVector() + (acceleration * dt.asSeconds());
+    setDirection(newSpeedVector.normalised());
+    if(newSpeedVector.length() > getMaxSpeed()) {
+        newSpeedVector = getDirection() * getMaxSpeed();
     }
-    this->setSpeedNorm(newSpeedVector.length());
-    this->setPosition(this->getPosition() + (newSpeedVector * dt.asSeconds()));
+    setSpeedNorm(newSpeedVector.length());
+    setPosition(getPosition() + (newSpeedVector * dt.asSeconds()));
 }
 
 Vec2d Animal::randomWalk()
 {
     Vec2d random_vec = Vec2d(uniform(-1.0, 1.0), uniform(-1.0, 1.0));
-    Vec2d current_target = this->getTarget() + random_vec * this->getRandomWalkJitter();
-    current_target = current_target.normalised() * this->getRandomWalkRadius();
-    this->setTarget(current_target);
-    return this->convertToGlobalCoord(this->getTarget() + Vec2d(getRandomWalkDistance(), 0.0)) - this->getPosition();
+    current_target += random_vec * getRandomWalkJitter();
+    current_target = current_target.normalised() * getRandomWalkRadius();
+    setTarget(current_target);
+    return convertToGlobalCoord(getTarget() + Vec2d(getRandomWalkDistance(), 0.0)) - getPosition();
 }
 
 void Animal::drawOn(sf::RenderTarget& targetWindow) const
 {
-    auto animalSprite = buildSprite(this->getPosition(), this->getRadius(), this->getTexture());
-    animalSprite.setRotation(this->getDirection().angle() / DEG_TO_RAD);
+    auto animalSprite = buildSprite(getPosition(), getRadius(), getTexture());
+    animalSprite.setRotation(getDirection().angle() / DEG_TO_RAD);
     targetWindow.draw(animalSprite);
     if(isDebugOn()) {
-        this->drawVision(targetWindow);
-        this->drawVirtualTarget(targetWindow);
-        this->drawDebugText(targetWindow);
+        drawVision(targetWindow);
+        drawVirtualTarget(targetWindow);
+        drawDebugText(targetWindow);
         Obstacle::drawObstacle(targetWindow);
     }
 }
@@ -181,52 +250,56 @@ void Animal::drawVision(sf::RenderTarget& targetWindow) const
 {
     sf::Color color = sf::Color::Black;
     color.a = 16; // light, transparent grey
-    double directionRotation = this->getRotation();
-    double viewRange = this->getViewRange();
-    double viewDistance = this->getViewDistance();
+    double directionRotation = getRotation();
+    double viewRange = getViewRange();
+    double viewDistance = getViewDistance();
     Arc arcgraphics(directionRotation - (viewRange/ DEG_TO_RAD) / 2, directionRotation + (viewRange/ DEG_TO_RAD)/2,
                     viewDistance, color, viewDistance);
     arcgraphics.setOrigin(viewDistance, viewDistance);
-    arcgraphics.setPosition(this->getPosition());
-    arcgraphics.rotate(this->getRotation() / DEG_TO_RAD);
+    arcgraphics.setPosition(getPosition());
+    arcgraphics.rotate(getRotation() / DEG_TO_RAD);
     targetWindow.draw(arcgraphics);
 }
 
 void Animal::drawDebugText(sf::RenderTarget& targetWindow) const
 {
-    auto text = buildText(this->getDebugString(),
+    auto text = buildText(getDebugString(),
                           convertToGlobalCoord(Vec2d(150.0, 0)),
                           getAppFont(),
                           getAppConfig().default_debug_text_size,
                           sf::Color::White);
-    text.setRotation(this->getRotation() / DEG_TO_RAD + 90);
+    text.setRotation(getRotation() / DEG_TO_RAD + 90);
     targetWindow.draw(text);
 }
 
 void Animal::drawVirtualTarget(sf::RenderTarget& targetWindow) const
 {
-    sf::CircleShape virtualRadius = buildCircle(Vec2d(0,0), this->getRandomWalkRadius(), sf::Color::Transparent);
+    sf::CircleShape virtualRadius = buildCircle(Vec2d(0,0), getRandomWalkRadius(), sf::Color::Transparent);
     virtualRadius.setOutlineThickness(-2);
     virtualRadius.setOutlineColor(sf::Color(0, 255, 0));
-    virtualRadius.setPosition(this->convertToGlobalCoord(Vec2d(this->getRandomWalkDistance(), 0)));
+    virtualRadius.setPosition(convertToGlobalCoord(Vec2d(getRandomWalkDistance(), 0)));
     targetWindow.draw(virtualRadius);
 
     sf::CircleShape virtualTarget = buildCircle(Vec2d(0,0), 5.0, sf::Color::Blue);
-    virtualTarget.setPosition(this->convertToGlobalCoord(this->getTarget()) + Vec2d(this->getRandomWalkDistance(), 0));
+    virtualTarget.setPosition(convertToGlobalCoord(getTarget()) + Vec2d(getRandomWalkDistance(), 0));
     targetWindow.draw(virtualTarget);
+
+    sf::CircleShape direction = buildCircle(Vec2d(0,0), 5.0, sf::Color::Red);
+    direction.setPosition(convertToGlobalCoord(getDirection())+ Vec2d(getRandomWalkDistance(), 0));
+    targetWindow.draw(direction);
 }
 
 Vec2d Animal::attractionForce() const
 {
-    Vec2d toTarget = this->getTarget() - this->getPosition();
+    Vec2d toTarget = getTarget() - getPosition();
     double toTargetNorm = toTarget.length();
     if(toTargetNorm == 0.0) {
         return Vec2d(0.0, 0.0);
     }
-    double coef = getDecelerationCoef(this->getDeceleration(toTargetNorm));
-    double tempSpeed = std::min(toTargetNorm / coef, this->getMaxSpeed());
+    double coef = getDecelerationCoef(getDeceleration(toTargetNorm));
+    double tempSpeed = std::min(toTargetNorm / coef, getMaxSpeed());
     Vec2d wantedSpeed = (toTarget / toTargetNorm) * tempSpeed;
-    return wantedSpeed - this->getSpeedVector();
+    return wantedSpeed - getSpeedVector();
 }
 
 Deceleration Animal::getDeceleration(const double& distanceToTarget) const
@@ -242,22 +315,22 @@ Deceleration Animal::getDeceleration(const double& distanceToTarget) const
 
 bool Animal::isTargetInSight(const Vec2d& target) const
 {
-    Vec2d distanceToTarget = (target - this->getPosition());
+    Vec2d distanceToTarget = (target - getPosition());
     double distanceSquared = distanceToTarget.lengthSquared();
 
-    double dotProd = this->getDirection().normalised().dot(distanceToTarget.normalised());
+    double dotProd = getDirection().normalised().dot(distanceToTarget.normalised());
     if(dotProd < 0) {
         return false;
     }
-    return isEqual(distanceSquared, 0) || (distanceSquared <= this->getViewDistance()*this->getViewDistance() &&
-                                           dotProd >= cos((this->getViewRange() + 0.001) / 2));
+    return isEqual(distanceSquared, 0) || (distanceSquared <= getViewDistance()*getViewDistance() &&
+                                           dotProd >= cos((getViewRange() + 0.001) / 2));
 }
 
 Vec2d Animal::convertToGlobalCoord(const Vec2d& coordinates) const
 {
     sf::Transform matTransform;
-    matTransform.translate(this->getPosition());
-    matTransform.rotate(this->getDirection().angle());
+    matTransform.translate(getPosition());
+    matTransform.rotate(getDirection().angle());
     return matTransform.transformPoint(coordinates);
 }
 
@@ -287,12 +360,12 @@ std::string stateToString(const AnimalState state)
 
 std::string Animal::getDebugString() const
 {
-    std::string sex = sexToString(this->getGenome().getSex());
-    std::string state = stateToString(this->getState());
-    std::string speed = to_nice_string(this->getSpeedNorm());
-    std::string energy = to_nice_string(this->getEnergy());
+    std::string sex = sexToString(getGenome().getSex());
+    std::string state = stateToString(getState());
+    std::string speed = to_nice_string(getSpeedNorm());
+    std::string energy = to_nice_string(getEnergy());
     std::string hungry = "NOT HUNGRY";
-    if(this->isHungry()) {
+    if(isHungry()) {
         hungry = "HUNGRY";
     }
     std::string debugStr = state + "    " + sex + "\n" + "Speed: " + speed + "\n"
@@ -302,15 +375,30 @@ std::string Animal::getDebugString() const
 
 void Animal::updateHunger()
 {
-    if(this->getEnergy() < getAppConfig().animal_satiety_min ||
-       (this->getState() == FEEDING && this->getEnergy() < getAppConfig().animal_satiety_max)) {
-        this->hungry = true;
+    if(getEnergy() < getAppConfig().animal_satiety_min ||
+       (getState() == FEEDING && getEnergy() < getAppConfig().animal_satiety_max)) {
+        hungry = true;
     } else {
-        this->hungry = false;
+        hungry = false;
     }
 }
 
 bool Animal::isHungry() const
 {
-    return this->hungry;
+    return hungry;
+}
+
+bool Animal::isFemale() const
+{
+    return getGenome().getSex() == FEMALE;
+}
+
+bool Animal::isPregnant() const
+{
+    return pregnant;
+}
+
+void Animal::setPregnant(const bool& preg)
+{
+    pregnant = preg;
 }
