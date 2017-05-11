@@ -28,7 +28,7 @@ double Sheep::getRadius() const
 
 sf::Texture& Sheep::getTexture() const
 {
-    if(getGenome().getColorPhenotype() == WHITE) {
+    if(getGenome()->getColorPhenotype() == WHITE) {
         return getAppTexture(getAppConfig().sheep_texture_white);
     } else {
         return getAppTexture(getAppConfig().sheep_texture_black);
@@ -95,6 +95,7 @@ void Sheep::update(sf::Time dt)
 
 double Sheep::feed(LivingEntity *entity)
 {
+    setFeedingTime(sf::seconds(getAppConfig().animal_feed_time));
     double bite = getAppConfig().sheep_energy_bite;
     setEnergy(getEnergy() +  getAppConfig().animal_meal_retention * entity->getEnergy());
     entity->setEnergy(entity->getEnergy() - bite);
@@ -149,16 +150,32 @@ void Sheep::breed(Sheep* sheep)
         male = this;
     }
 
+    female->setState(MATING);
+    female->setDad(male->getGenome());
+    female->setMatingTime(sf::seconds(getAppConfig().animal_mating_time));
     female->setPregnant(true);
     int nbBabies = uniform(getAppConfig().sheep_reproduction_min_children, getAppConfig().sheep_reproduction_max_children);
     female->setNBabies(nbBabies);
     female->setEnergy(female->getEnergy() - (getAppConfig().sheep_energy_loss_female_per_child * nbBabies));
     female->setGestationTime(sf::seconds(getAppConfig().sheep_reproduction_gestation_time));
     male->setEnergy(male->getEnergy() - getAppConfig().sheep_energy_loss_mating_male);
+    male->setState(MATING);
+    male->setMatingTime(sf::seconds(getAppConfig().animal_mating_time));
 }
 
 
 void Sheep::breed(Grass* grass)
 {
     return;
+}
+
+void Sheep::givingBirth()
+{
+    Environment *env = &getAppEnv();
+    for(int i = 0; i < getNBabies(); i++) {
+        Sheep *baby = new Sheep(getPosition(), getGenome(), getDad());
+        env->addEntity(baby);
+    }
+    setPregnant(false);
+    setNBabies(0);
 }

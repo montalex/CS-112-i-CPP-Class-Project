@@ -20,7 +20,7 @@
          "min energy" : 20,
          "reproduction":{
                "delivery time":10,
-               "mating time":5
+               "mating time":3
          },
         "idle":{
             "min":5,
@@ -37,7 +37,7 @@
             "longevity":40000,
             "max speed":50,
             "reproduction":{
-               "gestation time":10,
+               "gestation time":3,
                "min children":1,
                "max children":2
             },
@@ -51,7 +51,7 @@
                "distance":160
             },
             "energy":{
-               "initial":800,
+               "initial":610,
                "min mating male":450,
                "min mating female":600,
                "loss mating male":250,

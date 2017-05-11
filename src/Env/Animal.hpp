@@ -40,6 +40,8 @@ enum AnimalState {
  * bool pregnant: define if the Animal is pregnant or not.
  * int nBabies: the amount of babies the Animal is having once pregnant.
  * sf::Time gestationTime: the time the Animal is pregnant before giving birth.
+ * Genome* babiesDad: the Animal's baby father genome (for pregnant female).
+ * std::list<LivingEntity*> dangers: the list of all dangers to the Animal.
  */
 class Animal : public LivingEntity
 {
@@ -107,7 +109,7 @@ public:
      *
      * @return the Animal's genome (Genome)
      */
-    Genome getGenome() const;
+    Genome* getGenome() const;
 
     /*!
      * @brief Gets the Animal's state.
@@ -192,6 +194,48 @@ public:
      * @param newTime the new gestation time.
      */
     void setGestationTime(const sf::Time& newTime);
+
+    /*!
+     * @brief Gets the Animal's delivery time.
+     *
+     * @return the Animal's delivery time (sf::Time)
+     */
+    sf::Time getDeliveryTime() const;
+
+    /*!
+     * @brief Sets the Animal's delivery time.
+     *
+     * @param newTime the new delivery time.
+     */
+    void setDeliveryTime(const sf::Time& newTime);
+
+    /*!
+     * @brief Gets the pointer to the children's father.
+     *
+     * @return the pointer to the children's father (Animal*).
+     */
+    Genome* getDad() const;
+
+    /*!
+     * @brief Sets the pointer to the children's father.
+     *
+     * @param dad the pointer to the children's father.
+     */
+    void setDad(Genome* dad);
+
+    /*!
+     * @brief Gets the list of dangers.
+     *
+     * @return the list of dangers to the Animal.
+     */
+    std::list<LivingEntity*> getDangers() const;
+
+    /*!
+     * @brief Set the danger list to the given one.
+     *
+     * @param list the list of dangers
+     */
+    void setDangers(std::list<LivingEntity*> list);
 
     /*!
      * @brief Updates the Animal's state according to its surrounding.
@@ -408,12 +452,22 @@ public:
      */
     bool isFemale() const;
 
+    /*!
+     * @brief Give birth to children, adding new Animals to the Environment
+     */
+    virtual void givingBirth() = 0;
+
+    /*!
+     * @brief Gets the Animal's run away force from the dangers.
+     */
+    Vec2d runAway() const;
+
 private:
     Vec2d direction;
     Vec2d target;
     Vec2d current_target;
     double speedNorm;
-    Genome genome;
+    Genome* genome;
     AnimalState state;
     bool hungry;
     sf::Time feedingTime;
@@ -421,6 +475,9 @@ private:
     bool pregnant;
     int nBabies;
     sf::Time gestationTime;
+    sf::Time deliveryTime;
+    Genome* babiesDad;
+    std::list<LivingEntity*> dangers;
 };
 
 /*!

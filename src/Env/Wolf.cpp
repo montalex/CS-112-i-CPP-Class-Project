@@ -91,6 +91,7 @@ void Wolf::update(sf::Time dt)
 
 double Wolf::feed(LivingEntity *entity)
 {
+    setFeedingTime(sf::seconds(getAppConfig().animal_feed_time));
     setEnergy(getEnergy() +  getAppConfig().animal_meal_retention * entity->getEnergy());
     entity->setEnergy(0.0);
     return 0.0;
@@ -139,12 +140,17 @@ void Wolf::breed(Wolf* wolf)
         male = this;
     }
 
+    female->setState(MATING);
+    female->setDad(male->getGenome());
+    female->setMatingTime(sf::seconds(getAppConfig().animal_mating_time));
     female->setPregnant(true);
     int nbBabies = uniform(getAppConfig().wolf_reproduction_min_children, getAppConfig().wolf_reproduction_max_children);
     female->setNBabies(nbBabies);
     female->setEnergy(female->getEnergy() - (getAppConfig().wolf_energy_loss_female_per_child * nbBabies));
     female->setGestationTime(sf::seconds(getAppConfig().wolf_reproduction_gestation_time));
     male->setEnergy(male->getEnergy() - getAppConfig().wolf_energy_loss_mating_male);
+    male->setMatingTime(sf::seconds(getAppConfig().animal_mating_time));
+    male->setState(MATING);
 }
 
 void Wolf::breed(Sheep* sheep)
@@ -155,4 +161,15 @@ void Wolf::breed(Sheep* sheep)
 void Wolf::breed(Grass* grass)
 {
     return;
+}
+
+void Wolf::givingBirth()
+{
+    Environment *env = &getAppEnv();
+    for(int i = 0; i < getNBabies(); i++) {
+        Wolf *baby = new Wolf(getPosition(), getGenome(), getDad());
+        env->addEntity(baby);
+    }
+    setPregnant(false);
+    setNBabies(0);
 }

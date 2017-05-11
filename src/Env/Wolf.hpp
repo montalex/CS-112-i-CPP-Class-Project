@@ -214,6 +214,11 @@ public:
      * @param grass the Grass to mate with
      */
     void breed(Grass* grass) override;
+
+    /*!
+     * @brief Give birth to children, adding new Wolfs to the Environment
+     */
+    void givingBirth() override;
 };
 
 #endif // INFOSV_WOLF_HPP

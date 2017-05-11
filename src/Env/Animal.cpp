@@ -4,12 +4,17 @@
 Animal::Animal(const Vec2d& initPos, const double& startEnergy, Genome *mother,
                Genome *father, const sf::Time& gesTime) :
     LivingEntity(initPos, startEnergy), direction(Vec2d(1.0, 0.0)),
-    target(Vec2d()), current_target(Vec2d(1, 0)), speedNorm(0.0), genome(mother, father), state(WANDERING),
+    target(Vec2d()), current_target(Vec2d(1, 0)), speedNorm(0.0), state(WANDERING),
     hungry(false), feedingTime(sf::seconds(getAppConfig().animal_feed_time)),
     matingTime(sf::seconds(0)),pregnant(false),
-    nBabies(0), gestationTime(gesTime) {}
+    nBabies(0), gestationTime(gesTime), deliveryTime(sf::seconds(0)) {
+        genome = new Genome(mother, father);
+        babiesDad = new Genome(nullptr, nullptr);
+    }
 
-Animal::~Animal() {};
+Animal::~Animal() {
+    delete genome;
+};
 
 Vec2d Animal::getDirection() const
 {
@@ -41,7 +46,7 @@ void Animal::setSpeedNorm(const double& newNorm)
     speedNorm = newNorm;
 }
 
-Genome Animal::getGenome() const
+Genome* Animal::getGenome() const
 {
     return genome;
 }
@@ -96,18 +101,62 @@ void Animal::setGestationTime(const sf::Time& newTime)
     gestationTime = newTime;
 }
 
+sf::Time Animal::getDeliveryTime() const
+{
+    return deliveryTime;
+}
+
+void Animal::setDeliveryTime(const sf::Time& newTime)
+{
+    deliveryTime = newTime;
+}
+
+Genome* Animal::getDad() const
+{
+    return babiesDad;
+}
+
+void Animal::setDad(Genome* dad)
+{
+    babiesDad = dad;
+}
+
+std::list<LivingEntity*> Animal::getDangers() const
+{
+    return dangers;
+}
+
+void Animal::setDangers(std::list<LivingEntity*> list)
+{
+    dangers = list;
+}
+
 void Animal::updateState()
 {
     Environment env = INFOSV_APPLICATION_HPP::getAppEnv();
     std::list<LivingEntity*> eatables;
     std::list<LivingEntity*> matables;
+    std::list<LivingEntity*> dangers;
     std::list<LivingEntity*> entities = env.getEntitiesInSightForAnimal(this);
-    if(isPregnant() && getGestationTime().asSeconds() <= 0) {
-        setState(GIVING_BIRTH);
+
+    if(getState() == GIVING_BIRTH) {
+        if(getDeliveryTime().asSeconds() <= 0) {
+            setState(WANDERING);
+        }
         return;
     }
-
+    if(isPregnant() && getGestationTime().asSeconds() <= 0) {
+        setState(GIVING_BIRTH);
+        givingBirth();
+        setDeliveryTime(sf::seconds(getAppConfig().animal_delivery_time));
+        return;
+    }
     if(getMatingTime().asSeconds() > 0) {
+        setState(MATING);
+        return;
+    }
+    if(getFeedingTime().asSeconds() > 0) {
+        setState(FEEDING);
         return;
     }
 
@@ -115,6 +164,9 @@ void Animal::updateState()
         setState(WANDERING);
     } else {
         for(auto entity: entities) {
+            if(entity->eatable(this)) {
+                dangers.push_back(entity);
+            }
             if(matable(entity) && entity->matable(this)) {
                 matables.push_back(entity);
             }
@@ -122,14 +174,15 @@ void Animal::updateState()
                 eatables.push_back(entity);
             }
         }
+        std::cout << dangers.size() << std::endl;
 
-        if(!isPregnant() && !matables.empty()) { /*Checks for Mates in priority if not pregnant*/
-            std::cout<<"YOLO"<<std::endl;
+        if(!dangers.empty()) {
+            setState(RUNNING_AWAY);
+            setDangers(dangers);
+        } else if(!isPregnant() && !matables.empty()) { /*Checks for Mates in priority if not pregnant*/
             LivingEntity *closestEntity = getClosestEntity(matables);
             setTarget(closestEntity->getPosition());
             if(isColliding(*closestEntity)) {
-                setState(MATING);
-                setMatingTime(sf::seconds(getAppConfig().animal_mating_time));
                 meet(closestEntity);
             } else {
                 setState(MATE_IN_SIGHT);
@@ -138,13 +191,12 @@ void Animal::updateState()
             LivingEntity *closestEntity = getClosestEntity(eatables);
             setTarget(closestEntity->getPosition());
             if(isColliding(*closestEntity)) {
-                setState(FEEDING);
-                setFeedingTime(sf::seconds(getAppConfig().animal_feed_time));
                 feed(closestEntity);
             } else {
                 setState(FOOD_IN_SIGHT);
             }
         } else { /* If noone is interesting --> WANDERING*/
+            std::cout << "YOLO" << std::endl;
             setState(WANDERING);
         }
     }
@@ -198,15 +250,21 @@ void Animal::update(sf::Time dt)
     case FEEDING:
         if(getFeedingTime().asSeconds() > 0) {
             setFeedingTime(getFeedingTime() - dt);
-        } else {
-            setState(WANDERING);
         }
+        break;
     case MATING:
-    if(getMatingTime().asSeconds() > 0) {
-        setMatingTime(getMatingTime() - dt);
-    } else {
-        setState(WANDERING);
-    }
+        if(getMatingTime().asSeconds() > 0) {
+            setMatingTime(getMatingTime() - dt);
+        }
+        break;
+    case GIVING_BIRTH:
+        if(getDeliveryTime().asSeconds() > 0) {
+            setDeliveryTime(getDeliveryTime() - dt);
+        }
+        break;
+    case RUNNING_AWAY:
+        updatePosition(dt, runAway());
+        break;
     default:
         break;
     }
@@ -360,7 +418,7 @@ std::string stateToString(const AnimalState state)
 
 std::string Animal::getDebugString() const
 {
-    std::string sex = sexToString(getGenome().getSex());
+    std::string sex = sexToString(getGenome()->getSex());
     std::string state = stateToString(getState());
     std::string speed = to_nice_string(getSpeedNorm());
     std::string energy = to_nice_string(getEnergy());
@@ -368,8 +426,10 @@ std::string Animal::getDebugString() const
     if(isHungry()) {
         hungry = "HUNGRY";
     }
+    std::string gestaTime = to_nice_string(getGestationTime().asSeconds());
+    std::string delivTime = to_nice_string(getDeliveryTime().asSeconds());
     std::string debugStr = state + "    " + sex + "\n" + "Speed: " + speed + "\n"
-                           + "Energy: " + energy + "\n" + hungry + "\n";
+                           + "Energy: " + energy + "\n" + hungry + "\n" + gestaTime + "\n"+ delivTime + "\n";
     return debugStr;
 }
 
@@ -390,7 +450,7 @@ bool Animal::isHungry() const
 
 bool Animal::isFemale() const
 {
-    return getGenome().getSex() == FEMALE;
+    return getGenome()->getSex() == FEMALE;
 }
 
 bool Animal::isPregnant() const
@@ -401,4 +461,17 @@ bool Animal::isPregnant() const
 void Animal::setPregnant(const bool& preg)
 {
     pregnant = preg;
+}
+
+Vec2d Animal::runAway() const
+{
+    double coefRun = 500;
+    double coefDistance = 1.2;
+    Vec2d force = Vec2d(0, 0);
+    Vec2d dir;
+    for(auto danger: getDangers()) {
+        dir = danger->getPosition() - this->getPosition();
+        force -= (dir * coefRun / std::pow(dir.length(), coefDistance));
+    }
+    return force;
 }

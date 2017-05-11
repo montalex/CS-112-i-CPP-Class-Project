@@ -85,6 +85,10 @@ Q3.12: Avec une variable de classe propre à tous les animaux, initialisée au
 début dans le constructeur propre à chaque type d'animaux, puis réinitialisée
 à chanque 'meeting'.
 
-Q3.13:
+Q3.13: Avec une méthode virutal dans la classe Animal, implémenter différement
+pour chaque type d'Animaux.
 
 Q3.14: Avec une variable de classe propre à tous les animaux.
+
+Q3.15: Oui l'ensemble des dangers pour calculer la force d'attraction dans la
+méthode Update.
