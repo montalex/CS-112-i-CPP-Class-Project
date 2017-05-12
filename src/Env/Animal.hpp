@@ -459,6 +459,8 @@ public:
 
     /*!
      * @brief Gets the Animal's run away force from the dangers.
+     *
+     * @return Animal's run away force (Vec2d)
      */
     Vec2d runAway() const;
 

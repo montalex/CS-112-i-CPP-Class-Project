@@ -174,7 +174,6 @@ void Animal::updateState()
                 eatables.push_back(entity);
             }
         }
-        std::cout << dangers.size() << std::endl;
 
         if(!dangers.empty()) {
             setState(RUNNING_AWAY);
@@ -196,7 +195,6 @@ void Animal::updateState()
                 setState(FOOD_IN_SIGHT);
             }
         } else { /* If noone is interesting --> WANDERING*/
-            std::cout << "YOLO" << std::endl;
             setState(WANDERING);
         }
     }
@@ -287,8 +285,8 @@ Vec2d Animal::randomWalk()
     Vec2d random_vec = Vec2d(uniform(-1.0, 1.0), uniform(-1.0, 1.0));
     current_target += random_vec * getRandomWalkJitter();
     current_target = current_target.normalised() * getRandomWalkRadius();
-    setTarget(current_target);
-    return convertToGlobalCoord(getTarget() + Vec2d(getRandomWalkDistance(), 0.0)) - getPosition();
+    Vec2d moved_current_target = current_target + Vec2d(getRandomWalkDistance(), 0);
+    return convertToGlobalCoord(moved_current_target) - getPosition();
 }
 
 void Animal::drawOn(sf::RenderTarget& targetWindow) const
@@ -315,7 +313,7 @@ void Animal::drawVision(sf::RenderTarget& targetWindow) const
                     viewDistance, color, viewDistance);
     arcgraphics.setOrigin(viewDistance, viewDistance);
     arcgraphics.setPosition(getPosition());
-    arcgraphics.rotate(getRotation() / DEG_TO_RAD);
+    arcgraphics.rotate(directionRotation / DEG_TO_RAD);
     targetWindow.draw(arcgraphics);
 }
 
@@ -335,16 +333,12 @@ void Animal::drawVirtualTarget(sf::RenderTarget& targetWindow) const
     sf::CircleShape virtualRadius = buildCircle(Vec2d(0,0), getRandomWalkRadius(), sf::Color::Transparent);
     virtualRadius.setOutlineThickness(-2);
     virtualRadius.setOutlineColor(sf::Color(0, 255, 0));
-    virtualRadius.setPosition(convertToGlobalCoord(Vec2d(getRandomWalkDistance(), 0)));
+    virtualRadius.setPosition(getPosition() + getDirection()*getRandomWalkDistance());
     targetWindow.draw(virtualRadius);
 
     sf::CircleShape virtualTarget = buildCircle(Vec2d(0,0), 5.0, sf::Color::Blue);
-    virtualTarget.setPosition(convertToGlobalCoord(getTarget()) + Vec2d(getRandomWalkDistance(), 0));
+    virtualTarget.setPosition(convertToGlobalCoord(current_target) + getDirection()*getRandomWalkDistance() );
     targetWindow.draw(virtualTarget);
-
-    sf::CircleShape direction = buildCircle(Vec2d(0,0), 5.0, sf::Color::Red);
-    direction.setPosition(convertToGlobalCoord(getDirection())+ Vec2d(getRandomWalkDistance(), 0));
-    targetWindow.draw(direction);
 }
 
 Vec2d Animal::attractionForce() const
@@ -376,7 +370,7 @@ bool Animal::isTargetInSight(const Vec2d& target) const
     Vec2d distanceToTarget = (target - getPosition());
     double distanceSquared = distanceToTarget.lengthSquared();
 
-    double dotProd = getDirection().normalised().dot(distanceToTarget.normalised());
+    double dotProd = getDirection().dot(distanceToTarget.normalised());
     if(dotProd < 0) {
         return false;
     }
@@ -388,7 +382,7 @@ Vec2d Animal::convertToGlobalCoord(const Vec2d& coordinates) const
 {
     sf::Transform matTransform;
     matTransform.translate(getPosition());
-    matTransform.rotate(getDirection().angle());
+    matTransform.rotate(getRotation() / DEG_TO_RAD);
     return matTransform.transformPoint(coordinates);
 }
 
