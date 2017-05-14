@@ -1,7 +1,9 @@
 #include <Env/Environment.hpp>
 #include <Env/Animal.hpp>
 #include <Env/LivingEntity.hpp>
+#include <Utility/Constants.hpp>
 #include <algorithm>
+#include <Env/SpeciesCounter.hpp>
 
 Environment::~Environment() {
 
@@ -48,4 +50,18 @@ std::list<LivingEntity*> Environment::getEntitiesInSightForAnimal(const Animal* 
         }
     }
     return entitiesSeen;
+}
+
+std::unordered_map<std::string, double> Environment::fetchData(std::string const & label) {
+    if (label == s::GENERAL) {
+        SpeciesCounter sc;
+        for (LivingEntity * const entity : entities) {
+            entity->acceptVisit(sc);
+        }
+        return sc.getCount();
+    } else {
+        std::unordered_map<std::string, double> empty;
+        return empty;
+    }
+
 }

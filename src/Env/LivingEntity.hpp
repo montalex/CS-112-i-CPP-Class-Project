@@ -2,7 +2,6 @@
 #define INFOSV_LIVING_ENTITY_HPP
 
 #include <Env/Obstacle.hpp>
-
 class Sheep;
 class Wolf;
 class Grass;
@@ -221,6 +220,8 @@ public:
      * @param grass the Grass to mate with
      */
     virtual void breed(Grass* grass) = 0;
+
+    virtual void acceptVisit(class Visitor& v) = 0;
 
 private:
     Vec2d position;

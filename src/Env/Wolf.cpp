@@ -1,5 +1,6 @@
 #include <Env/Wolf.hpp>
 #include <Application.hpp>
+#include <Env/Visitor.hpp>
 
 Wolf::Wolf(const Vec2d& initPos, Genome *mother, Genome *father)
     : Animal(initPos, getAppConfig().wolf_energy_initial, mother, father,
@@ -172,4 +173,8 @@ void Wolf::givingBirth()
     }
     setPregnant(false);
     setNBabies(0);
+}
+
+void Wolf::acceptVisit(Visitor& v) {
+    v.visit(this);
 }

@@ -9,7 +9,7 @@
 
 #include <Env/Environment.hpp>
 #include <JSON/JSON.hpp>
-//#include <Stats/Stats.hpp>
+#include <Stats/Stats.hpp>
 #include "Config.hpp"
 //#include <Utility/AnimalTracker.hpp>
 #include <Utility/Vec2d.hpp>
@@ -33,8 +33,7 @@
  *
  * Note that `simulation` and `world` usually mean the same thing here.
  */
-class Application
-{
+class Application {
 public:
     /*!
      * @brief Constructor
@@ -143,6 +142,18 @@ public:
      */
     Vec2d getCursorPositionInView() const;
 
+    // resets stats to general view
+    void resetStats() {
+        getStats().setActive(0);
+    }
+
+    // focus on particular stat + resets the stat
+    void focusOnStat(std::string graph_title) {
+		// UNCOMMENT ME AT STEP 5:
+        //getStats().focusOn(graph_title);
+    }
+
+
 protected:
     /**
      *  @brief Add a graph to the stats manager and update GUI
@@ -152,7 +163,7 @@ protected:
      *  @param min    y-axis: min value expected
      *  @param max    y-axis: max value expected
      */
-//    void addGraph(std::string const& title, std::vector<std::string> const& series, double min, double max);
+    void addGraph(std::string const& title, std::vector<std::string> const& series, double min, double max);
 
 protected:
     /*!
@@ -196,14 +207,14 @@ protected:
      * @param target a render target
      */
     virtual void onDraw(sf::RenderTarget& target);
-/*!
-     * @brief Subclass can override this method to change the policy for
-	 * background handling
-	 */
-	void chooseBackground();
-	
+    /*!
+         * @brief Subclass can override this method to change the policy for
+    	 * background handling
+    	 */
+    void chooseBackground();
 
-private:
+
+protected:
     /*!
      * @brief Create the window
      */
@@ -235,7 +246,7 @@ private:
      *
      *  @return the application statistic manager
      */
-//    Stats& getStats();
+    Stats& getStats();
 
     /*!
      * @brief Toggle pause
@@ -265,19 +276,23 @@ private:
      * if selection is active.
      */
     void updateSimulationView();
-	
-   /*!
-     * @brief toggle debug mode
-     */
-	void switchDebug();
-	
 
-private:
+    /*!
+      * @brief toggle debug mode
+      */
+    void switchDebug();
+
+
+protected:
     // The order is important since some fields need other to be initialised
     std::string const mAppDirectory; ///< Path to the executable's directory
     std::string const mCfgFile;      ///< Relative path to the CFG
 //    j::Value          mJSONRead;       ///< Application configuration
     Config*          mConfig;       ///< Application configuration
+
+    Stats*   mStats;                 ///< Statistic manager
+    sf::View mStatsView;             ///< View for the stats area
+    int      mCurrentGraphId;        ///< Current graph ID
 
     Environment* mEnv;                       ///< Simulated environment
 
@@ -286,11 +301,6 @@ private:
     sf::RenderWindow mRenderWindow;  ///< SFML window / render target
     sf::View mSimulationView;        ///< View for simulation area
 
-//    Stats*   mStats;                 ///< Statistic manager
-    sf::View mStatsView;             ///< View for the stats area
-    int      mNextGraphId;           ///< Next ID to be used for the next new graph
-    int      mCurrentGraphId;        ///< Current graph ID
-
     using TexturePool = std::map<std::string, sf::Texture*>;
     TexturePool mTextures;           ///< Pool of textures
     sf::Texture mDefaultTexture;     ///< Default, white texture
@@ -298,14 +308,14 @@ private:
 
     bool         mPaused;            ///< Tells if the application is in pause or not
     bool         mIsResetting;       ///< Is true for one main loop iteration when resetting.
-                                     ///  This is useful to pause the clock while generating
-                                     ///  a new world. Without this, a huge dt would result from
-                                     ///  rebuilding the world.
+    ///  This is useful to pause the clock while generating
+    ///  a new world. Without this, a huge dt would result from
+    ///  rebuilding the world.
     bool         mIsDragging;        ///< Tells whether or not the user is dragging the view
     sf::Vector2i mLastCursorPosition;///< For handling dragging logic
 //    AnimalTracker   mAnimalTracker;        ///< Helper to keep track of an animal (optional)
 
-	sf::RectangleShape mSimulationBackground;
+    sf::RectangleShape mSimulationBackground;
 };
 
 /*!

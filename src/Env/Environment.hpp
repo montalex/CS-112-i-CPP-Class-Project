@@ -69,6 +69,15 @@ public:
      */
     std::list<LivingEntity*> getEntitiesInSightForAnimal(const Animal* animal) const;
 
+    /*!
+     * @brief Computes new data for graphs.
+     *
+     * @param label the label of the graph that will be receive the data.
+     * 
+     * @return new data to add to the graph.
+     */
+     std::unordered_map<std::string, double> fetchData(std::string const & label);
+
 private:
     std::list<LivingEntity*> entities;
 };

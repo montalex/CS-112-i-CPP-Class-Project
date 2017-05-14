@@ -2,7 +2,6 @@
 #define INFOSV_WOLF_HPP
 
 #include <Env/Animal.hpp>
-
 /*!
  * @class Wolf
  *
@@ -219,6 +218,8 @@ public:
      * @brief Give birth to children, adding new Wolfs to the Environment
      */
     void givingBirth() override;
+
+    void acceptVisit(Visitor& v) override;
 };
 
 #endif // INFOSV_WOLF_HPP

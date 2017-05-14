@@ -1,6 +1,6 @@
 #include <Env/Grass.hpp>
 #include <Application.hpp>
-
+#include <Env/Visitor.hpp>
 Grass::Grass(const Vec2d& initPos)
     : LivingEntity(initPos, getAppConfig().grass_initial_energy)
 {
@@ -121,4 +121,8 @@ void Grass::breed(Sheep* sheep)
 void Grass::breed(Grass* grass)
 {
     return;
+}
+
+void Grass::acceptVisit(Visitor& v) {
+    v.visit(this);
 }

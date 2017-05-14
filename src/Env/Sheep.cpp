@@ -1,6 +1,6 @@
 #include <Env/Sheep.hpp>
 #include <Application.hpp>
-
+#include <Env/Visitor.hpp>
 Sheep::Sheep(const Vec2d& initPos, Genome *mother, Genome *father)
     : Animal(initPos, getAppConfig().sheep_energy_initial, mother, father,
             sf::seconds(getAppConfig().sheep_reproduction_gestation_time)) {}
@@ -178,4 +178,8 @@ void Sheep::givingBirth()
     }
     setPregnant(false);
     setNBabies(0);
+}
+
+void Sheep::acceptVisit(Visitor& v) {
+    v.visit(this);
 }

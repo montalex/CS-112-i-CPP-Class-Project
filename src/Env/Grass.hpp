@@ -2,7 +2,6 @@
 #define INFOSV_GRASS_HPP
 
 #include <Env/LivingEntity.hpp>
-
 /*!
  * @class Grass
  *
@@ -160,6 +159,8 @@ public:
      * @param grass the Grass to mate with
      */
     void breed(Grass* grass) override;
+
+    void acceptVisit(Visitor& v) override;
 };
 
 #endif // INFOSV_GRASS_HPP

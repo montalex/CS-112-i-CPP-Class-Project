@@ -2,7 +2,6 @@
 #define INFOSV_SHEEP_HPP
 
 #include <Env/Animal.hpp>
-
 /*!
  * @class Sheep
  *
@@ -219,6 +218,8 @@ public:
      * @brief Give birth to children, adding new Sheep to the Environment
      */
     void givingBirth() override;
+
+    void acceptVisit(Visitor& v) override;
 };
 
 #endif // INFOSV_SHEEP_HPP
