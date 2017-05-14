@@ -3,7 +3,7 @@
 
 Genome::Genome(Genome *mother, Genome *father)
 {
-    double const MUTABILITY = getAppConfig().genome_mutability_innate_immmune_system;
+    double const MUTABILITY = getAppConfig().genome_mutability_innate_immune_system;
     double const ALLELE_PREVALENCE = getAppConfig().genome_black_allelle_prevalence;
     if(INFOSV_RANDOM_HPP::bernoulli(0.5)) {
         sex = MALE;
