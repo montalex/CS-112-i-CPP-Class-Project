@@ -83,7 +83,6 @@ void Environment::addToHerd(const Sheep * const sheep) {
 
 const Sheep* Environment::findOldestSheep(int herd) {
     OldestSheepFinder finder(herd);
-    std::cout << "in finder" << std::endl;
     for (LivingEntity* const entity : entities) {
         entity->acceptVisit(finder);
     }
@@ -93,10 +92,7 @@ const Sheep* Environment::findOldestSheep(int herd) {
 void Environment::updateHerds() {
     for (std::pair<const int, const Sheep*> entry : sheepLeaders) {
         if (entry.second->isDead()) {
-
-            const Sheep* oldestSheep = findOldestSheep(entry.first);
-
-            sheepLeaders[entry.second->getHerdId()] = oldestSheep;
+            sheepLeaders[entry.second->getHerdId()] = findOldestSheep(entry.first);
         }
     }
 }
