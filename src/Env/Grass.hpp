@@ -160,7 +160,7 @@ public:
      */
     void breed(Grass* grass) override;
 
-    void acceptVisit(Visitor& v) override;
+    virtual void acceptVisit(Visitor& v) override;
 };
 
 #endif // INFOSV_GRASS_HPP

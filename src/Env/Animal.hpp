@@ -349,7 +349,7 @@ public:
      *
      * @param targetWindow the window to draw on
      */
-    void drawOn(sf::RenderTarget& targetWindow) const override;
+    virtual void drawOn(sf::RenderTarget& targetWindow) const override;
 
     /*!
      * @brief Draws the Animal's vision in the given window.
@@ -421,7 +421,7 @@ public:
      *
      * @return the debug string (std::string)
      */
-    std::string getDebugString() const override;
+    virtual std::string getDebugString() const override;
 
     /*!
      * @brief Updates the Animal's hunger status.

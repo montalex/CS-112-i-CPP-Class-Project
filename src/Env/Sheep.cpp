@@ -1,9 +1,13 @@
 #include <Env/Sheep.hpp>
 #include <Application.hpp>
 #include <Env/Visitor.hpp>
-Sheep::Sheep(const Vec2d& initPos, Genome *mother, Genome *father)
+Sheep::Sheep(const Vec2d& initPos, int herd, Genome *mother, Genome *father)
     : Animal(initPos, getAppConfig().sheep_energy_initial, mother, father,
-            sf::seconds(getAppConfig().sheep_reproduction_gestation_time)) {}
+            sf::seconds(getAppConfig().sheep_reproduction_gestation_time)), herdId(herd) {
+        if (herdId != -1) {
+            getAppEnv().addToHerd(this);
+        }
+    }
 
 Sheep::~Sheep() {}
 
@@ -133,6 +137,16 @@ void Sheep::meet(LivingEntity* mate)
     mate->breed(this);
 }
 
+void Sheep::drawOn(sf::RenderTarget& targetWindow) const {
+    Animal::drawOn(targetWindow);
+    if (isLeader()) {
+        auto leaderSprite = buildSprite(getPosition() + Vec2d(getRadius() / 2, -getRadius() / 2),
+                                        getRadius() / 2,
+                                        getAppTexture(getAppConfig().animal_texture_leader));
+        targetWindow.draw(leaderSprite);
+    }
+}
+
 void Sheep::breed(Wolf* wolf)
 {
     return;
@@ -173,7 +187,7 @@ void Sheep::givingBirth()
 {
     Environment *env = &getAppEnv();
     for(int i = 0; i < getNBabies(); i++) {
-        Sheep *baby = new Sheep(getPosition(), getGenome(), getDad());
+        Sheep *baby = new Sheep(getPosition(), getHerdId(), getGenome(), getDad());
         env->addEntity(baby);
     }
     setPregnant(false);
@@ -182,4 +196,35 @@ void Sheep::givingBirth()
 
 void Sheep::acceptVisit(Visitor& v) {
     v.visit(this);
+}
+
+const Sheep* Sheep::getLeader() const {
+    return hasLeader() ? getAppEnv().getLeader(herdId) : nullptr;
+}
+
+int Sheep::getHerdId() const {
+    return herdId;
+}
+
+bool Sheep::hasLeader() const {
+    return herdId != -1;
+}
+
+bool Sheep::isLeader() const {
+    return getLeader() == this;
+}
+
+bool Sheep::isFreeToMove() const {
+    return isLeader() || !hasLeader();
+}
+
+std::string Sheep::getDebugString() const {
+    std::string herdString;
+    if (hasLeader()) {
+        herdString = (isLeader() ? "Leader" : "Follower") ;
+        herdString += ", Herd: " + std::to_string(getHerdId());
+    } else {
+        herdString = "Not in herd";
+    }
+    return Animal::getDebugString() + herdString + "\n";
 }

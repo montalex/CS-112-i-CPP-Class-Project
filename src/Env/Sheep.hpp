@@ -17,7 +17,7 @@ public:
      * @param mother Mother's genome of the Sheep
      * @param father Father's genome of the Sheep
      */
-    Sheep(const Vec2d& initPos, Genome *mother = nullptr, Genome *father = nullptr);
+    Sheep(const Vec2d& initPos, int herd = 0, Genome *mother = nullptr, Genome *father = nullptr);
 
     /*!
      * @brief Destructor.
@@ -220,6 +220,39 @@ public:
     void givingBirth() override;
 
     void acceptVisit(Visitor& v) override;
+
+    /*!
+     * @brief Gets the animal herd id
+     */
+    int getHerdId() const;
+
+    /*!
+     * @brief Gets the leader of the animal
+     */
+    virtual const Sheep* getLeader() const;
+
+    /*!
+     * @brief Checks whether the animal has a leader
+     */
+    bool hasLeader() const;
+
+    /*!
+     * @brief Checks whether the animal is a leader
+     */
+    bool isLeader() const; 
+
+    /*!
+     * @brief Checks whether the animal is free to move
+     */
+    bool isFreeToMove() const;
+
+    void drawOn(sf::RenderTarget& targetWindow) const override;
+
+    std::string getDebugString() const override;
+
+private:
+    int herdId;
+
 };
 
 #endif // INFOSV_SHEEP_HPP

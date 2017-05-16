@@ -22,7 +22,9 @@ public:
 	 * @param id of the graph desired to become active.
 	 */
 	void setActive(int id);
-	virtual void drawOn(sf::RenderTarget& target) const override;
+	/*!
+	 * @brief Resets all the data series for all graphs
+	 */
 	void reset();
 	/*!
 	 * @brief Adds a new graph to the stats or modify an existing one
@@ -36,6 +38,7 @@ public:
 	void addGraph(int id, std::string const & label, std::vector<std::string> const & titles,
 				  double min, double max, Vec2d const & windowDimensions);
 	virtual void update(sf::Time dt) override;
+	virtual void drawOn(sf::RenderTarget& target) const override;
 };
 
 #endif // STATS_HPP

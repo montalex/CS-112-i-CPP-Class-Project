@@ -4,6 +4,7 @@
 #include <Utility/Constants.hpp>
 #include <algorithm>
 #include <Env/SpeciesCounter.hpp>
+#include <Env/OldestSheepFinder.hpp>
 
 Environment::~Environment() {
 
@@ -18,6 +19,7 @@ void Environment::update(sf::Time dt)
 {
     for(auto& entity: entities) {
         entity->update(dt);
+        updateHerds();
         if(entity->isDead()) {
             delete entity;
             entity = nullptr;
@@ -64,4 +66,37 @@ std::unordered_map<std::string, double> Environment::fetchData(std::string const
         return empty;
     }
 
+}
+
+const Sheep* Environment::getLeader(int herdId) const  {
+    return sheepLeaders.at(herdId);
+}
+
+void Environment::addToHerd(const Sheep * const sheep) {
+    int herdId = sheep->getHerdId();
+    // The simplest and most efficient way to check whether a map contains a certain key
+    // is to count its occurrences.
+    if (sheepLeaders.count(herdId) == 0) {
+        sheepLeaders[herdId] = sheep;
+    }
+}
+
+const Sheep* Environment::findOldestSheep(int herd) {
+    OldestSheepFinder finder(herd);
+    std::cout << "in finder" << std::endl;
+    for (LivingEntity* const entity : entities) {
+        entity->acceptVisit(finder);
+    }
+    return finder.getOldestVisited();
+}
+
+void Environment::updateHerds() {
+    for (std::pair<const int, const Sheep*> entry : sheepLeaders) {
+        if (entry.second->isDead()) {
+
+            const Sheep* oldestSheep = findOldestSheep(entry.first);
+
+            sheepLeaders[entry.second->getHerdId()] = oldestSheep;
+        }
+    }
 }

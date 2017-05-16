@@ -36,7 +36,6 @@ void FinalApplication::onEvent(sf::Event event, sf::RenderWindow&) {
             getAppEnv().addEntity(new Sheep(getCursorPositionInView()));
             break;
 
-        /*// UNCOMMENT ME WHEN 4.2 IS IMPLEMENTED
         case sf::Keyboard::Num1:
         getAppEnv().addEntity(new Sheep(getCursorPositionInView(), 1));
         break;
@@ -44,7 +43,6 @@ void FinalApplication::onEvent(sf::Event event, sf::RenderWindow&) {
         case sf::Keyboard::Num2:
         getAppEnv().addEntity(new Sheep(getCursorPositionInView(), 2));
         break;
-        */
 
         case sf::Keyboard::G:
             getAppEnv().addEntity(new Grass(getCursorPositionInView()));

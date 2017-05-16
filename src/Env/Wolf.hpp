@@ -220,6 +220,7 @@ public:
     void givingBirth() override;
 
     void acceptVisit(Visitor& v) override;
+
 };
 
 #endif // INFOSV_WOLF_HPP

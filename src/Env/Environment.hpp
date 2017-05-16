@@ -5,6 +5,8 @@
 #include <Utility/Vec2d.hpp>
 #include <SFML/Graphics.hpp>
 #include <Utility/Utility.hpp>
+#include <Env/Sheep.hpp>
+#include <Env/Wolf.hpp>
 
 class Animal;
 class LivingEntity;
@@ -76,9 +78,36 @@ public:
      * 
      * @return new data to add to the graph.
      */
-     std::unordered_map<std::string, double> fetchData(std::string const & label);
+    std::unordered_map<std::string, double> fetchData(std::string const & label);
 
+    /*!
+     * @brief Gets the leader of the sheep
+     *
+     * @param id The sheep
+     * @return pointer to the animal leader.
+     */
+    const Sheep* getLeader(int herdId) const;
+
+    /*!
+     * @brief Adds the sheep to its herd or creates a new one if none exist
+     * with the animal herd id
+     *
+     * @param sheep the sheep to add to the herd.
+    */
+    void addToHerd(const Sheep* const sheep);
+
+    /*!
+     * @brief Adds the wolf to its herd or creates a new one if none exist
+     * with the animal herd id
+     *
+     * @param wofl the wolf to add to the herd.
+    */
+    void addToHerd(const Wolf* const wolf);
+private:
+    void updateHerds();
+    const Sheep* findOldestSheep(int herd);
 private:
     std::list<LivingEntity*> entities;
+    std::unordered_map<int, const Sheep*> sheepLeaders;
 };
 #endif // INFOSV_ENVIRONMENT_HPP

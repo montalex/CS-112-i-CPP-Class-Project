@@ -13,7 +13,6 @@ void Stats::reset() {
 
 void Stats::addGraph(int id, std::string const & label, std::vector<std::string> const & titles,
 				     double min, double max, Vec2d const& windowDimensions) {
-	// If the id is not already in the map, create a new entry.
 	Graph* newG = new Graph(titles, windowDimensions, min, max);
 	graphs[id].graph.reset(newG);
 	graphs[id].label = label;
@@ -21,13 +20,18 @@ void Stats::addGraph(int id, std::string const & label, std::vector<std::string>
 }
 
 void Stats::update(sf::Time dt) {
+	// Only update if the right interval has passed, otherwise
+	// wait
 	if (timeSinceUpdate < getAppConfig().stats_refresh_rate) {
 		timeSinceUpdate += dt.asSeconds();
 		return;
 	}
+	// Each graph is updated
 	for (std::pair<const int, LabelledGraph> & lg : graphs) {
-		lg.second.graph->updateData(sf::seconds(timeSinceUpdate), getAppEnv().fetchData(lg.second.label));
+		lg.second.graph->updateData(sf::seconds(timeSinceUpdate),
+		       						getAppEnv().fetchData(lg.second.label));
 	}
+	// Start to wait again
 	timeSinceUpdate = 0;
 }
 

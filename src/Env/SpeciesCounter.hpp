@@ -1,6 +1,12 @@
 #include <Env/Visitor.hpp>
 #include <Utility/Constants.hpp>
 
+/*!
+ * @class SpeciesCounter
+ * @brief Simple implementation of the visitor
+ * super class to count the number of sheep, wolves and grass
+ * entities given a list of LivingEntities
+ */
 class SpeciesCounter: public Visitor
 {
 private:

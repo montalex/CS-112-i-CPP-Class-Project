@@ -424,7 +424,7 @@ std::string Animal::getDebugString() const
     std::string delivTime = to_nice_string(getDeliveryTime().asSeconds());
     std::string debugStr = state + "    " + sex + "\n" + "Speed: " + speed + "\n"
                            + "Energy: " + energy + "\n" + hungry + "\n" + gestaTime + "\n"+ delivTime + "\n";
-    return debugStr;
+    return debugStr;                           
 }
 
 void Animal::updateHunger()

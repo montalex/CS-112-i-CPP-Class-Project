@@ -5,6 +5,7 @@
 class Sheep;
 class Wolf;
 class Grass;
+class Visitor;
 
 /*!
  * @class LivingEntity
@@ -203,7 +204,7 @@ public:
     /*!
      * @brief Breeds the LivingEntity with the given Wolf.
      *
-     * @param wolf the Wolf to mate with.
+     * @param wolf the Wolf to ma11te with.
      */
     virtual void breed(Wolf* wolf) = 0;
 
@@ -221,7 +222,11 @@ public:
      */
     virtual void breed(Grass* grass) = 0;
 
-    virtual void acceptVisit(class Visitor& v) = 0;
+    /*!
+     * @brief Accepts the visit of a Visitor object
+     * @param v The visitor checking the object.
+     */
+    virtual void acceptVisit(Visitor& v) = 0;
 
 private:
     Vec2d position;
