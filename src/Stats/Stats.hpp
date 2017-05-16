@@ -22,10 +22,12 @@ public:
 	 * @param id of the graph desired to become active.
 	 */
 	void setActive(int id);
+
 	/*!
 	 * @brief Resets all the data series for all graphs
 	 */
 	void reset();
+
 	/*!
 	 * @brief Adds a new graph to the stats or modify an existing one
 	 *
@@ -39,6 +41,13 @@ public:
 				  double min, double max, Vec2d const & windowDimensions);
 	virtual void update(sf::Time dt) override;
 	virtual void drawOn(sf::RenderTarget& target) const override;
+
+	/*!
+	 * @brief Activates the graph with the given title
+	 *
+	 * @param graph_title the title of the graph to activate.
+	 */
+	void focusOn(std::string graph_title);
 };
 
 #endif // STATS_HPP

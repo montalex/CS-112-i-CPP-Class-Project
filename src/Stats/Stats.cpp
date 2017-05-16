@@ -38,3 +38,13 @@ void Stats::update(sf::Time dt) {
 void Stats::drawOn(sf::RenderTarget& target) const {
 	graphs.at(activeId).graph->drawOn(target);
 }
+
+void Stats::focusOn(std::string graph_title) {
+	for (std::pair<const int, LabelledGraph> & idToGraph : graphs) {
+		if (idToGraph.second.label == graph_title) {
+			idToGraph.second.graph->reset();
+			setActive(idToGraph.first);
+			return;
+		}
+	}
+}
