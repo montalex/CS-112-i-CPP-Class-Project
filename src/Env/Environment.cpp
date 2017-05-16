@@ -92,7 +92,13 @@ const Sheep* Environment::findOldestSheep(int herd) {
 void Environment::updateHerds() {
     for (std::pair<const int, const Sheep*> entry : sheepLeaders) {
         if (entry.second->isDead()) {
-            sheepLeaders[entry.second->getHerdId()] = findOldestSheep(entry.first);
+            const Sheep* oldestSheep = findOldestSheep(entry.first);
+            if (oldestSheep == nullptr) {
+                std::cout << "NO MORE BREBIS IN HERD " << entry.first << std::endl;
+                sheepLeaders.erase(entry.first);
+            } else {
+                sheepLeaders[entry.second->getHerdId()] = findOldestSheep(entry.first);
+            }
         }
     }
 }

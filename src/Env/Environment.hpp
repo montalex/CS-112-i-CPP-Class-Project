@@ -95,14 +95,6 @@ public:
      * @param sheep the sheep to add to the herd.
     */
     void addToHerd(const Sheep* const sheep);
-
-    /*!
-     * @brief Adds the wolf to its herd or creates a new one if none exist
-     * with the animal herd id
-     *
-     * @param wofl the wolf to add to the herd.
-    */
-    void addToHerd(const Wolf* const wolf);
 private:
     void updateHerds();
     const Sheep* findOldestSheep(int herd);
