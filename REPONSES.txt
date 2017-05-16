@@ -119,3 +119,6 @@ Q4.4
  4. L'animal est libre de ses déplacements s'il est chef ou s'il n'a pas de chef.
 
 Q4.5 Nous proposons de simplement choisir le membre du troupeau le plus agé.
+
+Q4.6 On aurait simplement besoin d'éliminer le code d'affichage graphique. Notre programme gère
+déjà de façon indépendante les dynamiques de l'environnement et des entités de l'affichage.
