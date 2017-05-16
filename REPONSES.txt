@@ -92,3 +92,30 @@ Q3.14: Avec une variable de classe propre à tous les animaux.
 
 Q3.15: Oui l'ensemble des dangers pour calculer la force d'attraction dans la
 méthode Update.
+
+Q4.1 Du point de vue conceptuel La table associative nous permet d'avoir des index négatifs, comme -1 qui indique qu'aucun graphe n'est actif. De plus les identificateurs des graphs ne sont pas 
+forcement consécutifs, ce qui, avec un vector, causerait des cases vides.
+Enfin, en ce qui concerne les performances, les tables associatives permettent de recupérer un
+élément en temps constant (tout comme les vecteurs) mais aussi d'executer des ajouts en temps
+alors que les push_back sur les vectors sont en amortized constant time.
+
+Q4.2 Pour pouvoir étudier la population qui est un attribut de `Environment` nous avons décidé
+de mettre en place le design pattern du Visitor. Toute LivingEntity doit fournir une méthode
+`acceptVisit` qui reçoit un objet de type `Visitor` en paramètre et qui appelle `visit(this)` de
+cet objet. `Visitor` est une classe abstraite, ce qui nous permet d'implémenter différents type de
+statistiques sur la population.
+
+Q4.3 Nous avons décidé d'utiliser une `unordered_map<int, Animal*>` nous permettant ajouts et
+recherche rapide des chefs des troupeaux. Cet objet est un attribut de Environnment.
+La classe animal a été dotée d'un attribut contenant le id de son leader. Si un animal n'a pas 
+de troupeau et donc de chef, cet id est mis à -1. Cela nous permet d'implementer les fonctionnalités
+demandées.
+
+Q4.4 
+ 1. Qui est le chef? Recuperer le `Animal*` au travers d'un getter de `Environment` en lui
+ fournissant le id.
+ 2. L'animal a un chef (y compris lui-même) si leaderId != -1
+ 3. L'animal est un chef si le le pointeur à son chef pointe vers la zone de mémoire qui le continet
+ 4. L'animal est libre de ses déplacements s'il est chef ou s'il n'a pas de chef.
+
+Q4.5 Nous proposons de simplement choisir le membre du troupeau le plus agé.
