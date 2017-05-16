@@ -33,7 +33,8 @@
  *
  * Note that `simulation` and `world` usually mean the same thing here.
  */
-class Application {
+class Application
+{
 public:
     /*!
      * @brief Constructor
@@ -143,16 +144,17 @@ public:
     Vec2d getCursorPositionInView() const;
 
     // resets stats to general view
-    void resetStats() {
+    void resetStats()
+    {
         getStats().setActive(0);
-    }
+	}
 
-    // focus on particular stat + resets the stat
-    void focusOnStat(std::string graph_title) {
-		// UNCOMMENT ME AT STEP 5:
-        //getStats().focusOn(graph_title);
-    }
-
+	// focus on particular stat + resets the stat
+	void focusOnStat(std::string graph_title)
+		{
+			//		getStats().focusOn(graph_title);
+		}
+	
 
 protected:
     /**
@@ -207,11 +209,11 @@ protected:
      * @param target a render target
      */
     virtual void onDraw(sf::RenderTarget& target);
-    /*!
-         * @brief Subclass can override this method to change the policy for
-    	 * background handling
-    	 */
-    void chooseBackground();
+/*!
+     * @brief Subclass can override this method to change the policy for
+	 * background handling
+	 */
+	void chooseBackground();
 
 
 protected:
@@ -272,15 +274,15 @@ protected:
     void dragView(sf::Vector2i const& srcPixel, sf::Vector2i const& destPixel);
 
     /*!
-     * @brief Center the simulation view on the tracked bee,
+     * @brief Center the simulation view on the tracked animal,
      * if selection is active.
      */
     void updateSimulationView();
 
-    /*!
-      * @brief toggle debug mode
-      */
-    void switchDebug();
+   /*!
+     * @brief toggle debug mode
+     */
+	void switchDebug();
 
 
 protected:
@@ -308,14 +310,14 @@ protected:
 
     bool         mPaused;            ///< Tells if the application is in pause or not
     bool         mIsResetting;       ///< Is true for one main loop iteration when resetting.
-    ///  This is useful to pause the clock while generating
-    ///  a new world. Without this, a huge dt would result from
-    ///  rebuilding the world.
+                                     ///  This is useful to pause the clock while generating
+                                     ///  a new world. Without this, a huge dt would result from
+                                     ///  rebuilding the world.
     bool         mIsDragging;        ///< Tells whether or not the user is dragging the view
     sf::Vector2i mLastCursorPosition;///< For handling dragging logic
 //    AnimalTracker   mAnimalTracker;        ///< Helper to keep track of an animal (optional)
 
-    sf::RectangleShape mSimulationBackground;
+	sf::RectangleShape mSimulationBackground;
 };
 
 /*!
@@ -337,9 +339,9 @@ Application& getApp();
 Environment& getAppEnv();
 
 /*!
- * @brief Get the bee tracker helper for the current application
+ * @brief Get the animal tracker helper for the current application
  *
- * @return the app's bee tracker
+ * @return the app's animal tracker
  */
 //AnimalTracker& getAppAnimalTracker();
 

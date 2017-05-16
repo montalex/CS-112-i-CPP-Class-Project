@@ -14,39 +14,68 @@
 
 IMPLEMENT_MAIN(FinalApplication);
 
-void FinalApplication::onRun() {
+void FinalApplication::onRun()
+{
     // Setup stats
-    Application::onRun();
-    addGraph(s::GENERAL, { s::WOLVES, s::SHEEP, s::GRASS, }, 0, 300);
+	Application::onRun();
+	
+	/* UNCOMMENT WHEN TESTING 5.1 */
+	//addGraph(s::GENERAL, { s::WOLVES, s::SHEEP, s::GRASS}, 0, 300);
+	//addGraph(s::GRASS_INDIVIDUAL, {s::ENERGY}, 0, 1000);
+	//addGraph(s::ANIMAL_INDIVIDUAL, {s::ENERGY, s::HEALTH, s::VIRUS, s::ADASCORE, s::IMUNAC, s::SCORE}, 0, 1000);
+	//focusOnStat(s::GENERAL);
+
 }
 
-void FinalApplication::onSimulationStart() {
+void FinalApplication::onSimulationStart()
+{
     // TODO add more stuff here
 }
 
-void FinalApplication::onEvent(sf::Event event, sf::RenderWindow&) {
+void FinalApplication::onEvent(sf::Event event, sf::RenderWindow&)
+{
     if (event.type == sf::Event::KeyReleased) {
-        switch (event.key.code) {
+        switch (event.key.code){
 
-        case sf::Keyboard::W:
-            getAppEnv().addEntity(new Wolf(getCursorPositionInView()));
+			case sf::Keyboard::W:
+				getAppEnv().addEntity(new Wolf(getCursorPositionInView()));
+				break;
+
+			case sf::Keyboard::S:
+				getAppEnv().addEntity(new Sheep(getCursorPositionInView()));
+				break;
+
+			case sf::Keyboard::Num1:
+				getAppEnv().addEntity(new Sheep(getCursorPositionInView(), 1));
+				break;
+
+			case sf::Keyboard::Num2:
+				getAppEnv().addEntity(new Sheep(getCursorPositionInView(), 2));
+				break;
+
+			case sf::Keyboard::I:
+				// UNCOMMENT WHEN infectEntity CODED
+				//getAppEnv().infectEntity(getCursorPositionInView());
+				break;
+
+			case sf::Keyboard::K:
+				getAppEnv().killEntity(getCursorPositionInView());
+				break;
+
+			case sf::Keyboard::T:
+				// UNCOMMENT WHEN trackEntity CODED
+				// getAppEnv().trackEntity(getCursorPositionInView());
+
             break;
 
-        case sf::Keyboard::S:
-            getAppEnv().addEntity(new Sheep(getCursorPositionInView()));
-            break;
+			case sf::Keyboard::Z:
+				// UNCOMMENT WHEN stopTrackAnyEntity CODED
+			    //getAppEnv().stopTrackingAnyEntity();
+				break;
 
-        case sf::Keyboard::Num1:
-        getAppEnv().addEntity(new Sheep(getCursorPositionInView(), 1));
-        break;
-
-        case sf::Keyboard::Num2:
-        getAppEnv().addEntity(new Sheep(getCursorPositionInView(), 2));
-        break;
-
-        case sf::Keyboard::G:
-            getAppEnv().addEntity(new Grass(getCursorPositionInView()));
-            break;
+			case sf::Keyboard::G:
+				getAppEnv().addEntity(new Grass(getCursorPositionInView()));
+				break;
 
         default:
             break;

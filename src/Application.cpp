@@ -12,11 +12,13 @@
 #include <algorithm>
 #include <cassert>
 
-namespace { // anonymous
+namespace // anonymous
+{
 
 Application* currentApp = nullptr; ///< Current application
 
-std::string applicationDirectory(int argc, char const** argv) {
+std::string applicationDirectory(int argc, char const** argv)
+{
     assert(argc >= 1);
 
     auto dir = std::string(argv[0]);
@@ -31,11 +33,12 @@ std::string applicationDirectory(int argc, char const** argv) {
     return dir;
 }
 
-std::string configFileRelativePath(int argc, char const** argv) {
+std::string configFileRelativePath(int argc, char const** argv)
+{
     if (argc >= 2) {
         return RES_LOCATION + argv[1];
     } else {
-        return RES_LOCATION + DEFAULT_CFG;
+			return RES_LOCATION + DEFAULT_CFG;
     }
 }
 
@@ -43,29 +46,34 @@ std::string configFileRelativePath(int argc, char const** argv) {
  * get*Size and get*Position: see createViews for graphical layout
  */
 
-Vec2d getWindowSize() {
+Vec2d getWindowSize()
+{
     auto width = getAppConfig().window_simulation_width;
     auto height = getAppConfig().window_simulation_height + getAppConfig().window_stats_height;
     return { width, height };
 }
 
-Vec2d getSimulationSize() {
+Vec2d getSimulationSize()
+{
     auto width = getAppConfig().window_simulation_width;
-    auto height = getAppConfig().window_simulation_height;
+	auto height = getAppConfig().window_simulation_height;
     return { width, height };
 }
 
-Vec2d getSimulationPosition() {
+Vec2d getSimulationPosition()
+{
     return { 0, 0 };
 }
 
-Vec2d getStatsSize() {
+Vec2d getStatsSize()
+{
     auto width = getAppConfig().window_simulation_width;
-    auto height = getAppConfig().window_stats_height;
+	auto height = getAppConfig().window_stats_height;
     return { width, height };
 }
 
-Vec2d getStatsPosition() {
+Vec2d getStatsPosition()
+{
     return { 0, getSimulationSize().y };
 }
 
@@ -79,14 +87,14 @@ Vec2d getStatsPosition() {
  */
 sf::View setupView(Vec2d const& viewSize,
                    Vec2d const& position, Vec2d const& allocation,
-                   sf::Vector2u const& windowSize) {
+                   sf::Vector2u const& windowSize)
+{
     sf::View view;
     view.reset({ { 0, 0 }, viewSize });
     view.setViewport({ static_cast<float>(position.x / windowSize.x),
                        static_cast<float>(position.y / windowSize.y),
                        static_cast<float>(allocation.x / windowSize.x),
-                       static_cast<float>(allocation.y / windowSize.y)
-                     });
+                       static_cast<float>(allocation.y / windowSize.y) });
 
     return view;
 }
@@ -94,16 +102,17 @@ sf::View setupView(Vec2d const& viewSize,
 } // anonymous
 
 Application::Application(int argc, char const** argv)
-    : mAppDirectory(applicationDirectory(argc, argv))
-    , mCfgFile(configFileRelativePath(argc, argv))
+: mAppDirectory(applicationDirectory(argc, argv))
+, mCfgFile(configFileRelativePath(argc, argv))
 //, mJSONRead(mAppDirectory + mCfgFile)
-    , mConfig(new Config(mAppDirectory + mCfgFile))
-    , mEnv(nullptr)
-    , mStats(nullptr)
-    , mCurrentGraphId(-1)
-    , mPaused(false)
-    , mIsResetting(false)
-    , mIsDragging(false) {
+, mConfig(new Config(mAppDirectory + mCfgFile))
+, mEnv(nullptr)
+, mStats(nullptr)
+, mCurrentGraphId(-1)
+, mPaused(false)
+, mIsResetting(false)
+, mIsDragging(false)
+{
     // Set global singleton
     assert(currentApp == nullptr);
     currentApp = this;
@@ -114,20 +123,21 @@ Application::Application(int argc, char const** argv)
     if (!mFont.loadFromFile(mAppDirectory + FONT_LOCATION)) {
         std::cerr << "Couldn't load " << FONT_LOCATION << std::endl;
     }
-    // prepare simulation background
-    mSimulationBackground = sf::RectangleShape();
+	// prepare simulation background
+	mSimulationBackground = sf::RectangleShape();
     mSimulationBackground.setSize(getWorldSize());
     //simulationBackground.setFillColor(sf::Color::Black);
-    mSimulationBackground.setOutlineColor(sf::Color::Black);
+	mSimulationBackground.setOutlineColor(sf::Color::Black);
     mSimulationBackground.setOutlineThickness(5);
     mSimulationBackground.setTexture(&getAppTexture(getAppConfig().simulation_world_texture));
 }
 
-Application::~Application() {
+Application::~Application()
+{
     // Destroy lab and stats, in reverse order
     delete mEnv;
     delete mStats;
-    delete mConfig;
+	delete mConfig;
 
     // Release textures
     for (auto& kv : mTextures) {
@@ -140,7 +150,8 @@ Application::~Application() {
     currentApp = nullptr;
 }
 
-void Application::run() {
+void Application::run()
+{
     // Load lab and stats
     mEnv   = new Environment;
     mStats = new Stats;
@@ -219,11 +230,13 @@ void Application::run() {
     }
 }
 
-Environment& Application::getEnv() {
+Environment& Application::getEnv()
+{
     return *mEnv;
 }
 
-Environment const& Application::getEnv() const {
+Environment const& Application::getEnv() const
+{
     return *mEnv;
 }
 
@@ -237,19 +250,23 @@ Environment const& Application::getEnv() const {
 //     return mAnimalTracker;
 // }
 
-Config& Application::getConfig() {
+Config& Application::getConfig()
+{
     return *mConfig;
 }
 
-Config const& Application::getConfig() const {
+Config const& Application::getConfig() const
+{
     return *mConfig;
 }
 
-sf::Font const& Application::getFont() const {
+sf::Font const& Application::getFont() const
+{
     return mFont;
 }
 
-sf::Texture& Application::getTexture(std::string const& name) {
+sf::Texture& Application::getTexture(std::string const& name)
+{
     auto const it = mTextures.find(name);
     if (it != mTextures.end())
         return *it->second;
@@ -272,61 +289,73 @@ sf::Texture& Application::getTexture(std::string const& name) {
 }
 
 
-std::string Application::getResPath() const {
+std::string Application::getResPath() const
+{
     return mAppDirectory + RES_LOCATION;
 }
 
-Vec2d Application::getWorldSize() const {
+Vec2d Application::getWorldSize() const
+{
     // Not the same as getSimulationSize!
     double size(getAppConfig().simulation_world_size);
     return { size, size };
 }
 
-Vec2d Application::getCentre() const {
+Vec2d Application::getCentre() const
+{
     return getWorldSize() / 2.0;
 }
 
-void Application::onRun() {
+void Application::onRun()
+{
     // By default nothing is done here
-    chooseBackground();
+	chooseBackground();
 }
 
-void Application::chooseBackground() {
-    mSimulationBackground.setTexture(&getAppTexture(isDebugOn() ?
-                                     getAppConfig().simulation_world_debug_texture :
-                                     getAppConfig().simulation_world_texture)
-                                     , true);
+void Application::chooseBackground()
+{
+	mSimulationBackground.setTexture(&getAppTexture(isDebugOn() ?
+													getAppConfig().simulation_world_debug_texture :
+													getAppConfig().simulation_world_texture)
+									 , true);
 }
 
-void Application::onEvent(sf::Event, sf::RenderWindow&) {
-    // By default nothing is done here
-}
-
-void Application::onSimulationStart() {
-    // By default nothing is done here
-}
-
-void Application::onUpdate(sf::Time) {
+void Application::onEvent(sf::Event, sf::RenderWindow&)
+{
     // By default nothing is done here
 }
 
-void Application::onDraw(sf::RenderTarget&) {
+void Application::onSimulationStart()
+{
+    // By default nothing is done here
+}
+
+void Application::onUpdate(sf::Time)
+{
+    // By default nothing is done here
+}
+
+void Application::onDraw(sf::RenderTarget&)
+{
     // By default nothing is done here
 
 }
 
-Vec2d Application::getCursorPositionInView() const {
+Vec2d Application::getCursorPositionInView() const
+{
     return mRenderWindow.mapPixelToCoords(sf::Mouse::getPosition(mRenderWindow), mSimulationView);
 }
 
-void Application::addGraph(std::string const& title, std::vector<std::string> const& series, double min, double max) {
-    if (series.size() > 0) {
-        mCurrentGraphId += 1;
-        getStats().addGraph(mCurrentGraphId, title, series, min, max, getStatsSize() );
-    }
+void Application::addGraph(std::string const& title, std::vector<std::string> const& series, double min, double max)
+{
+    if (series.size() > 0){
+    mCurrentGraphId += 1;
+    getStats().addGraph(mCurrentGraphId, title, series, min, max, getStatsSize() );
+}
 }
 
-void Application::createWindow(Vec2d const& size) {
+void Application::createWindow(Vec2d const& size)
+{
     sf::VideoMode vm(size.x, size.y);
 
     auto title = getAppConfig().window_title;
@@ -340,7 +369,8 @@ void Application::createWindow(Vec2d const& size) {
     mRenderWindow.setFramerateLimit(60);
 }
 
-void Application::createViews() {
+void Application::createViews()
+{
     //   WINDOW STRUCTURE
     //
     //   ------------------------
@@ -363,7 +393,8 @@ void Application::createViews() {
                            mRenderWindow.getSize());
 }
 
-void Application::handleEvent(sf::Event event, sf::RenderWindow& window) {
+void Application::handleEvent(sf::Event event, sf::RenderWindow& window)
+{
     // zoom factor
     auto const ZOOM = 1.1f;
 
@@ -376,7 +407,7 @@ void Application::handleEvent(sf::Event event, sf::RenderWindow& window) {
         switch (event.key.code) {
         // Toggle debug mode
         case sf::Keyboard::D:
-            switchDebug();
+			switchDebug();
             break;
 
         // Exit simulation
@@ -385,13 +416,13 @@ void Application::handleEvent(sf::Event event, sf::RenderWindow& window) {
             break;
 
         case sf::Keyboard::L:
-            delete mConfig;
+			delete mConfig;
             mConfig = new Config(mAppDirectory + mCfgFile); // reconstruct
             break;
 
         // Save the world
         case sf::Keyboard::O:
-            //  getEnv().saveWorldToFile();
+			//  getEnv().saveWorldToFile();
             break;
 
         // Toggle pause for simulation
@@ -426,10 +457,12 @@ void Application::handleEvent(sf::Event event, sf::RenderWindow& window) {
             mSimulationView.move(0, 100);
             break;
 
-			/*  case sf::Keyboard::H:
-            getStats().logCurrentGraph(getAppConfig().stats_log_folder + getAppConfig().stats_log_prefix + std::to_string(getStats().getActive()) + ".txt", getAppConfig().stats_log_header);
-            break;
+        case sf::Keyboard::H:
+			/* UNCOMMENT IF BONUS CODED
+            if (mCurrentGraphId > -1)
+                getStats().logCurrentGraph(getAppConfig().stats_log_folder + getAppConfig().stats_log_prefix + std::to_string(getStats().getActive()) + ".txt", getAppConfig().stats_log_header);
 			*/
+            break;
 
         default:
             onEvent(event, window);
@@ -438,7 +471,7 @@ void Application::handleEvent(sf::Event event, sf::RenderWindow& window) {
         break;
 
 
-        // Handle zoom for SFML 2.3+ and older versions as well
+    // Handle zoom for SFML 2.3+ and older versions as well
 #if SFML_VERSION_MAJOR >= 2 && (SFML_VERSION_MINOR > 3 || (SFML_VERSION_MINOR == 3 && SFML_VERSION_PATCH >= 2))
     case sf::Event::MouseWheelScrolled:
         if (event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel) {
@@ -510,7 +543,8 @@ void Application::handleEvent(sf::Event event, sf::RenderWindow& window) {
     } // event.type switch
 }
 
-void Application::render(sf::Drawable const& simulationBackground, sf::Drawable const& statsBackground) {
+void Application::render(sf::Drawable const& simulationBackground, sf::Drawable const& statsBackground)
+{
     mRenderWindow.clear();
 
     // Render the simulation
@@ -519,7 +553,7 @@ void Application::render(sf::Drawable const& simulationBackground, sf::Drawable 
     mRenderWindow.draw(simulationBackground);
     getEnv().drawOn(mRenderWindow);
 
-    // Render the stats
+       // Render the stats
     mRenderWindow.setView(mStatsView);
     mRenderWindow.draw(statsBackground);
     getStats().drawOn(mRenderWindow);
@@ -532,11 +566,13 @@ void Application::render(sf::Drawable const& simulationBackground, sf::Drawable 
     mRenderWindow.setView(mSimulationView);
 }
 
-Stats& Application::getStats() {
+Stats& Application::getStats()
+{
     return *mStats;
 }
 
-void Application::togglePause() {
+void Application::togglePause()
+{
     mPaused = !mPaused;
 }
 
@@ -545,7 +581,8 @@ void Application::togglePause() {
 //    j::writeToFile(getConfig().getJsonRead(), mAppDirectory + mCfgFile);
 //}
 
-void Application::zoomViewAt(sf::Vector2i const& /*pixel*/, float zoomFactor) {
+void Application::zoomViewAt(sf::Vector2i const& /*pixel*/, float zoomFactor)
+{
     // Note: we know that the simulation view is active
     sf::View& view = mSimulationView;
 
@@ -564,7 +601,8 @@ void Application::zoomViewAt(sf::Vector2i const& /*pixel*/, float zoomFactor) {
     // }
 }
 
-void Application::dragView(sf::Vector2i const& srcPixel, sf::Vector2i const& destPixel) {
+void Application::dragView(sf::Vector2i const& srcPixel, sf::Vector2i const& destPixel)
+{
     // Note: we know that the simulation view is active
     sf::View& view = mSimulationView;
 
@@ -576,27 +614,29 @@ void Application::dragView(sf::Vector2i const& srcPixel, sf::Vector2i const& des
     mRenderWindow.setView(view);
 }
 
-void Application::updateSimulationView() {
+void Application::updateSimulationView()
+{
     // if (getBeeTracker().isTrackingAnimal()) {
     //     auto pos = getBeeTracker().getTrackedBeePosition();
     //     mSimulationView.setCenter(pos);
     // }
 }
 
-void Application::switchDebug() {
-    getAppConfig().switchDebug();
-    chooseBackground();
+void Application::switchDebug()
+{
+	getAppConfig().switchDebug();
+	chooseBackground();
 }
 
-
-
-Application& getApp() {
+Application& getApp()
+{
     assert(currentApp != nullptr);
 
     return *currentApp;
 }
 
-Environment& getAppEnv() {
+Environment& getAppEnv()
+{
     return getApp().getEnv();
 }
 
@@ -605,19 +645,23 @@ Environment& getAppEnv() {
 //     return getApp().getBeeTracker();
 // }
 
-Config& getAppConfig() {
+Config& getAppConfig()
+{
     return getApp().getConfig();
 }
 
-sf::Font const& getAppFont() {
+sf::Font const& getAppFont()
+{
     return getApp().getFont();
 }
 
-sf::Texture& getAppTexture(std::string const& name) {
+sf::Texture& getAppTexture(std::string const& name)
+{
     return getApp().getTexture(name);
 }
 
-bool isDebugOn() {
+bool isDebugOn()
+{
     return getAppConfig().getDebug();
 }
 
