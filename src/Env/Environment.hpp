@@ -75,7 +75,7 @@ public:
      * @brief Computes new data for graphs.
      *
      * @param label the label of the graph that will be receive the data.
-     * 
+     *
      * @return new data to add to the graph.
      */
     std::unordered_map<std::string, double> fetchData(std::string const & label);
@@ -95,10 +95,19 @@ public:
      * @param sheep the sheep to add to the herd.
     */
     void addToHerd(const Sheep* const sheep);
+
+    /*!
+     * @brief Gets all entities that the given Animal wants to avoid.
+     *
+     * @param animal the Animal
+     *
+     * @return all entities that the Animal wants to avoid
+     */
+    std::list<LivingEntity*> getNearbyAvoidableEntitesForAnimal(const Animal* animal) const;
+
 private:
     void updateHerds();
     const Sheep* findOldestSheep(int herd);
-private:
     std::list<LivingEntity*> entities;
     std::unordered_map<int, const Sheep*> sheepLeaders;
 };

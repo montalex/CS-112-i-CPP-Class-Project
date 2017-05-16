@@ -35,7 +35,7 @@ std::string const GRASS  = "grass";
 std::string const INFECTED  = "infected";
 std::string const ANIMAL_INDIVIDUAL = "Tracked Animal";
 std::string const GRASS_INDIVIDUAL   = "Tracked grass";
-	
+
 std::string const INDIVIDUAL = "Tracked Animal";
 std::string const HEALTH = "health";
 std::string const ENERGY = "energy";

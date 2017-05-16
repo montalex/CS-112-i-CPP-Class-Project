@@ -464,6 +464,23 @@ public:
      */
     Vec2d runAway() const;
 
+    /*!
+     * @brief Checks whether the Animal is free to move.
+     */
+    virtual bool isFreeToMove() const = 0;
+
+    /*!
+     * @brief Gets the Animal herd id.
+     */
+    virtual int getHerdId() const = 0;
+
+    /*!
+     * @brief Compute the Animal's avoidance force toward nearby animals.
+     *
+     * @return the avoidance force toward other Animals (Vec2d)
+     */
+    Vec2d avoidanceForce() const;
+
 private:
     Vec2d direction;
     Vec2d target;

@@ -221,6 +221,20 @@ public:
 
     void acceptVisit(Visitor& v) override;
 
+    /*!
+     * @brief Checks whether the Wolf is free to move
+     *
+     * @return always true
+     */
+    bool isFreeToMove() const override;
+
+    /*!
+     * @brief Gets the Wolf herd id
+     *
+     * @return always -1 -- no herd for now.
+     */
+    int getHerdId() const override;
+
 };
 
 #endif // INFOSV_WOLF_HPP

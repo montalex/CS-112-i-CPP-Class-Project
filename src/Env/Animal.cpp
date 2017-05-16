@@ -1,5 +1,6 @@
 #include <Env/Animal.hpp>
 #include <Application.hpp>
+#include <Utility/Constants.hpp>
 
 Animal::Animal(const Vec2d& initPos, const double& startEnergy, Genome *mother,
                Genome *father, const sf::Time& gesTime) :
@@ -243,7 +244,12 @@ void Animal::update(sf::Time dt)
         updatePosition(dt, attractionForce());
         break;
     case WANDERING:
-        updatePosition(dt, randomWalk());
+        if(isFreeToMove()) {
+            updatePosition(dt, randomWalk() + avoidanceForce());
+        } else {
+            setTarget(getAppEnv().getLeader(getHerdId())->getPosition());
+            updatePosition(dt, randomWalk() + attractionForce() + avoidanceForce());
+        }
         break;
     case FEEDING:
         if(getFeedingTime().asSeconds() > 0) {
@@ -424,7 +430,7 @@ std::string Animal::getDebugString() const
     std::string delivTime = to_nice_string(getDeliveryTime().asSeconds());
     std::string debugStr = state + "    " + sex + "\n" + "Speed: " + speed + "\n"
                            + "Energy: " + energy + "\n" + hungry + "\n" + gestaTime + "\n"+ delivTime + "\n";
-    return debugStr;                           
+    return debugStr;
 }
 
 void Animal::updateHunger()
@@ -468,4 +474,16 @@ Vec2d Animal::runAway() const
         force -= (dir * coefRun / std::pow(dir.length(), coefDistance));
     }
     return force;
+}
+
+Vec2d Animal::avoidanceForce() const
+{
+    Vec2d avoidance = Vec2d(0, 0);
+    Vec2d pos = getPosition();
+    std::list<LivingEntity*> nearby = getAppEnv().getNearbyAvoidableEntitesForAnimal(this);
+    for(auto entity: nearby) {
+        Vec2d distance = (pos - entity->getPosition());
+        avoidance += (ANIMAL_AVOIDANCE_WEIGHT * distance) / distance.lengthSquared();
+    }
+    return avoidance;
 }

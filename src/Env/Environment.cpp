@@ -102,3 +102,15 @@ void Environment::updateHerds() {
         }
     }
 }
+
+std::list<LivingEntity*> Environment::getNearbyAvoidableEntitesForAnimal(const Animal* animal) const
+{
+    std::list<LivingEntity*> entitiesToAvoid;
+    for(auto entity: entities) {
+        double distance = (entity->getPosition() - animal->getPosition()).length();
+        if(entity != nullptr && entity != animal && !animal->eatable(entity) && distance <= ANIMAL_PROXIMITY_MIN) {
+            entitiesToAvoid.push_back(entity);
+        }
+    }
+    return entitiesToAvoid;
+}

@@ -68,4 +68,7 @@ double const ANIMAL_RANDOM_WALK_RADIUS = 50;
 /// Random walk distance
 double const ANIMAL_RANDOM_WALK_DISTANCE = 160;
 
+int const ANIMAL_AVOIDANCE_WEIGHT = 2000;
+int const ANIMAL_PROXIMITY_MIN = 60;
+
 #endif // INFOSV_CONSTANTS_HPP

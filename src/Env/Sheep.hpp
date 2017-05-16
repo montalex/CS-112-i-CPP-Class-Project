@@ -222,29 +222,31 @@ public:
     void acceptVisit(Visitor& v) override;
 
     /*!
-     * @brief Gets the animal herd id
+     * @brief Gets the Sheep herd id
      */
-    int getHerdId() const;
+    int getHerdId() const override;
 
     /*!
-     * @brief Gets the leader of the animal
+     * @brief Gets the leader of the Sheep
      */
-    virtual const Sheep* getLeader() const;
+    const Sheep* getLeader() const;
 
     /*!
-     * @brief Checks whether the animal has a leader
+     * @brief Checks whether the Sheep has a leader
      */
     bool hasLeader() const;
 
     /*!
-     * @brief Checks whether the animal is a leader
+     * @brief Checks whether the Sheep is a leader
      */
-    bool isLeader() const; 
+    bool isLeader() const;
 
     /*!
-     * @brief Checks whether the animal is free to move
+     * @brief Checks whether the Sheep is free to move
+     *
+     * @return true is sheep can move freely
      */
-    bool isFreeToMove() const;
+    bool isFreeToMove() const override;
 
     void drawOn(sf::RenderTarget& targetWindow) const override;
 

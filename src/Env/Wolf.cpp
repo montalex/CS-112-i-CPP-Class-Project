@@ -178,3 +178,11 @@ void Wolf::givingBirth()
 void Wolf::acceptVisit(Visitor& v) {
     v.visit(this);
 }
+
+bool Wolf::isFreeToMove() const {
+    return true;
+}
+
+int Wolf::getHerdId() const {
+    return -1;
+}
