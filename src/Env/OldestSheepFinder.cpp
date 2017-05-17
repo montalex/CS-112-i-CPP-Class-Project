@@ -5,6 +5,7 @@ OldestSheepFinder::OldestSheepFinder(int herd)
 {}
 
  const Sheep* OldestSheepFinder::getOldestVisited() {
+	std::cout << "GET OLDEST VISITED"  << std::endl;
     return oldest;
  }
 
@@ -13,11 +14,8 @@ void OldestSheepFinder::visit(Wolf* e) {}
 void OldestSheepFinder::visit(Grass* e) {}
 
 void OldestSheepFinder::visit(Sheep* e) {
-	if (e == nullptr) {
-		std::cout << "good bye biatch" << std::endl;
-		return;
-	}
 	if (!e->isDead() && e->getHerdId() == herdId && e->getAge() > oldestAge) {
+		std::cout << "GET OLDER"  << std::endl;
         oldestAge = e->getAge();
         oldest = e;
     }
