@@ -21,7 +21,7 @@ void Environment::update(sf::Time dt)
         entity->update(dt);
     }
     updateHerds();
-    
+
     for(auto& entity: entities) {
         if(entity->isDead()) {
             delete entity;
@@ -94,18 +94,18 @@ const Sheep* Environment::findOldestSheep(int herd) {
 }
 
 void Environment::updateHerds() {
-    std::list<int> to_erase;
+    std::list<int> toErase;
     for (std::pair<const int, const Sheep*> & entry : sheepLeaders) {
         if (entry.second->isDead()) {
             const Sheep* oldestSheep = findOldestSheep(entry.first);
             if (oldestSheep == nullptr) {
-                to_erase.push_back(entry.first);
+                toErase.push_back(entry.first);
             } else {
                 sheepLeaders[entry.second->getHerdId()] = findOldestSheep(entry.first);
             }
         }
     }
-    for (int &t : to_erase) {
+    for (int &t : toErase) {
         sheepLeaders.erase(t);
     }
 }
