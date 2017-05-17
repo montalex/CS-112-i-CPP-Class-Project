@@ -152,7 +152,7 @@ public:
 	// focus on particular stat + resets the stat
 	void focusOnStat(std::string graph_title)
 		{
-			//		getStats().focusOn(graph_title);
+            getStats().focusOn(graph_title);
 		}
 	
 

@@ -19,12 +19,18 @@ void Environment::update(sf::Time dt)
 {
     for(auto& entity: entities) {
         entity->update(dt);
-        updateHerds();
+    }
+    updateHerds();
+                    std::cout << "IS CRASH HERE 4"<< std::endl;
+
+    for(auto& entity: entities) {
         if(entity->isDead()) {
             delete entity;
             entity = nullptr;
         }
     }
+                    std::cout << "IS CRASH HERE 5 " << std::endl;
+
     entities.erase(std::remove(entities.begin(), entities.end(), nullptr), entities.end());
 }
 
@@ -85,19 +91,28 @@ const Sheep* Environment::findOldestSheep(int herd) {
     OldestSheepFinder finder(herd);
     for (LivingEntity* const entity : entities) {
         entity->acceptVisit(finder);
+        std::cout << "IS CRASH HERE 6 " << &entity << std::endl;
     }
+            std::cout << "IS CRASH HERE 7 "  << std::endl;
+
     return finder.getOldestVisited();
 }
 
 void Environment::updateHerds() {
-    for (std::pair<const int, const Sheep*> entry : sheepLeaders) {
+    for (std::pair<const int, const Sheep*> & entry : sheepLeaders) {
         if (entry.second->isDead()) {
             const Sheep* oldestSheep = findOldestSheep(entry.first);
             if (oldestSheep == nullptr) {
                 std::cout << "NO MORE BREBIS IN HERD " << entry.first << std::endl;
                 sheepLeaders.erase(entry.first);
+                std::cout << "IS CRASH HERE 1 " << entry.first << std::endl;
+
             } else {
+                std::cout << "IS CRASH HERE 2 " << entry.first << std::endl;
+
                 sheepLeaders[entry.second->getHerdId()] = findOldestSheep(entry.first);
+                                std::cout << "IS CRASH HERE 3 " << entry.first << std::endl;
+
             }
         }
     }

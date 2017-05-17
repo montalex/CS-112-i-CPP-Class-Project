@@ -20,10 +20,10 @@ void FinalApplication::onRun()
 	Application::onRun();
 	
 	/* UNCOMMENT WHEN TESTING 5.1 */
-	//addGraph(s::GENERAL, { s::WOLVES, s::SHEEP, s::GRASS}, 0, 300);
+	addGraph(s::GENERAL, { s::WOLVES, s::SHEEP, s::GRASS}, 0, 300);
 	//addGraph(s::GRASS_INDIVIDUAL, {s::ENERGY}, 0, 1000);
 	//addGraph(s::ANIMAL_INDIVIDUAL, {s::ENERGY, s::HEALTH, s::VIRUS, s::ADASCORE, s::IMUNAC, s::SCORE}, 0, 1000);
-	//focusOnStat(s::GENERAL);
+	focusOnStat(s::GENERAL);
 
 }
 
@@ -59,7 +59,7 @@ void FinalApplication::onEvent(sf::Event event, sf::RenderWindow&)
 				break;
 
 			case sf::Keyboard::K:
-				getAppEnv().killEntity(getCursorPositionInView());
+				//getAppEnv().killEntity(getCursorPositionInView());
 				break;
 
 			case sf::Keyboard::T:
