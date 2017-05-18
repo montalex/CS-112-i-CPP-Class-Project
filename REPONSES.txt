@@ -122,3 +122,7 @@ Q4.5 Nous proposons de simplement choisir le membre du troupeau le plus agé.
 
 Q4.6 On aurait simplement besoin d'éliminer le code d'affichage graphique. Notre programme gère
 déjà de façon indépendante les dynamiques de l'environnement et des entités de l'affichage.
+
+Q5.1 On peut vérifier que l'entité trackée soit différente de nullptr. Si elle ne l'est pas, on peut
+appeler la fonction getStats de l'entité qui est redefinie dans Animal et Grass et qui retourne le map avec
+les statistiques.

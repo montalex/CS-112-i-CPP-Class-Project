@@ -105,10 +105,28 @@ public:
      */
     std::list<LivingEntity*> getNearbyAvoidableEntitesForAnimal(const Animal* animal) const;
 
+    /*!
+     * @brief Provides pointer to currently tracked entity
+     */
+    const LivingEntity* getTrackedEntity() const;
+
+    /*!
+     * @brief Tracks the entity which is the closest to the provided position.
+     * 
+     * @param position the position of the entity to track.
+     */
+    void trackEntity(Vec2d position);
+
+    /*!
+     * @brief Stops tracking any entity.
+     */
+    void stopTrackingAnyEntity();
+
 private:
     void updateHerds();
     const Sheep* findOldestSheep(int herd);
     std::list<LivingEntity*> entities;
     std::unordered_map<int, const Sheep*> sheepLeaders;
+    const LivingEntity* tracked = nullptr;
 };
 #endif // INFOSV_ENVIRONMENT_HPP

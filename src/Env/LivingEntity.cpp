@@ -78,3 +78,24 @@ Vec2d LivingEntity::getCenter() const
 {
     return getPosition();
 }
+
+bool LivingEntity::isTracked() const {
+    return this == getAppEnv().getTrackedEntity();
+}
+
+void LivingEntity::drawOn(sf::RenderTarget& targetWindow) const {
+    if (isTracked()) {
+        auto trackedSprite = buildSprite(getPosition() + Vec2d(-getRadius() / 3, getRadius() / 3),
+                                         getRadius() / 2,
+                                         getAppTexture(getAppConfig().entity_texture_tracked));
+        targetWindow.draw(trackedSprite);
+    }
+}
+
+std::unordered_map<std::string, double> LivingEntity::getStats() const {
+    //return {{s::ENERGY, energy}};
+        std::cout << "debug print " << std::endl;
+    std::unordered_map<std::string, double> res = {{s::ENERGY, getEnergy()}};
+    std::cout << "debug print " << res.at(s::ENERGY) << std::endl;
+    return res;
+}

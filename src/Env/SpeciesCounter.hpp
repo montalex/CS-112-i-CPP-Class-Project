@@ -14,8 +14,8 @@ private:
 
 public:
 	SpeciesCounter();
-	virtual void visit(Wolf* e) override;
-	virtual void visit(Sheep* e) override;
-	virtual void visit(Grass* e) override;
+	void visit(Wolf* e) override;
+	void visit(Sheep* e) override;
+	void visit(Grass* e) override;
 	std::unordered_map<std::string, double> getCount() const;
 };

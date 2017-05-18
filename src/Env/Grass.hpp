@@ -161,6 +161,8 @@ public:
     void breed(Grass* grass) override;
 
     virtual void acceptVisit(Visitor& v) override;
+
+    std::string getStatLabel() const override;
 };
 
 #endif // INFOSV_GRASS_HPP

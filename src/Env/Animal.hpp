@@ -481,6 +481,10 @@ public:
      */
     Vec2d avoidanceForce() const;
 
+    std::string getStatLabel() const override;
+
+    virtual std::unordered_map<std::string, double> getStats() const override;
+
 private:
     Vec2d direction;
     Vec2d target;

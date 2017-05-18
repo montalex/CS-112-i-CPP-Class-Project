@@ -21,8 +21,8 @@ void FinalApplication::onRun()
 	
 	/* UNCOMMENT WHEN TESTING 5.1 */
 	addGraph(s::GENERAL, { s::WOLVES, s::SHEEP, s::GRASS}, 0, 300);
-	//addGraph(s::GRASS_INDIVIDUAL, {s::ENERGY}, 0, 1000);
-	//addGraph(s::ANIMAL_INDIVIDUAL, {s::ENERGY, s::HEALTH, s::VIRUS, s::ADASCORE, s::IMUNAC, s::SCORE}, 0, 1000);
+	addGraph(s::GRASS_INDIVIDUAL, {s::ENERGY}, 0, 1000);
+	addGraph(s::ANIMAL_INDIVIDUAL, {s::ENERGY, s::HEALTH, s::VIRUS, s::ADASCORE, s::IMUNAC, s::SCORE}, 0, 1000);
 	focusOnStat(s::GENERAL);
 
 }
@@ -63,14 +63,12 @@ void FinalApplication::onEvent(sf::Event event, sf::RenderWindow&)
 				break;
 
 			case sf::Keyboard::T:
-				// UNCOMMENT WHEN trackEntity CODED
-				// getAppEnv().trackEntity(getCursorPositionInView());
+				getAppEnv().trackEntity(getCursorPositionInView());
 
             break;
 
 			case sf::Keyboard::Z:
-				// UNCOMMENT WHEN stopTrackAnyEntity CODED
-			    //getAppEnv().stopTrackingAnyEntity();
+			    getAppEnv().stopTrackingAnyEntity();
 				break;
 
 			case sf::Keyboard::G:

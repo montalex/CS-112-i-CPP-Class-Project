@@ -131,7 +131,7 @@
          "mutability innate immune system":.3
       },
       "world":{
-         "size":6000,
+         "size":1000,
          "texture":"ground3.png",
           "debug texture":"sand.png"
       }

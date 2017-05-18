@@ -80,7 +80,7 @@ public:
      *
      * @param targetWindow the window to draw on
      */
-    virtual void drawOn(sf::RenderTarget& targetWindow) const = 0;
+    virtual void drawOn(sf::RenderTarget& targetWindow) const;
 
     /*!
      * @brief Updates the Entity's position over time.
@@ -227,6 +227,21 @@ public:
      * @param v The visitor checking the object.
      */
     virtual void acceptVisit(Visitor& v) = 0;
+
+    /*!
+     * @brief Getter for the statistic label
+     */
+    virtual std::string getStatLabel() const = 0;
+
+    /*!
+     * @brief Checks whether the animal is tracked
+     */
+    bool isTracked() const;
+
+    /*!
+     * @brief Retrieves stats for the individual
+     */
+    virtual std::unordered_map<std::string, double> getStats() const;
 
 private:
     Vec2d position;

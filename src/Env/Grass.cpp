@@ -25,6 +25,7 @@ Grass::~Grass() {}
 
 void Grass::drawOn(sf::RenderTarget& targetWindow) const
 {
+    LivingEntity::drawOn(targetWindow);
     auto grassSprite = buildSprite(getPosition(), getEnergy() / 2.0,
                                    getAppTexture(getAppConfig().grass_texture));
     targetWindow.draw(grassSprite);
@@ -125,4 +126,8 @@ void Grass::breed(Grass* grass)
 
 void Grass::acceptVisit(Visitor& v) {
     v.visit(this);
+}
+
+std::string Grass::getStatLabel() const {
+    return s::GRASS_INDIVIDUAL;
 }

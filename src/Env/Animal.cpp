@@ -297,6 +297,7 @@ Vec2d Animal::randomWalk()
 
 void Animal::drawOn(sf::RenderTarget& targetWindow) const
 {
+    LivingEntity::drawOn(targetWindow);
     auto animalSprite = buildSprite(getPosition(), getRadius(), getTexture());
     animalSprite.setRotation(getDirection().angle() / DEG_TO_RAD);
     targetWindow.draw(animalSprite);
@@ -486,4 +487,19 @@ Vec2d Animal::avoidanceForce() const
         avoidance += (ANIMAL_AVOIDANCE_WEIGHT * distance) / distance.lengthSquared();
     }
     return avoidance;
+}
+
+std::string Animal::getStatLabel() const {
+    return s::ANIMAL_INDIVIDUAL;
+}
+
+std::unordered_map<std::string, double> Animal::getStats() const {
+    std::unordered_map<std::string, double> res = LivingEntity::getStats();
+    res[s::HEALTH] = 0;
+    res[s::VIRUS] = 0;
+    res[s::ADASCORE] = 0;
+    res[s::IMUNAC] = 0;
+    res[s::SCORE] = 0;
+
+    return res;
 }

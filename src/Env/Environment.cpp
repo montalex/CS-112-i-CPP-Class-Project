@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <Env/SpeciesCounter.hpp>
 #include <Env/OldestSheepFinder.hpp>
+#include <Application.hpp>
 
 Environment::~Environment() {
 
@@ -58,21 +59,29 @@ std::list<LivingEntity*> Environment::getEntitiesInSightForAnimal(const Animal* 
 }
 
 std::unordered_map<std::string, double> Environment::fetchData(std::string const & label) {
+    std::unordered_map<std::string, double> empty;
+
     if (label == s::GENERAL) {
         SpeciesCounter sc;
         for (LivingEntity * const entity : entities) {
             entity->acceptVisit(sc);
         }
         return sc.getCount();
-    } else {
-        std::unordered_map<std::string, double> empty;
-        return empty;
     }
 
+    if (label == s::GRASS_INDIVIDUAL || label == s::ANIMAL_INDIVIDUAL) {
+        return tracked == nullptr ? empty : tracked->getStats();
+    }
+
+    return empty;
 }
 
 const Sheep* Environment::getLeader(int herdId) const  {
-    return sheepLeaders.at(herdId);
+    std::cout << "before at in enveronment" << std::endl;
+    const Sheep* s = sheepLeaders.at(herdId);
+    std::cout << "after at in enveronment" << std::endl;
+    return s;
+    //return sheepLeaders.at(herdId);
 }
 
 void Environment::addToHerd(const Sheep * const sheep) {
@@ -85,6 +94,7 @@ void Environment::addToHerd(const Sheep * const sheep) {
 }
 
 const Sheep* Environment::findOldestSheep(int herd) {
+    // Use OldestSheepFinder visitor to retrieve new leader.
     OldestSheepFinder finder(herd);
     for (LivingEntity* const entity : entities) {
         entity->acceptVisit(finder);
@@ -94,11 +104,13 @@ const Sheep* Environment::findOldestSheep(int herd) {
 }
 
 void Environment::updateHerds() {
-    std::list<int> toErase;
+    std::list<int> toErase; //Store dead leaders for later remove them from map
+
     for (std::pair<const int, const Sheep*> & entry : sheepLeaders) {
         if (entry.second->isDead()) {
             const Sheep* oldestSheep = findOldestSheep(entry.first);
-            if (oldestSheep == nullptr) {
+            if (oldestSheep == nullptr) { 
+                // No oldest means all the herd is dead.
                 toErase.push_back(entry.first);
             } else {
                 sheepLeaders[entry.second->getHerdId()] = findOldestSheep(entry.first);
@@ -120,4 +132,29 @@ std::list<LivingEntity*> Environment::getNearbyAvoidableEntitesForAnimal(const A
         }
     }
     return entitiesToAvoid;
+}
+
+const LivingEntity* Environment::getTrackedEntity() const {
+    return tracked;
+}
+
+void Environment::trackEntity(Vec2d position) {
+    LivingEntity* closest = nullptr;
+    double distanceFromClosest = std::numeric_limits<double>::max();
+    // Track element closest to given position
+    for (LivingEntity* entity : entities) {
+        double distance = (position - entity->getPosition()).length();
+        if (distance < distanceFromClosest) {
+            closest = entity;
+            distanceFromClosest = distance;
+        }
+    }
+
+    tracked = closest;
+    getApp().focusOnStat(tracked->getStatLabel());
+}
+
+void Environment::stopTrackingAnyEntity() {
+    tracked = nullptr;
+    getApp().focusOnStat(s::GENERAL);
 }

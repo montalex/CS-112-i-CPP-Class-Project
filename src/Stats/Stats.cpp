@@ -13,6 +13,7 @@ void Stats::reset() {
 
 void Stats::addGraph(int id, std::string const & label, std::vector<std::string> const & titles,
 				     double min, double max, Vec2d const& windowDimensions) {
+	std::cout << "adding graph with label " << label << std::endl;
 	Graph* newG = new Graph(titles, windowDimensions, min, max);
 	graphs[id].graph.reset(newG);
 	graphs[id].label = label;
@@ -28,6 +29,7 @@ void Stats::update(sf::Time dt) {
 	}
 	// Each graph is updated
 	for (std::pair<const int, LabelledGraph> & lg : graphs) {
+		
 		lg.second.graph->updateData(sf::seconds(timeSinceUpdate),
 		       						getAppEnv().fetchData(lg.second.label));
 	}
