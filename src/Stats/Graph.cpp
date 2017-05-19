@@ -45,12 +45,7 @@ void Graph::updateData(sf::Time deltaEpoch, std::unordered_map<std::string, doub
 
     for (auto& serie : mSeries) {
         auto x = newEpoch.asSeconds() * X_SCALE;
-        std::cout << "before at in graph with " << serie.title << std::endl;
-
         auto y = (newData.at(serie.title) - mYMin) * Y_SCALE;
-
-        std::cout << "after at in graph" << std::endl;
-        
         y = mSize.y - y; // Reverse SFML axis
         auto newVertex = sf::Vertex({ static_cast<float>(x), static_cast<float>(y) }, serie.color);
 

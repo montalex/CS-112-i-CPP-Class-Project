@@ -25,6 +25,9 @@ void Environment::update(sf::Time dt)
 
     for(auto& entity: entities) {
         if(entity->isDead()) {
+            if (tracked == entity) {
+                tracked = nullptr;
+            }
             delete entity;
             entity = nullptr;
         }
@@ -70,18 +73,25 @@ std::unordered_map<std::string, double> Environment::fetchData(std::string const
     }
 
     if (label == s::GRASS_INDIVIDUAL || label == s::ANIMAL_INDIVIDUAL) {
-        return tracked == nullptr ? empty : tracked->getStats();
+        std::unordered_map<std::string, double> init = {
+            {s::ENERGY, 0},
+            {s::HEALTH, 0}, 
+            {s::HEALTH, 0},
+            {s::VIRUS, 0},
+            {s::ADASCORE, 0},
+            {s::IMUNAC, 0},
+            {s::SCORE, 0}
+        };
+        //return tracked == nullptr ? empty : tracked->getStats();
+        return tracked == nullptr ? init : tracked->getStats();
+
     }
 
     return empty;
 }
 
 const Sheep* Environment::getLeader(int herdId) const  {
-    std::cout << "before at in enveronment" << std::endl;
-    const Sheep* s = sheepLeaders.at(herdId);
-    std::cout << "after at in enveronment" << std::endl;
-    return s;
-    //return sheepLeaders.at(herdId);
+    return sheepLeaders.at(herdId);
 }
 
 void Environment::addToHerd(const Sheep * const sheep) {
