@@ -126,3 +126,6 @@ déjà de façon indépendante les dynamiques de l'environnement et des entités
 Q5.1 On peut vérifier que l'entité trackée soit différente de nullptr. Si elle ne l'est pas, on peut
 appeler la fonction getStats de l'entité qui est redefinie dans Animal et Grass et qui retourne le map avec
 les statistiques.
+
+Q5.2 Nous avons introduits (lors de l'étape précedente) une méthode getStats dans LivingEntity qui produit le map avec juste l'énergie et nous l'avons redefinie dans Animal pourqu'elle ajoute 
+au map produit par la superclasse les nouvelles données.

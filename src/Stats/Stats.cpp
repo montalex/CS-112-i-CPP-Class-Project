@@ -28,6 +28,8 @@ void Stats::update(sf::Time dt) {
 	}
 	// Each graph is updated
 	for (std::pair<const int, LabelledGraph> & lg : graphs) {
+		//if (lg.second.label == s::GRASS_INDIVIDUAL) {
+		//std::cout << lg.second.label << "\n" << lg.second.graph->getSeriesInString() << std::endl;}
 		lg.second.graph->updateData(sf::seconds(timeSinceUpdate),
 		       						getAppEnv().fetchData(lg.second.label));
 	}

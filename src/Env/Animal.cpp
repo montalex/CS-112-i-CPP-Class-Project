@@ -11,10 +11,13 @@ Animal::Animal(const Vec2d& initPos, const double& startEnergy, Genome *mother,
     nBabies(0), gestationTime(gesTime), deliveryTime(sf::seconds(0)) {
         genome = new Genome(mother, father);
         babiesDad = new Genome(nullptr, nullptr);
+        immuneSystem = new ImmuneSystem(this);
     }
 
 Animal::~Animal() {
     delete genome;
+    delete immuneSystem;
+    // TODO: DELETE babiesDad?
 };
 
 Vec2d Animal::getDirection() const
@@ -272,6 +275,7 @@ void Animal::update(sf::Time dt)
     default:
         break;
     }
+    immuneSystem->update(dt);
 }
 
 void Animal::updatePosition(sf::Time dt, const Vec2d& attractionForce)
@@ -306,6 +310,12 @@ void Animal::drawOn(sf::RenderTarget& targetWindow) const
         drawVirtualTarget(targetWindow);
         drawDebugText(targetWindow);
         Obstacle::drawObstacle(targetWindow);
+    }
+    if (immuneSystem->isInfected()) {
+        auto infectedSprite = buildSprite(getPosition() + Vec2d(-getRadius() / 3, -getRadius() / 3),
+                                          getRadius() / 2,
+                                          getAppTexture(getAppConfig().virus_texture_infected));
+        targetWindow.draw(infectedSprite);
     }
 }
 
@@ -495,11 +505,20 @@ std::string Animal::getStatLabel() const {
 
 std::unordered_map<std::string, double> Animal::getStats() const {
     std::unordered_map<std::string, double> res = LivingEntity::getStats();
-    res[s::HEALTH] = 0;
-    res[s::VIRUS] = 0;
-    res[s::ADASCORE] = 0;
-    res[s::IMUNAC] = 0;
-    res[s::SCORE] = 0;
+    res[s::HEALTH] = immuneSystem->getHealth();
+    res[s::VIRUS] = immuneSystem->getVirus()->getAmount();
+    res[s::ADASCORE] = immuneSystem->computeInfectionScore();
+    res[s::IMUNAC] = immuneSystem->getActivationLevel();
+    res[s::SCORE] = 0; // TODO wtf?
 
     return res;
+}
+
+bool Animal::isDead() const {
+    return getEnergy() < getAppConfig().animal_min_energy ||
+           immuneSystem->getHealth() < 0;
+}
+
+void Animal::infect(Virus* v) {
+    immuneSystem->infect(v);
 }

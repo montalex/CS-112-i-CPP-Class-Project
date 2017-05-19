@@ -1,6 +1,6 @@
 #include <Env/Sheep.hpp>
 #include <Application.hpp>
-#include <Env/Visitor.hpp>
+#include <Interface/Visitor.hpp>
 Sheep::Sheep(const Vec2d& initPos, int herd, Genome *mother, Genome *father)
     : Animal(initPos, getAppConfig().sheep_energy_initial, mother, father,
             sf::seconds(getAppConfig().sheep_reproduction_gestation_time)), herdId(herd) {
@@ -86,8 +86,7 @@ bool Sheep::eatableBy(Grass const* grass) const
 
 bool Sheep::isDead() const
 {
-    return getAge() > getAppConfig().sheep_longevity ||
-           getEnergy() < getAppConfig().animal_min_energy;
+    return Animal::isDead() || getAge() > getAppConfig().sheep_longevity;
 }
 
 void Sheep::update(sf::Time dt)

@@ -6,6 +6,7 @@
 #include <Env/SpeciesCounter.hpp>
 #include <Env/OldestSheepFinder.hpp>
 #include <Application.hpp>
+#include <Genetics/Infecter.hpp>
 
 Environment::~Environment() {
 
@@ -72,7 +73,16 @@ std::unordered_map<std::string, double> Environment::fetchData(std::string const
         return sc.getCount();
     }
 
-    if (label == s::GRASS_INDIVIDUAL || label == s::ANIMAL_INDIVIDUAL) {
+    if (label == s::GRASS_INDIVIDUAL) {
+        std::cout << "fetching data for grass" << std::endl;
+        std::unordered_map<std::string, double> init = {{s::ENERGY, 0}};
+        return tracked == nullptr ? init : tracked->getStats();
+    }
+
+    if (label == s::ANIMAL_INDIVIDUAL) {
+        std::cout << "fetching data for animal" << std::endl;
+
+    //if (label == s::GRASS_INDIVIDUAL || label == s::ANIMAL_INDIVIDUAL) {
         std::unordered_map<std::string, double> init = {
             {s::ENERGY, 0},
             {s::HEALTH, 0}, 
@@ -148,7 +158,7 @@ const LivingEntity* Environment::getTrackedEntity() const {
     return tracked;
 }
 
-void Environment::trackEntity(Vec2d position) {
+LivingEntity* Environment::entityClosestTo(const Vec2d& position) {
     LivingEntity* closest = nullptr;
     double distanceFromClosest = std::numeric_limits<double>::max();
     // Track element closest to given position
@@ -159,12 +169,26 @@ void Environment::trackEntity(Vec2d position) {
             distanceFromClosest = distance;
         }
     }
+    return closest;
+}
 
-    tracked = closest;
+void Environment::trackEntity(Vec2d position) {
+    if (entities.empty()) {
+        return;
+    }
+    tracked = entityClosestTo(position);
     getApp().focusOnStat(tracked->getStatLabel());
 }
 
 void Environment::stopTrackingAnyEntity() {
     tracked = nullptr;
     getApp().focusOnStat(s::GENERAL);
+}
+
+void Environment::infectEntity(const Vec2d& p, Virus* v) {
+    if (entities.empty()) {
+        return;
+    }
+    Infecter infecter(v);
+    entityClosestTo(p)->acceptVisit(infecter);
 }

@@ -1,7 +1,7 @@
 #include <Env/Wolf.hpp>
 #include <Env/Sheep.hpp>
 #include <Env/Grass.hpp>
-#include <Env/Visitor.hpp>
+#include <Interface/Visitor.hpp>
 
 class OldestSheepFinder : public Visitor {
 private:

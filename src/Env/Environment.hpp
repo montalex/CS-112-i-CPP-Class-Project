@@ -122,11 +122,15 @@ public:
      */
     void stopTrackingAnyEntity();
 
+    void infectEntity(const Vec2d& p, Virus* v);
+
 private:
     void updateHerds();
     const Sheep* findOldestSheep(int herd);
     std::list<LivingEntity*> entities;
     std::unordered_map<int, const Sheep*> sheepLeaders;
     const LivingEntity* tracked = nullptr;
+
+    LivingEntity* entityClosestTo(const Vec2d& position);
 };
 #endif // INFOSV_ENVIRONMENT_HPP

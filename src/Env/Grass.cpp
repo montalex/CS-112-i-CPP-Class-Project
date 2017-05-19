@@ -1,6 +1,6 @@
 #include <Env/Grass.hpp>
 #include <Application.hpp>
-#include <Env/Visitor.hpp>
+#include <Interface/Visitor.hpp>
 Grass::Grass(const Vec2d& initPos)
     : LivingEntity(initPos, getAppConfig().grass_initial_energy)
 {

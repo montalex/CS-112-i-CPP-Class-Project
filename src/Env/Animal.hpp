@@ -7,6 +7,7 @@
 #include <Random/Random.hpp>
 #include <Env/LivingEntity.hpp>
 #include <Genetics/Genome.hpp>
+#include <Genetics/ImmuneSystem.hpp>
 
 /*!
  * @brief Represents an Animal state.
@@ -485,6 +486,10 @@ public:
 
     virtual std::unordered_map<std::string, double> getStats() const override;
 
+    virtual bool isDead() const override;
+
+    void infect(Virus* v);
+
 private:
     Vec2d direction;
     Vec2d target;
@@ -501,6 +506,7 @@ private:
     sf::Time deliveryTime;
     Genome* babiesDad;
     std::list<LivingEntity*> dangers;
+    ImmuneSystem* immuneSystem;
 };
 
 /*!

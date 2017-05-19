@@ -1,6 +1,6 @@
 #include <Env/Wolf.hpp>
 #include <Application.hpp>
-#include <Env/Visitor.hpp>
+#include <Interface/Visitor.hpp>
 
 Wolf::Wolf(const Vec2d& initPos, Genome *mother, Genome *father)
     : Animal(initPos, getAppConfig().wolf_energy_initial, mother, father,
@@ -79,8 +79,7 @@ bool Wolf::eatableBy(Grass const* grass) const
 
 bool Wolf::isDead() const
 {
-    return getAge() > getAppConfig().wolf_longevity ||
-           getEnergy() < getAppConfig().animal_min_energy;
+    return Animal::isDead() || getAge() > getAppConfig().wolf_longevity;
 }
 
 void Wolf::update(sf::Time dt)
