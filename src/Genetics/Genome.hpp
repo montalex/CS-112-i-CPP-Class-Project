@@ -5,6 +5,7 @@
 #include <Random/Random.hpp>
 #include <iostream>
 #include <Utility/Utility.hpp>
+#include <array>
 
 #define colorSize 2
 #define immuneSize 10
@@ -73,10 +74,15 @@ public:
      */
     std::ostream& print(std::ostream& out) const;
 
+    /*!
+     * @brief Sets the immunê genes
+     */
+    void setImmuneGenes(std::array<double, immuneSize> newProfile);
+
 private:
     Sex sex;
     ColorAllele color[colorSize];
-    double immuneProfile[immuneSize];
+    std::array<double, immuneSize> immuneProfile;
 };
 
 /*!

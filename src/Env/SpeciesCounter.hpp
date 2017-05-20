@@ -10,12 +10,16 @@
 class SpeciesCounter: public Visitor
 {
 private:
-	int sheep, wolves, grass;
+	int sheep, wolves, grass; // counters
 
 public:
 	SpeciesCounter();
 	void visit(Wolf* e) override;
 	void visit(Sheep* e) override;
 	void visit(Grass* e) override;
+
+	/*!
+	 * @brief Gets the result of the count
+	 */
 	std::unordered_map<std::string, double> getCount() const;
 };

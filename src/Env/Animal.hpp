@@ -488,8 +488,16 @@ public:
 
     virtual bool isDead() const override;
 
+    /*!
+     * @brief The animal gets infected by a virus
+     *
+     * @param v the pathogen mass of virus
+     */
     void infect(Virus* v);
 
+    /*!
+     * @brief Setter for the immune profile of the animal
+     */
     void setImmuneGenes(const std::array<double, 10>& immuneProfile);
 
 private:

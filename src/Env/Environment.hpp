@@ -122,8 +122,19 @@ public:
      */
     void stopTrackingAnyEntity();
 
+    /*!
+     * @brief Infects the entity at the given location with the provided virus
+     *
+     * @param p The position of the animal to infect.
+     * @param v The virus that will infect the animal.
+     */
     void infectEntity(const Vec2d& p, Virus* v);
 
+    /*!
+     * @brief Kills the living enitity at the provided position
+     *    
+     * @param p The closest position to the animal to infect.
+     */
     void killEntity(const Vec2d& p);
 
 private:
@@ -132,7 +143,9 @@ private:
     std::list<LivingEntity*> entities;
     std::unordered_map<int, const Sheep*> sheepLeaders;
     const LivingEntity* tracked = nullptr;
-
+    /*!
+     * @brief Gets the entity which is the closest to the provided position
+     */
     LivingEntity* entityClosestTo(const Vec2d& position);
 };
 #endif // INFOSV_ENVIRONMENT_HPP

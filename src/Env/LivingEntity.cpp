@@ -84,7 +84,7 @@ bool LivingEntity::isTracked() const {
 }
 
 void LivingEntity::drawOn(sf::RenderTarget& targetWindow) const {
-    if (isTracked()) {
+    if (isTracked()) { // if tracked add target ssprite
         auto trackedSprite = buildSprite(getPosition() + Vec2d(-getRadius() / 3, getRadius() / 3),
                                          getRadius() / 2,
                                          getAppTexture(getAppConfig().entity_texture_tracked));

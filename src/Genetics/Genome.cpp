@@ -97,3 +97,7 @@ std::ostream& operator<<(std::ostream& out, const Genome& g)
     g.print(out);
     return out;
 }
+
+void Genome::setImmuneGenes(std::array<double, immuneSize> newProfile) {
+    immuneProfile = newProfile;
+}

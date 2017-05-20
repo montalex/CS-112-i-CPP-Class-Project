@@ -236,6 +236,7 @@ void Animal::setRotation(const double& angle)
 void Animal::update(sf::Time dt)
 {
     LivingEntity::update(dt);
+    immuneSystem->update(dt);
     if(isPregnant() && getGestationTime().asSeconds() > 0) {
         setGestationTime(getGestationTime() - dt);
     }
@@ -275,7 +276,6 @@ void Animal::update(sf::Time dt)
     default:
         break;
     }
-    immuneSystem->update(dt);
 }
 
 void Animal::updatePosition(sf::Time dt, const Vec2d& attractionForce)
@@ -507,6 +507,8 @@ std::unordered_map<std::string, double> Animal::getStats() const {
     std::unordered_map<std::string, double> res = LivingEntity::getStats();
     res[s::HEALTH] = immuneSystem->getHealth();
     if (immuneSystem->isInfected()) {
+        std::cout << "HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH " << std::endl;
+
         res[s::VIRUS] = immuneSystem->getVirus()->getAmount();
         res[s::ADASCORE] = immuneSystem->computeInfectionScore();
         res[s::IMUNAC] = immuneSystem->getActivationLevel();
@@ -517,8 +519,6 @@ std::unordered_map<std::string, double> Animal::getStats() const {
         res[s::IMUNAC] = 0.0;
         res[s::SCORE] = 0.0;
     }
-    std::cout << "HERERERE " << std::endl;
-
     return res;
 }
 
@@ -532,5 +532,5 @@ void Animal::infect(Virus* v) {
 }
 
 void Animal::setImmuneGenes(const std::array<double, 10>& immuneProfile) {
-    immuneSystem->setImmuneGenes(immuneProfile);
+    genome->setImmuneGenes(immuneProfile);
 }

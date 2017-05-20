@@ -243,6 +243,9 @@ public:
      */
     virtual std::unordered_map<std::string, double> getStats() const;
 
+    /*!
+     * @brief Kills the LivingEntity
+     */
     void die();
 
 private:

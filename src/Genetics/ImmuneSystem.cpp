@@ -6,7 +6,12 @@
 ImmuneSystem::ImmuneSystem(const Animal* host_animal)
 	: health(getAppConfig().immune_health_max),
 	  activationLevel(getAppConfig().immune_adaptive_baseline),
-	  host(host_animal), virus(nullptr) {}
+	  host(host_animal), virus(nullptr) 
+{
+	for (size_t i = 0; i < immuneProfile.size(); ++i) {
+		immuneProfile[i] = 0.0;
+	} 
+}
 
 double ImmuneSystem::getHealth() const {
 	return health;
@@ -14,7 +19,7 @@ double ImmuneSystem::getHealth() const {
 
 void ImmuneSystem::updateActivationLevel(sf::Time dt) {
 	if (isInfected()) {
-		activationLevel *= 1 + dt.asSeconds() * (0.5 * (1 - activationLevel*activationLevel / 16));
+		activationLevel *= (1 + dt.asSeconds() * (0.5 * (1 - activationLevel*activationLevel / 16)));
 	} else {
 		double possibleLevel = activationLevel * 0.995;
 		activationLevel = possibleLevel > getAppConfig().immune_adaptive_baseline ? possibleLevel : activationLevel;
@@ -29,13 +34,11 @@ void ImmuneSystem::adaptToVirus(sf::Time dt) {
 
 double ImmuneSystem::computeInfectionScore() const {
 	double score = 0;
+	double tmp = 0;
+	// Compute the two sums at the same time. Possible as they are independent (except score+=)
 	for (size_t i = 0; i < immuneProfile.size(); ++i) {
 		score += immuneProfile[i] * virus->getProfile().at(i);
-	}
-	double tmp = 0;
-	for (size_t i = 0; i < immuneProfile.size(); ++i) {
-		tmp += getAppConfig().immune_defense_effectiveness * 
-			(host->getGenome()->getImmuneGenes(i) * virus->getProfile().at(i) + uniform(0.0, getAppConfig().immune_defense_random_variability));
+		tmp += getAppConfig().immune_defense_effectiveness * (host->getGenome()->getImmuneGenes(i) * virus->getProfile().at(i) + uniform(0.0, getAppConfig().immune_defense_random_variability));
 	}
 	score += tmp;
 	score = score*score * activationLevel;
@@ -54,6 +57,8 @@ void ImmuneSystem::update(sf::Time dt) {
 		adaptToVirus(dt);
 		fightInfection(dt);
 		if (virus->isDead()) {
+        	std::cout << "VIRUS IS DEAD " << std::endl;
+        	delete virus;
 			virus = nullptr;
 		}
 	} else {
@@ -75,9 +80,12 @@ double ImmuneSystem::getActivationLevel() const {
 }
 
 void ImmuneSystem::infect(Virus* v) {
-	virus = v;
+	// Each animal has its own infection, virus object should not be shared.
+	virus = new Virus(*v);
 }
 
-void ImmuneSystem::setImmuneGenes(const std::array<double, 10>& immuneProfile) {
-	this->immuneProfile = immuneProfile; // copy constructor
+ImmuneSystem::~ImmuneSystem() {
+	if (isInfected()) {
+		delete virus;
+	}
 }
