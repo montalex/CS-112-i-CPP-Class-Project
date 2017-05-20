@@ -124,6 +124,8 @@ public:
 
     void infectEntity(const Vec2d& p, Virus* v);
 
+    void killEntity(const Vec2d& p);
+
 private:
     void updateHerds();
     const Sheep* findOldestSheep(int herd);

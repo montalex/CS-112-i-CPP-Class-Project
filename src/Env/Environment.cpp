@@ -192,3 +192,7 @@ void Environment::infectEntity(const Vec2d& p, Virus* v) {
     Infecter infecter(v);
     entityClosestTo(p)->acceptVisit(infecter);
 }
+
+void Environment::killEntity(const Vec2d& p) {
+    entityClosestTo(p)->die();
+}

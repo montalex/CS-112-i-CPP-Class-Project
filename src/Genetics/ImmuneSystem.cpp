@@ -77,3 +77,7 @@ double ImmuneSystem::getActivationLevel() const {
 void ImmuneSystem::infect(Virus* v) {
 	virus = v;
 }
+
+void ImmuneSystem::setImmuneGenes(const std::array<double, 10>& immuneProfile) {
+	this->immuneProfile = immuneProfile; // copy constructor
+}

@@ -506,10 +506,18 @@ std::string Animal::getStatLabel() const {
 std::unordered_map<std::string, double> Animal::getStats() const {
     std::unordered_map<std::string, double> res = LivingEntity::getStats();
     res[s::HEALTH] = immuneSystem->getHealth();
-    res[s::VIRUS] = immuneSystem->getVirus()->getAmount();
-    res[s::ADASCORE] = immuneSystem->computeInfectionScore();
-    res[s::IMUNAC] = immuneSystem->getActivationLevel();
-    res[s::SCORE] = 0; // TODO wtf?
+    if (immuneSystem->isInfected()) {
+        res[s::VIRUS] = immuneSystem->getVirus()->getAmount();
+        res[s::ADASCORE] = immuneSystem->computeInfectionScore();
+        res[s::IMUNAC] = immuneSystem->getActivationLevel();
+        res[s::SCORE] = 0; // TODO wtf?
+    } else {
+        res[s::VIRUS] = 0.0;
+        res[s::ADASCORE] = 0.0;
+        res[s::IMUNAC] = 0.0;
+        res[s::SCORE] = 0.0;
+    }
+    std::cout << "HERERERE " << std::endl;
 
     return res;
 }
@@ -521,4 +529,8 @@ bool Animal::isDead() const {
 
 void Animal::infect(Virus* v) {
     immuneSystem->infect(v);
+}
+
+void Animal::setImmuneGenes(const std::array<double, 10>& immuneProfile) {
+    immuneSystem->setImmuneGenes(immuneProfile);
 }

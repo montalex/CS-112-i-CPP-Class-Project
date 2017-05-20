@@ -490,6 +490,8 @@ public:
 
     void infect(Virus* v);
 
+    void setImmuneGenes(const std::array<double, 10>& immuneProfile);
+
 private:
     Vec2d direction;
     Vec2d target;

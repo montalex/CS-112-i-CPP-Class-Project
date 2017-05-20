@@ -38,3 +38,15 @@ bool Virus::isDead() const {
 void Virus::reduceAmount(double difference) {
 	amount -= difference;
 }
+
+std::string Virus::toString() const {
+	std::string result = "Virus: ";
+	result += "Quantity: " + std::to_string(amount) + " | growth rate: " + std::to_string(growthRate);
+	return result;
+}
+
+std::ostream& operator<<(std::ostream& os, Virus const & v) {
+	os << v.toString();
+	os << std::endl;
+	return os;
+}

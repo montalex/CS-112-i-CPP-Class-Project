@@ -18,6 +18,7 @@ private:
 	void updateActivationLevel(sf::Time dt);
 	void adaptToVirus(sf::Time dt);
 	void fightInfection(sf::Time dt);
+	
 public:
 	ImmuneSystem(const Animal* host_animal);
 	double getHealth() const;
@@ -27,6 +28,7 @@ public:
 	double computeInfectionScore() const;
 	double getActivationLevel() const;
 	void infect(Virus* v);
+	void setImmuneGenes(const std::array<double, 10>& immuneProfile);
 };
 
 #endif

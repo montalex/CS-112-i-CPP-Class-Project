@@ -95,3 +95,7 @@ void LivingEntity::drawOn(sf::RenderTarget& targetWindow) const {
 std::unordered_map<std::string, double> LivingEntity::getStats() const {
     return {{s::ENERGY, energy}};
 }
+
+void LivingEntity::die() {
+    setEnergy(-1);
+}

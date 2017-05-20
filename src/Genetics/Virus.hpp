@@ -19,6 +19,9 @@ public:
     double getAmount() const;
     bool isDead() const;
     void reduceAmount(double difference);
+    std::string toString() const;
 };
+
+std::ostream& operator<<(std::ostream& os, Virus const & v);
 
 #endif

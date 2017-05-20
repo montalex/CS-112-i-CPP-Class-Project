@@ -243,6 +243,8 @@ public:
      */
     virtual std::unordered_map<std::string, double> getStats() const;
 
+    void die();
+
 private:
     Vec2d position;
     double energy;
