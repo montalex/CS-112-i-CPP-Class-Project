@@ -30,8 +30,10 @@ void Stats::update(sf::Time dt) {
 	for (std::pair<const int, LabelledGraph> & lg : graphs) {
 		//if (lg.second.label == s::GRASS_INDIVIDUAL) {
 		//std::cout << lg.second.label << "\n" << lg.second.graph->getSeriesInString() << std::endl;}
-		lg.second.graph->updateData(sf::seconds(timeSinceUpdate),
-		       						getAppEnv().fetchData(lg.second.label));
+		std::unordered_map<std::string, double> data = getAppEnv().fetchData(lg.second.label);
+		if(!data.empty()) {
+			lg.second.graph->updateData(sf::seconds(timeSinceUpdate), data);
+		}
 	}
 	// Start to wait again
 	timeSinceUpdate = 0;
