@@ -72,33 +72,11 @@ std::unordered_map<std::string, double> Environment::fetchData(std::string const
         return sc.getCount();
     }
 
-    if (label == s::GRASS_INDIVIDUAL || label == s::ANIMAL_INDIVIDUAL) {
-        return tracked == nullptr ? empty : tracked->getStats();
+    if(tracked != nullptr) {
+        if(tracked->getStatLabel() == label) {
+            return tracked->getStats();
+        }
     }
-
-    // if (label == s::GRASS_INDIVIDUAL) {
-    //     std::cout << "fetching data for grass" << std::endl;
-    //     std::unordered_map<std::string, double> init = {{s::ENERGY, 0}};
-    //     return tracked == nullptr ? init : tracked->getStats();
-    // }
-    //
-    // if (label == s::ANIMAL_INDIVIDUAL) {
-    //     std::cout << "fetching data for animal" << std::endl;
-    //
-    // //if (label == s::GRASS_INDIVIDUAL || label == s::ANIMAL_INDIVIDUAL) {
-    //     std::unordered_map<std::string, double> init = {
-    //         {s::ENERGY, 0},
-    //         {s::HEALTH, 0},
-    //         {s::HEALTH, 0},
-    //         {s::VIRUS, 0},
-    //         {s::ADASCORE, 0},
-    //         {s::IMUNAC, 0},
-    //         {s::SCORE, 0}
-    //     };
-    //     //return tracked == nullptr ? empty : tracked->getStats();
-    //     return tracked == nullptr ? init : tracked->getStats();
-    //
-    // }
 
     return empty;
 }
