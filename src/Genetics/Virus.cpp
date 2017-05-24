@@ -22,7 +22,7 @@ Virus::Virus(const std::array<double, 10>& virulence_profile) : amount(getAppCon
 void Virus::update(sf::Time dt) {
 	if(amount <= getAppConfig().virus_max) {
 		amount *= (1 + growthRate * (1 - amount / getAppConfig().virus_max) * dt.asSeconds());
-	}	
+	}
 }
 
 const std::array<double, 10>& Virus::getProfile() const {
@@ -38,7 +38,7 @@ bool Virus::isDead() const {
 }
 
 void Virus::reduceAmount(double difference) {
-	std::cout << "HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH " << difference << " " << (amount-difference) << " " << getAppConfig().virus_initial_quantity << std::endl;
+	std::cout << "HHHHHHHHHHHHHHHHHHHHHHHHH DIFF " << difference << " AFTER - " << (amount-difference) << " INIT " << getAppConfig().virus_initial_quantity << std::endl;
 	amount -= difference;
 }
 
