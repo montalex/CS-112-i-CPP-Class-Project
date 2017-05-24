@@ -6,11 +6,11 @@
 ImmuneSystem::ImmuneSystem(const Animal* host_animal)
 	: health(getAppConfig().immune_health_max),
 	  activationLevel(getAppConfig().immune_adaptive_baseline),
-	  host(host_animal), virus(nullptr) 
+	  host(host_animal), virus(nullptr)
 {
 	for (size_t i = 0; i < immuneProfile.size(); ++i) {
-		immuneProfile[i] = 0.0;
-	} 
+		immuneProfile[i] = host_animal->getGenome()->getImmuneGenes(i);
+	}
 }
 
 double ImmuneSystem::getHealth() const {
@@ -19,7 +19,7 @@ double ImmuneSystem::getHealth() const {
 
 void ImmuneSystem::updateActivationLevel(sf::Time dt) {
 	if (isInfected()) {
-		activationLevel *= (1 + dt.asSeconds() * (0.5 * (1 - activationLevel*activationLevel / 16)));
+		activationLevel *= (1 + dt.asSeconds() * (0.5 * (1 - (activationLevel*activationLevel) / 16)));
 	} else {
 		double possibleLevel = activationLevel * 0.995;
 		activationLevel = possibleLevel > getAppConfig().immune_adaptive_baseline ? possibleLevel : activationLevel;
