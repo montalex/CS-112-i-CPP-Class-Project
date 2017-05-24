@@ -129,3 +129,6 @@ les statistiques.
 
 Q5.2 Nous avons introduits (lors de l'étape précedente) une méthode getStats dans LivingEntity qui produit le map avec juste l'énergie et nous l'avons redefinie dans Animal pourqu'elle ajoute 
 au map produit par la superclasse les nouvelles données.
+
+Q5.3 On ajoute une méthode isInfected dans Animal qui appelle la méthode de même nom dans ImmuneSystem.
+On modifie ensuite notre visitor SpeciesCounter pour qu'il compte, en plus du nombre de loups, brebis et plantes, le nombre d'animaux infectés.

@@ -99,3 +99,19 @@ std::unordered_map<std::string, double> LivingEntity::getStats() const {
 void LivingEntity::die() {
     setEnergy(-1);
 }
+
+bool LivingEntity::canInfect(LivingEntity const * other) const {
+    return false;
+}
+
+bool LivingEntity::infectableBy(Sheep const * sheep) const {
+    return false;
+}
+
+bool LivingEntity::infectableBy(Wolf const * wolf) const {
+    return false;
+}
+
+bool LivingEntity::infectableBy(Grass const * grass) const {
+    return false;
+}

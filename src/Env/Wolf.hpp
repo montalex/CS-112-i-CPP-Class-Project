@@ -235,6 +235,10 @@ public:
      */
     int getHerdId() const override;
 
+    bool canInfect(LivingEntity const * other) const override;
+
+    virtual bool infectableBy(Wolf const * sheep) const override;
+
 };
 
 #endif // INFOSV_WOLF_HPP

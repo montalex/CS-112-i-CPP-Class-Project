@@ -177,3 +177,14 @@ void Environment::infectEntity(const Vec2d& p, Virus* v) {
 void Environment::killEntity(const Vec2d& p) {
     entityClosestTo(p)->die();
 }
+
+std::list<LivingEnity*> Environment::getEntitiesInInfectionRnage(Vec2d& point) const {
+{
+    std::list<LivingEntity*> result;
+    for (LivingEntity* entity: entities) {
+        if (distance(entity->getPosition(), point) < getAppConfig().virus_infection_range) {
+            result.push_back(entity);
+        }
+    }
+    return result;
+}

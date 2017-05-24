@@ -234,7 +234,7 @@ public:
     virtual std::string getStatLabel() const = 0;
 
     /*!
-     * @brief Checks whether the animal is tracked
+     * @brief Checks whether the entity is tracked
      */
     bool isTracked() const;
 
@@ -248,6 +248,26 @@ public:
      */
     void die();
 
+    /*!
+     * @brief Checks whether an entity can be infected by the current one
+     * uing the canBeInfectedBy
+     */
+    virtual bool canInfect(LivingEntity const * other) const;
+
+    /*!
+     * @brief Checks whether a sheep can be infected by the current entity.
+     */
+    virtual bool infectableBy(Sheep const * sheep) const;
+
+    /*!
+     * @brief Checks whether a wolf can be infected by the current entity.
+     */
+    virtual bool infectableBy(Wolf const * wolf) const;
+
+    /*!
+     * @brief Checks whether a grass can be infected by the current entity.
+     */
+    virtual bool infectableBy(Grass const * grass) const;
 private:
     Vec2d position;
     double energy;
