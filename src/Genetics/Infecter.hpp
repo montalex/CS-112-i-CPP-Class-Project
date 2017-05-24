@@ -1,3 +1,5 @@
+#ifndef INFOSV_INFECTER
+#define INFOSV_INFECTER
 #include <Interface/Visitor.hpp>
 
 /*!
@@ -20,3 +22,5 @@ public:
 private:
 	Virus* virus;
 };
+
+#endif

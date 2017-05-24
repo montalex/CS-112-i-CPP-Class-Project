@@ -1,6 +1,7 @@
 #include <Env/Animal.hpp>
 #include <Application.hpp>
 #include <Utility/Constants.hpp>
+#include <Genetics/Infecter.hpp>
 
 Animal::Animal(const Vec2d& initPos, const double& startEnergy, Genome *mother,
                Genome *father, const sf::Time& gesTime) :
@@ -142,6 +143,15 @@ void Animal::updateState()
     std::list<LivingEntity*> matables;
     std::list<LivingEntity*> dangers;
     std::list<LivingEntity*> entities = env.getEntitiesInSightForAnimal(this);
+    std::list<LivingEntity*> entitiesInInfectionRange = env.getEntitiesInInfectionRange(getPosition());
+
+    if (!entitiesInInfectionRange.empty()) {
+        for (LivingEntity* entity: entitiesInInfectionRange) {
+            if (canInfect(entity)) {
+                infect(entity);
+            }
+        }
+    }
 
     if(getState() == GIVING_BIRTH) {
         if(getDeliveryTime().asSeconds() <= 0) {
@@ -533,6 +543,19 @@ void Animal::infect(Virus* v) {
 
 void Animal::setImmuneGenes(const std::array<double, 10>& immuneProfile) {
     genome->setImmuneGenes(immuneProfile);
+}
+
+double Animal::getVirusQuantity() const {
+    return immuneSystem->getVirus()->getAmount();
+}
+
+Virus* Animal::getVirus() const {
+    return immuneSystem->getVirus();
+}
+
+void Animal::infect(LivingEntity* entity) const {
+    Infecter infecter(getVirus());
+    entity->acceptVisit(infecter);
 }
 
 bool Animal::hasVirus() const

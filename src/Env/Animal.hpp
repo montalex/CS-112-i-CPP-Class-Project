@@ -501,6 +501,15 @@ public:
     void setImmuneGenes(const std::array<double, 10>& immuneProfile);
 
     /*!
+     * @brief Checks if the animal is infected.
+     */
+    double getVirusQuantity() const;
+
+    void infect(LivingEntity* entity) const;
+
+    Virus* getVirus() const;
+
+    /*!
      * @brief Checks if an Animal has a virus
      */
     bool hasVirus() const;

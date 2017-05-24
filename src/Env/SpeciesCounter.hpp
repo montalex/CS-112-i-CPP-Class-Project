@@ -10,7 +10,7 @@
 class SpeciesCounter: public Visitor
 {
 private:
-	int sheep, wolves, grass; // counters
+	int sheep, wolves, grass, infected; // counters
 
 public:
 	SpeciesCounter();

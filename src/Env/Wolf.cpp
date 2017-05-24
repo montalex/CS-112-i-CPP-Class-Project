@@ -185,3 +185,14 @@ bool Wolf::isFreeToMove() const {
 int Wolf::getHerdId() const {
     return -1;
 }
+
+bool Wolf::canInfect(LivingEntity const * other) const {
+    return other->infectableBy(this);
+}
+
+bool Wolf::infectableBy(Wolf const * wolf) const {
+    return wolf != this &&
+           wolf->hasVirus() &&
+           wolf->getVirusQuantity() > getAppConfig().virus_min_quantity_for_infection &&
+           bernoulli(getAppConfig().virus_infection_probability);
+}

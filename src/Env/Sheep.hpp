@@ -252,6 +252,10 @@ public:
 
     std::string getDebugString() const override;
 
+    bool canInfect(LivingEntity const * other) const override;
+
+    virtual bool infectableBy(Sheep const * sheep) const override;
+
 private:
     int herdId;
 

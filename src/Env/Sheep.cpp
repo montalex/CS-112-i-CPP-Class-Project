@@ -227,3 +227,14 @@ std::string Sheep::getDebugString() const {
     }
     return Animal::getDebugString() + herdString + "\n";
 }
+
+bool Sheep::canInfect(LivingEntity const * other) const {
+    return other->infectableBy(this);
+}
+
+bool Sheep::infectableBy(Sheep const * sheep) const {
+    return sheep != this &&
+           sheep->hasVirus() &&
+           sheep->getVirusQuantity() > getAppConfig().virus_min_quantity_for_infection &&
+           bernoulli(getAppConfig().virus_infection_probability);
+}

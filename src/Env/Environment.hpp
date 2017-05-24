@@ -72,6 +72,14 @@ public:
     std::list<LivingEntity*> getEntitiesInSightForAnimal(const Animal* animal) const;
 
     /*!
+     * @brief Gets all the entities in the infection range of the given position.
+     *
+     * @param center The center of the infection area
+     * @return all entities in the infection range of the given point.
+     */
+    std::list<LivingEntity*> getEntitiesInInfectionRange(Vec2d point) const;
+
+    /*!
      * @brief Computes new data for graphs.
      *
      * @param label the label of the graph that will be receive the data.
