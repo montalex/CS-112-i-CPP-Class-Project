@@ -524,7 +524,7 @@ std::unordered_map<std::string, double> Animal::getStats() const {
 
 bool Animal::isDead() const {
     return getEnergy() < getAppConfig().animal_min_energy ||
-           immuneSystem->getHealth() <= 0;
+           immuneSystem->getHealth() <= 0.0;
 }
 
 void Animal::infect(Virus* v) {

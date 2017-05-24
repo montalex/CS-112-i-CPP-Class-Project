@@ -64,7 +64,7 @@ void ImmuneSystem::update(sf::Time dt) {
 			virus = nullptr;
 		}
 	} else {
-		double tmpHealth = getAppConfig().immune_health_recovery * dt.asSeconds();
+		double tmpHealth = health + getAppConfig().immune_health_recovery * dt.asSeconds();
 		health = tmpHealth < getAppConfig().immune_health_max ? tmpHealth : health;
 	}
 }
