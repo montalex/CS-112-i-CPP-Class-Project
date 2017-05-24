@@ -38,7 +38,8 @@ double ImmuneSystem::computeInfectionScore() const {
 	// Compute the two sums at the same time. Possible as they are independent (except score+=)
 	for (size_t i = 0; i < immuneProfile.size(); ++i) {
 		score += immuneProfile[i] * virus->getProfile().at(i);
-		tmp += getAppConfig().immune_defense_effectiveness * (host->getGenome()->getImmuneGenes(i) * virus->getProfile().at(i) + uniform(0.0, getAppConfig().immune_defense_random_variability));
+		tmp += getAppConfig().immune_defense_effectiveness * (host->getGenome()->getImmuneGenes(i) * virus->getProfile().at(i) +
+				uniform(-getAppConfig().immune_defense_random_variability, getAppConfig().immune_defense_random_variability));
 	}
 	score *= getAppConfig().immune_defense_effectiveness;
 	score += tmp;

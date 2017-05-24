@@ -500,6 +500,16 @@ public:
      */
     void setImmuneGenes(const std::array<double, 10>& immuneProfile);
 
+    /*!
+     * @brief Checks if an Animal has a virus
+     */
+    bool hasVirus() const;
+
+    /*!
+     * @brief Checks if an Animal is infected
+     */
+    bool isInfected() const;
+
 private:
     Vec2d direction;
     Vec2d target;

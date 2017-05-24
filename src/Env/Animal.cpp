@@ -534,3 +534,13 @@ void Animal::infect(Virus* v) {
 void Animal::setImmuneGenes(const std::array<double, 10>& immuneProfile) {
     genome->setImmuneGenes(immuneProfile);
 }
+
+bool Animal::hasVirus() const
+{
+    return immuneSystem->getVirus() != nullptr;
+}
+
+bool Animal::isInfected() const
+{
+    return hasVirus() && immuneSystem->getVirus()->getAmount() > getAppConfig().virus_min_quantity_for_infection;
+}
