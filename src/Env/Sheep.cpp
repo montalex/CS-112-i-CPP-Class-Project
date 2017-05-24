@@ -229,7 +229,7 @@ std::string Sheep::getDebugString() const {
 }
 
 bool Sheep::canInfect(LivingEntity const * other) const {
-    return other.infectableBy(this);
+    return other->infectableBy(this);
 }
 
 bool Sheep::infectableBy(Sheep const * sheep) const {

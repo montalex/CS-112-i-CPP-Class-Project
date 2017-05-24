@@ -130,9 +130,10 @@ void InfectionTest::onEvent(sf::Event event, sf::RenderWindow&)
         else if (event.key.code == sf::Keyboard::I)
         {
             Virus* tmp3 = new Virus();
+			// décommentez si l'opérateur d'affichage est codé
             std::cout << "NEW VIRUS: " << *tmp3 << std::endl;
             getAppEnv().infectEntity(getCursorPositionInView(), tmp3);
-            delete tmp3;
+
         }
 
         else if (event.key.code == sf::Keyboard::K)

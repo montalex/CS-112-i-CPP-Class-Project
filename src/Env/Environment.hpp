@@ -77,7 +77,7 @@ public:
      * @param center The center of the infection area
      * @return all entities in the infection range of the given point.
      */
-    std::list<LivingEnity*> getEntitiesInInfectionRnage(Vec2d& point) const;
+    std::list<LivingEntity*> getEntitiesInInfectionRange(Vec2d point) const;
 
     /*!
      * @brief Computes new data for graphs.

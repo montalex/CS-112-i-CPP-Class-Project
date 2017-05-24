@@ -147,7 +147,7 @@ void Animal::updateState()
 
     if (!entitiesInInfectionRange.empty()) {
         for (LivingEntity* entity: entitiesInInfectionRange) {
-            if (canInfect(entity) && !entity->hasVirus()) {
+            if (canInfect(entity)) {
                 infect(entity);
             }
         }
@@ -534,7 +534,7 @@ std::unordered_map<std::string, double> Animal::getStats() const {
 
 bool Animal::isDead() const {
     return getEnergy() < getAppConfig().animal_min_energy ||
-           immuneSystem->getHealth() < 0;
+           immuneSystem->getHealth() <= 0;
 }
 
 void Animal::infect(Virus* v) {
@@ -543,10 +543,6 @@ void Animal::infect(Virus* v) {
 
 void Animal::setImmuneGenes(const std::array<double, 10>& immuneProfile) {
     genome->setImmuneGenes(immuneProfile);
-}
-
-bool Animal::isInfected() const {
-    return immuneSystem->isInfected();
 }
 
 double Animal::getVirusQuantity() const {
@@ -560,4 +556,14 @@ Virus* Animal::getVirus() const {
 void Animal::infect(LivingEntity* entity) const {
     Infecter infecter(getVirus());
     entity->acceptVisit(infecter);
+}
+
+bool Animal::hasVirus() const
+{
+    return immuneSystem->getVirus() != nullptr;
+}
+
+bool Animal::isInfected() const
+{
+    return hasVirus() && immuneSystem->getVirus()->getAmount() > getAppConfig().virus_min_quantity_for_infection;
 }

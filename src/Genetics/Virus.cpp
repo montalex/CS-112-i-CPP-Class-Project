@@ -20,7 +20,9 @@ Virus::Virus(const std::array<double, 10>& virulence_profile) : amount(getAppCon
 }
 
 void Virus::update(sf::Time dt) {
-	amount *= (1 + growthRate * (1 - amount / ((double) getAppConfig().virus_max) * dt.asSeconds()));
+	if(amount <= getAppConfig().virus_max) {
+		amount *= (1 + growthRate * (1 - amount / getAppConfig().virus_max) * dt.asSeconds());
+	}
 }
 
 const std::array<double, 10>& Virus::getProfile() const {

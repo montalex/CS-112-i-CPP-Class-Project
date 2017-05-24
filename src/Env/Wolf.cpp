@@ -187,7 +187,7 @@ int Wolf::getHerdId() const {
 }
 
 bool Wolf::canInfect(LivingEntity const * other) const {
-    return other.infectableBy(this);
+    return other->infectableBy(this);
 }
 
 bool Wolf::infectableBy(Wolf const * wolf) const {

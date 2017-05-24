@@ -23,4 +23,4 @@ private:
 	Virus* virus;
 };
 
-#endif;
+#endif

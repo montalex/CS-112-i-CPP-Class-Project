@@ -503,13 +503,21 @@ public:
     /*!
      * @brief Checks if the animal is infected.
      */
-    bool isInfected() const;
-
     double getVirusQuantity() const;
 
     void infect(LivingEntity* entity) const;
 
     Virus* getVirus() const;
+
+    /*!
+     * @brief Checks if an Animal has a virus
+     */
+    bool hasVirus() const;
+
+    /*!
+     * @brief Checks if an Animal is infected
+     */
+    bool isInfected() const;
 
 private:
     Vec2d direction;
