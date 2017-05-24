@@ -19,7 +19,7 @@ double ImmuneSystem::getHealth() const {
 
 void ImmuneSystem::updateActivationLevel(sf::Time dt) {
 	if (isInfected()) {
-		activationLevel *= (1 + dt.asSeconds() * (0.5 * (1 - activationLevel*activationLevel / 16)));
+		activationLevel *= (1 + dt.asSeconds() * (0.5 * (1 - activationLevel*activationLevel / 16.0)));
 	} else {
 		double possibleLevel = activationLevel * 0.995;
 		activationLevel = possibleLevel > getAppConfig().immune_adaptive_baseline ? possibleLevel : activationLevel;
@@ -40,13 +40,14 @@ double ImmuneSystem::computeInfectionScore() const {
 		score += immuneProfile[i] * virus->getProfile().at(i);
 		tmp += getAppConfig().immune_defense_effectiveness * (host->getGenome()->getImmuneGenes(i) * virus->getProfile().at(i) + uniform(0.0, getAppConfig().immune_defense_random_variability));
 	}
+	score *= getAppConfig().immune_defense_effectiveness;
 	score += tmp;
 	score = score*score * activationLevel;
 	return score;
 }
 
 void ImmuneSystem::fightInfection(sf::Time dt) {
-	health -= getAppConfig().immune_health_penalty * virus->getAmount() * dt.asSeconds();
+	health -= (getAppConfig().immune_health_penalty * virus->getAmount() * dt.asSeconds());
 	virus->reduceAmount(computeInfectionScore() * dt.asSeconds());
 }
 
