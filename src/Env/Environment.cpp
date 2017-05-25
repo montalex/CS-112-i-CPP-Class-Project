@@ -48,6 +48,7 @@ void Environment::reset()
         delete entity;
     }
     entities.clear();
+    sheepLeaders.clear();
 }
 
 std::list<LivingEntity*> Environment::getEntitiesInSightForAnimal(const Animal* animal) const

@@ -9,9 +9,9 @@ Animal::Animal(const Vec2d& initPos, const double& startEnergy, Genome *mother,
     target(Vec2d()), current_target(Vec2d(1, 0)), speedNorm(0.0), state(WANDERING),
     hungry(false), feedingTime(sf::seconds(getAppConfig().animal_feed_time)),
     matingTime(sf::seconds(0)),pregnant(false),
-    nBabies(0), gestationTime(gesTime), deliveryTime(sf::seconds(0)) {
+    nBabies(0), gestationTime(gesTime), deliveryTime(sf::seconds(0)), babiesDad(nullptr) {
         genome = new Genome(mother, father);
-        babiesDad = new Genome(nullptr, nullptr);
+        //babiesDad = new Genome(nullptr, nullptr);
         immuneSystem = new ImmuneSystem(this);
     }
 
@@ -519,7 +519,7 @@ std::unordered_map<std::string, double> Animal::getStats() const {
     res[s::IMUNAC] = immuneSystem->getActivationLevel();
     if (immuneSystem->isInfected()) {
         res[s::VIRUS] = immuneSystem->getVirus()->getAmount();
-        res[s::ADASCORE] = 0.0;
+        res[s::ADASCORE] = 0.0; //TODO: WTF?
         res[s::SCORE] = immuneSystem->computeInfectionScore();
     } else {
         res[s::VIRUS] = 0.0;
