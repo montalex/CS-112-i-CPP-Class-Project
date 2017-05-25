@@ -9,7 +9,7 @@ ImmuneSystem::ImmuneSystem(const Animal* host_animal)
 	  host(host_animal), virus(nullptr)
 {
 	for (size_t i = 0; i < immuneProfile.size(); ++i) {
-		immuneProfile[i] = host_animal->getGenome()->getImmuneGenes(i);
+		immuneProfile[i] = 0.0;
 	}
 }
 

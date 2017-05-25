@@ -38,7 +38,6 @@ bool Virus::isDead() const {
 }
 
 void Virus::reduceAmount(double difference) {
-	std::cout << "HHHHHHHHHHHHHHHHHHHHHHHHH DIFF " << difference << " AFTER - " << (amount-difference) << " INIT " << getAppConfig().virus_initial_quantity << std::endl;
 	amount -= difference;
 }
 
