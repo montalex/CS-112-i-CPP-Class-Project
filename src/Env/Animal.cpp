@@ -519,8 +519,8 @@ std::unordered_map<std::string, double> Animal::getStats() const {
     res[s::IMUNAC] = immuneSystem->getActivationLevel();
     if (immuneSystem->isInfected()) {
         res[s::VIRUS] = immuneSystem->getVirus()->getAmount();
-        res[s::ADASCORE] = 0.0; //TODO: WTF?
-        res[s::SCORE] = immuneSystem->computeInfectionScore();
+        res[s::ADASCORE] = immuneSystem->getAdaptScore();
+        res[s::SCORE] = immuneSystem->getTotalScore();
     } else {
         res[s::VIRUS] = 0.0;
         res[s::ADASCORE] = 0.0;

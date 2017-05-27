@@ -19,6 +19,8 @@ private:
 	const Animal* host;
 	Virus* virus;
 	std::array<double, 10> immuneProfile;
+	double totalScore;
+	double adaptScore;
 
 	/*!
 	 * @brief Updates the activation level of the system
@@ -60,12 +62,22 @@ public:
     /*!
      * @brief Computes the infection score
      */
-	double computeInfectionScore() const;
+	void computeInfectionScore();
 
 	/*!
 	 * @brief Activation level getter
 	 */
 	double getActivationLevel() const;
+
+	/*!
+	 * @brief Total score getter
+	 */
+	double getTotalScore() const;
+
+	/*!
+	 * @brief Adaptation score getter
+	 */
+	double getAdaptScore() const;
 
 	/*!
 	 * @brief The immune sytem has to fight the new virus

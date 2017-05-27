@@ -6,7 +6,7 @@
 ImmuneSystem::ImmuneSystem(const Animal* host_animal)
 	: health(getAppConfig().immune_health_max),
 	  activationLevel(getAppConfig().immune_adaptive_baseline),
-	  host(host_animal), virus(nullptr)
+	  host(host_animal), virus(nullptr), totalScore(0.0), adaptScore(0.0)
 {
 	for (size_t i = 0; i < immuneProfile.size(); ++i) {
 		immuneProfile[i] = 0.0;
@@ -32,7 +32,7 @@ void ImmuneSystem::adaptToVirus(sf::Time dt) {
 	}
 }
 
-double ImmuneSystem::computeInfectionScore() const {
+void ImmuneSystem::computeInfectionScore() {
 	double score = 0;
 	double tmp = 0;
 	// Compute the two sums at the same time. Possible as they are independent (except score+=)
@@ -42,14 +42,14 @@ double ImmuneSystem::computeInfectionScore() const {
 				uniform(-getAppConfig().immune_defense_random_variability, getAppConfig().immune_defense_random_variability));
 	}
 	score *= getAppConfig().immune_defense_effectiveness;
+	adaptScore = score;
 	score += tmp;
-	score = score*score * activationLevel;
-	return score;
+	totalScore = score*score * activationLevel;
 }
 
 void ImmuneSystem::fightInfection(sf::Time dt) {
 	health -= (getAppConfig().immune_health_penalty * virus->getAmount() * dt.asSeconds());
-	virus->reduceAmount(computeInfectionScore() * dt.asSeconds());
+	virus->reduceAmount(getTotalScore() * dt.asSeconds());
 }
 
 void ImmuneSystem::update(sf::Time dt) {
@@ -57,9 +57,9 @@ void ImmuneSystem::update(sf::Time dt) {
 	if (isInfected()) {
 		virus->update(dt);
 		adaptToVirus(dt);
+		computeInfectionScore();
 		fightInfection(dt);
 		if (virus->isDead()) {
-        	std::cout << "VIRUS IS DEAD " << std::endl;
         	delete virus;
 			virus = nullptr;
 		}
@@ -79,6 +79,16 @@ Virus* ImmuneSystem::getVirus() const {
 
 double ImmuneSystem::getActivationLevel() const {
 	return activationLevel;
+}
+
+double ImmuneSystem::getTotalScore() const
+{
+	return totalScore;
+}
+
+double ImmuneSystem::getAdaptScore() const
+{
+	return adaptScore;
 }
 
 void ImmuneSystem::infect(Virus* v) {
