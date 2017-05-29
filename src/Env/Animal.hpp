@@ -505,6 +505,9 @@ public:
      */
     double getVirusQuantity() const;
 
+    /*!
+     * @brief Infects a LivingEntity with the carried virus
+     */
     void infect(LivingEntity* entity) const;
 
     Virus* getVirus() const;

@@ -11,14 +11,12 @@ Animal::Animal(const Vec2d& initPos, const double& startEnergy, Genome *mother,
     matingTime(sf::seconds(0)),pregnant(false),
     nBabies(0), gestationTime(gesTime), deliveryTime(sf::seconds(0)), babiesDad(nullptr) {
         genome = new Genome(mother, father);
-        //babiesDad = new Genome(nullptr, nullptr);
         immuneSystem = new ImmuneSystem(this);
     }
 
 Animal::~Animal() {
     delete genome;
     delete immuneSystem;
-    // TODO: DELETE babiesDad?
 };
 
 Vec2d Animal::getDirection() const
@@ -142,16 +140,7 @@ void Animal::updateState()
     std::list<LivingEntity*> eatables;
     std::list<LivingEntity*> matables;
     std::list<LivingEntity*> dangers;
-    std::list<LivingEntity*> entities = env.getEntitiesInSightForAnimal(this);
-    std::list<LivingEntity*> entitiesInInfectionRange = env.getEntitiesInInfectionRange(getPosition());
-
-    if (!entitiesInInfectionRange.empty()) {
-        for (LivingEntity* entity: entitiesInInfectionRange) {
-            if (canInfect(entity)) {
-                infect(entity);
-            }
-        }
-    }
+    std::list<LivingEntity*> entities = env.getEntities();
 
     if(getState() == GIVING_BIRTH) {
         if(getDeliveryTime().asSeconds() <= 0) {
@@ -174,10 +163,10 @@ void Animal::updateState()
         return;
     }
 
-    if(entities.empty()) {
-        setState(WANDERING);
-    } else {
-        for(auto entity: entities) {
+    bool noEntityInSight = true;
+    for(auto entity: entities) {
+        if (isTargetInSight(entity->getPosition())) {
+            noEntityInSight = false;
             if(entity->eatable(this)) {
                 dangers.push_back(entity);
             }
@@ -188,29 +177,36 @@ void Animal::updateState()
                 eatables.push_back(entity);
             }
         }
-
-        if(!dangers.empty()) {
-            setState(RUNNING_AWAY);
-            setDangers(dangers);
-        } else if(!isPregnant() && !matables.empty()) { /*Checks for Mates in priority if not pregnant*/
-            LivingEntity *closestEntity = getClosestEntity(matables);
-            setTarget(closestEntity->getPosition());
-            if(isColliding(*closestEntity)) {
-                meet(closestEntity);
-            } else {
-                setState(MATE_IN_SIGHT);
-            }
-        } else if(isHungry() && !eatables.empty()) { /*If no mates checks for food if hungry */
-            LivingEntity *closestEntity = getClosestEntity(eatables);
-            setTarget(closestEntity->getPosition());
-            if(isColliding(*closestEntity)) {
-                feed(closestEntity);
-            } else {
-                setState(FOOD_IN_SIGHT);
-            }
-        } else { /* If noone is interesting --> WANDERING*/
-            setState(WANDERING);
+        if (distance(getPosition(), entity->getPosition()) < getAppConfig().virus_infection_range && canInfect(entity)) {
+            infect(entity);
         }
+    }
+    if (noEntityInSight) {
+        setState(WANDERING);
+        return;
+    }
+
+    if(!dangers.empty()) {
+        setState(RUNNING_AWAY);
+        setDangers(dangers);
+    } else if (!isPregnant() && !matables.empty()) { /*Checks for Mates in priority if not pregnant*/
+        LivingEntity *closestEntity = getClosestEntity(matables);
+        setTarget(closestEntity->getPosition());
+        if(isColliding(*closestEntity)) {
+            meet(closestEntity);
+        } else {
+            setState(MATE_IN_SIGHT);
+        }
+    } else if(isHungry() && !eatables.empty()) { /*If no mates checks for food if hungry */
+        LivingEntity *closestEntity = getClosestEntity(eatables);
+        setTarget(closestEntity->getPosition());
+        if(isColliding(*closestEntity)) {
+            feed(closestEntity);
+        } else {
+            setState(FOOD_IN_SIGHT);
+        }
+    } else { /* If noone is interesting --> WANDERING*/
+        setState(WANDERING);
     }
 }
 

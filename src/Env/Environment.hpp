@@ -63,23 +63,6 @@ public:
     void reset();
 
     /*!
-     * @brief Gets all entities that the given Animal see in the Environment.
-     *
-     * @param animal the Animal
-     *
-     * @return all entities that the Animal sees
-     */
-    std::list<LivingEntity*> getEntitiesInSightForAnimal(const Animal* animal) const;
-
-    /*!
-     * @brief Gets all the entities in the infection range of the given position.
-     *
-     * @param center The center of the infection area
-     * @return all entities in the infection range of the given point.
-     */
-    std::list<LivingEntity*> getEntitiesInInfectionRange(Vec2d point) const;
-
-    /*!
      * @brief Computes new data for graphs.
      *
      * @param label the label of the graph that will be receive the data.
@@ -144,6 +127,11 @@ public:
      * @param p The closest position to the animal to infect.
      */
     void killEntity(const Vec2d& p);
+
+    /*!
+     * @brief Getter for the list of entities in the environment.
+     */
+    const std::list<LivingEntity*>& getEntities() const;
 
 private:
     void updateHerds();
