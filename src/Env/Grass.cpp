@@ -3,23 +3,7 @@
 #include <Interface/Visitor.hpp>
 Grass::Grass(const Vec2d& initPos)
     : LivingEntity(initPos, getAppConfig().grass_initial_energy)
-{
-    Vec2d currentPosition = getPosition();
-    double maxWidth = getAppConfig().window_simulation_width;
-    double maxHeight = getAppConfig().window_simulation_height;
-    /* Keeps grass in window bounds */
-    if(currentPosition.x < 0) {
-        currentPosition.x += maxWidth;
-    } else if(currentPosition.x > maxWidth) {
-        currentPosition.x -= maxWidth;
-    }
-    if(currentPosition.y < 0) {
-        currentPosition.y += maxHeight;
-    } else if(currentPosition.y > maxHeight) {
-        currentPosition.y -= maxHeight;
-    }
-    setPosition(currentPosition);
-}
+{}
 
 Grass::~Grass() {}
 
