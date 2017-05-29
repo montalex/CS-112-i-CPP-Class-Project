@@ -4,8 +4,11 @@ Le programme permet de simuler l'évolution d'un environnement peuplé par des A
 vegetation. Les animaux intéragissent entre en formant des troupeaux, en se mangeant et en se reproduisant.
 Ils peuvent se nourrir de plantes (les brebis) ou de brebis (les loups).
 
-Les animaux peuvent aussi être infectés par des virus, et l'infection se propagera entre les animaux qui sont
-proches.
+Les animuax dans un troupeau restent proches les uns des autres et suivent leur chef.
+Les animaux peuvent aussi être infectés par des virus, et l'infection se propagera entre les animaux qui sont proches.
+Les animaux possèdent un système immunitaire qui leur permet de combattre l'infection.
+
+Les programme fournit aussi un mécanisme de recolte et d'affichage des statistiques.
 
 # Compilation du programme
 
