@@ -123,12 +123,20 @@ Q4.5 Nous proposons de simplement choisir le membre du troupeau le plus agé.
 Q4.6 On aurait simplement besoin d'éliminer le code d'affichage graphique. Notre programme gère
 déjà de façon indépendante les dynamiques de l'environnement et des entités de l'affichage.
 
-Q5.1 On peut vérifier que l'entité trackée soit différente de nullptr. Si elle ne l'est pas, on peut
+Q5.1 On vérifie que l'entité trackée soit différente de nullptr. Si elle ne l'est pas, on peut
 appeler la fonction getStats de l'entité qui est redefinie dans Animal et Grass et qui retourne le map avec
 les statistiques.
 
-Q5.2 Nous avons introduits (lors de l'étape précedente) une méthode getStats dans LivingEntity qui produit le map avec juste l'énergie et nous l'avons redefinie dans Animal pourqu'elle ajoute 
-au map produit par la superclasse les nouvelles données.
+Q5.2 Nous avons introduit (lors de l'étape précedente) une méthode getStats dans LivingEntity qui produit le map
+avec juste l'énergie et nous l'avons redefinie dans Animal pourqu'elle ajoute au map produit par la superclasse les nouvelles données.
 
 Q5.3 On ajoute une méthode isInfected dans Animal qui appelle la méthode de même nom dans ImmuneSystem.
 On modifie ensuite notre visitor SpeciesCounter pour qu'il compte, en plus du nombre de loups, brebis et plantes, le nombre d'animaux infectés.
+
+Q5.4 Nous implementons le pattern du double dispatch comme indiqué: toute living entity a 4 methodes: canInfect(LivingEntity*),
+infectableBy(Sheep*), infectableBy(Wolf*), infectableBy(Grass*). On les défini virtuelles et avec des retours par défaut dans living entity
+et on ne rédefinit que celles dont on a besoin dans Sheep et Wolf. Enfin on déclare et définit une méthode infect(LvingEntity*) dans
+Animal.
+
+Q5.5 L'animal itère sur toutes les entités dans l'environnement et pour chacune il vérifie si elle est in sight ou dans le rayon d'infection
+et agit de façon appropriée. Cela nous permet d'itérer sur les entités une seule fois.

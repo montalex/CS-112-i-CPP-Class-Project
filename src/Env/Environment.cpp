@@ -51,17 +51,6 @@ void Environment::reset()
     sheepLeaders.clear();
 }
 
-std::list<LivingEntity*> Environment::getEntitiesInSightForAnimal(const Animal* animal) const
-{
-    std::list<LivingEntity*> entitiesSeen;
-    for(auto entity: entities) {
-        if(entity != nullptr && animal->isTargetInSight(entity->getPosition())) {
-            entitiesSeen.push_back(entity);
-        }
-    }
-    return entitiesSeen;
-}
-
 std::unordered_map<std::string, double> Environment::fetchData(std::string const & label) {
     std::unordered_map<std::string, double> empty;
 
@@ -179,12 +168,6 @@ void Environment::killEntity(const Vec2d& p) {
     entityClosestTo(p)->die();
 }
 
-std::list<LivingEntity*> Environment::getEntitiesInInfectionRange(Vec2d point) const {
-    std::list<LivingEntity*> result;
-    for (LivingEntity* entity: entities) {
-        if (distance(entity->getPosition(), point) < getAppConfig().virus_infection_range) {
-            result.push_back(entity);
-        }
-    }
-    return result;
+const std::list<LivingEntity*>& Environment::getEntities() const {
+    return entities;
 }
