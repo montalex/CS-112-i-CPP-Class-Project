@@ -499,6 +499,9 @@ Vec2d Animal::avoidanceForce() const
     Vec2d pos = getPosition();
     std::list<LivingEntity*> nearby = getAppEnv().getNearbyAvoidableEntitesForAnimal(this);
     for(auto entity: nearby) {
+        if(pos == entity->getPosition()) {
+            return Vec2d(0, 0);
+        }
         Vec2d distance = (pos - entity->getPosition());
         avoidance += (ANIMAL_AVOIDANCE_WEIGHT * distance) / distance.lengthSquared();
     }
