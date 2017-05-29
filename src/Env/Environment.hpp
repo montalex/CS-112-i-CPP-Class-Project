@@ -120,6 +120,8 @@ public:
      * @param v The virus that will infect the animal.
      */
     void infectEntity(const Vec2d& p, Virus* v);
+    
+    void infectEntity(const Vec2d& p);
 
     /*!
      * @brief Kills the living enitity at the provided position

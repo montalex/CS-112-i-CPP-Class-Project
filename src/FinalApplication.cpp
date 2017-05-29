@@ -53,12 +53,11 @@ void FinalApplication::onEvent(sf::Event event, sf::RenderWindow&)
 				break;
 
 			case sf::Keyboard::I:
-				// UNCOMMENT WHEN infectEntity CODED
-				//getAppEnv().infectEntity(getCursorPositionInView());
+				getAppEnv().infectEntity(getCursorPositionInView());
 				break;
 
 			case sf::Keyboard::K:
-				//getAppEnv().killEntity(getCursorPositionInView());
+				getAppEnv().killEntity(getCursorPositionInView());
 				break;
 
 			case sf::Keyboard::T:
