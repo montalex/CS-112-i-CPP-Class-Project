@@ -21,6 +21,7 @@ void Environment::update(sf::Time dt)
     for(auto& entity: entities) {
         entity->update(dt);
     }
+
     updateHerds();
 
     for(auto& entity: entities) {
@@ -170,7 +171,10 @@ void Environment::infectEntity(const Vec2d& p) {
 }
 
 void Environment::killEntity(const Vec2d& p) {
-    entityClosestTo(p)->die();
+    LivingEntity* closest = entityClosestTo(p);
+    if (closest != nullptr) {
+        closest->die();
+    }
 }
 
 const std::list<LivingEntity*>& Environment::getEntities() const {
