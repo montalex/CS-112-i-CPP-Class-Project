@@ -32,3 +32,6 @@ Interaction au moyen du clavier:
  - **t** Suit le statistiques de l'animal le plus proche au pointeur de la souris.
  - **espace** Met en pause la simulation.
  - **d** entre en mode debug.
+
+# Parties implémentées
+Nous avons terminé les parties obligatoires du programme, soit jusqu'à la fin de l'étape 5.3
