@@ -12,7 +12,8 @@
 #include <iomanip> // setprecision
 #include <sstream> // stringstream
 
-namespace {
+namespace
+{
 
 std::vector<sf::Color> const& COLORS = { sf::Color::Red, sf::Color::Green, sf::Color::Yellow, sf::Color::Cyan,
                                          sf::Color::White, sf::Color::Magenta
@@ -23,7 +24,8 @@ std::vector<sf::Color> const& COLORS = { sf::Color::Red, sf::Color::Green, sf::C
 Graph::Graph(std::vector<std::string> const& titles, Vec2d const& size, double min, double max)
     : mSize(size)
     , mYMin(std::min(max, min))
-    , mYMax(std::max(max, min)) {
+    , mYMax(std::max(max, min))
+{
     assert(titles.size() <= COLORS.size());
 
     for (std::size_t i = 0; i < titles.size(); ++i) {
@@ -31,7 +33,8 @@ Graph::Graph(std::vector<std::string> const& titles, Vec2d const& size, double m
     }
 }
 
-void Graph::updateData(sf::Time deltaEpoch, std::unordered_map<std::string, double> const& newData) {
+void Graph::updateData(sf::Time deltaEpoch, std::unordered_map<std::string, double> const& newData)
+{
     auto newEpoch = mLastEpoch + deltaEpoch;
 
     auto const X_SCALE = 10.0; // The x-axis scale is 10px per second
@@ -73,7 +76,8 @@ void Graph::updateData(sf::Time deltaEpoch, std::unordered_map<std::string, doub
     mLastEpoch = newEpoch;
 }
 
-void Graph::reset() {
+void Graph::reset()
+{
     mLastEpoch = sf::Time::Zero;
 
     for (auto& serie : mSeries) {
@@ -82,7 +86,8 @@ void Graph::reset() {
     }
 }
 
-void Graph::drawOn(sf::RenderTarget& target) const {
+void Graph::drawOn(sf::RenderTarget& target) const
+{
     auto const LEGEND_MARGIN = 10;
     auto const FONT_SIZE = 10;
     auto lastLegendX = LEGEND_MARGIN;
@@ -111,7 +116,8 @@ void Graph::drawOn(sf::RenderTarget& target) const {
     }
 }
 
-std::string Graph::getSeriesInString() const {
+std::string Graph::getSeriesInString() const
+{
 
     auto const Y_SCALE = 1.0 / (mYMax - mYMin) * mSize.y;
 

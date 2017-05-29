@@ -98,6 +98,7 @@ std::ostream& operator<<(std::ostream& out, const Genome& g)
     return out;
 }
 
-void Genome::setImmuneGenes(std::array<double, immuneSize> newProfile) {
+void Genome::setImmuneGenes(std::array<double, immuneSize> newProfile)
+{
     immuneProfile = newProfile;
 }

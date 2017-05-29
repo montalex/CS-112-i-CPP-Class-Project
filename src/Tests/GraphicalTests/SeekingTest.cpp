@@ -21,20 +21,20 @@ void SeekingTest::onSimulationStart()
 
 void SeekingTest::onEvent(sf::Event event, sf::RenderWindow&)
 {
-     if (event.type == sf::Event::KeyReleased) {
-        switch (event.key.code){
+    if (event.type == sf::Event::KeyReleased) {
+        switch (event.key.code) {
 
-			case sf::Keyboard::T:
-			{
-			Vec2d const coord = getCursorPositionInView();
-			 mAutomaton->setTargetPosition(coord);
-			}
-			
+        case sf::Keyboard::T: {
+            Vec2d const coord = getCursorPositionInView();
+            mAutomaton->setTargetPosition(coord);
+        }
+
+        break;
+
+        default:
             break;
-			
-			default: break;
-		}
-	 }
+        }
+    }
 }
 
 void SeekingTest::onUpdate(sf::Time dt)
@@ -50,5 +50,5 @@ void SeekingTest::onDraw(sf::RenderTarget& target)
 
 void SeekingTest::onRun()
 {
- // TODO add more stuff here
+// TODO add more stuff here
 }

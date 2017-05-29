@@ -147,13 +147,13 @@ public:
     void resetStats()
     {
         getStats().setActive(0);
-	}
+    }
 
-	// focus on particular stat + resets the stat
-	void focusOnStat(std::string graph_title)
-	{
+    // focus on particular stat + resets the stat
+    void focusOnStat(std::string graph_title)
+    {
         getStats().focusOn(graph_title);
-	}
+    }
 
 
 protected:
@@ -209,11 +209,11 @@ protected:
      * @param target a render target
      */
     virtual void onDraw(sf::RenderTarget& target);
-/*!
-     * @brief Subclass can override this method to change the policy for
-	 * background handling
-	 */
-	void chooseBackground();
+    /*!
+         * @brief Subclass can override this method to change the policy for
+    	 * background handling
+    	 */
+    void chooseBackground();
 
 
 protected:
@@ -279,10 +279,10 @@ protected:
      */
     void updateSimulationView();
 
-   /*!
-     * @brief toggle debug mode
-     */
-	void switchDebug();
+    /*!
+      * @brief toggle debug mode
+      */
+    void switchDebug();
 
 
 protected:
@@ -310,14 +310,14 @@ protected:
 
     bool         mPaused;            ///< Tells if the application is in pause or not
     bool         mIsResetting;       ///< Is true for one main loop iteration when resetting.
-                                     ///  This is useful to pause the clock while generating
-                                     ///  a new world. Without this, a huge dt would result from
-                                     ///  rebuilding the world.
+    ///  This is useful to pause the clock while generating
+    ///  a new world. Without this, a huge dt would result from
+    ///  rebuilding the world.
     bool         mIsDragging;        ///< Tells whether or not the user is dragging the view
     sf::Vector2i mLastCursorPosition;///< For handling dragging logic
 //    AnimalTracker   mAnimalTracker;        ///< Helper to keep track of an animal (optional)
 
-	sf::RectangleShape mSimulationBackground;
+    sf::RectangleShape mSimulationBackground;
 };
 
 /*!

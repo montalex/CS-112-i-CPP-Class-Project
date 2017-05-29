@@ -13,9 +13,9 @@
 class Visitor
 {
 public:
-	virtual void visit(Wolf* e) = 0;
-	virtual void visit(Sheep* e) = 0;
-	virtual void visit(Grass* e) = 0;
+    virtual void visit(Wolf* e) = 0;
+    virtual void visit(Sheep* e) = 0;
+    virtual void visit(Grass* e) = 0;
 };
 
 #endif

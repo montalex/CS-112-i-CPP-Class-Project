@@ -21,21 +21,21 @@ using Uid = unsigned int;
  * @brief Represents a genome gender.
  */
 enum Sex {
-        MALE, FEMALE
+    MALE, FEMALE
 };
 
 /*!
  * @brief Represents a genome genetic color attributes.
  */
 enum ColorAllele {
-        WHITE, BLACK
+    WHITE, BLACK
 };
 
 /*!
  * @brief Represents an entity's deceleration.
  */
 enum Deceleration {
-        WEAK, MIDRANGE, STRONG
+    WEAK, MIDRANGE, STRONG
 };
 
 /*!

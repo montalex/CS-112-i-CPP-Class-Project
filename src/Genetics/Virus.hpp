@@ -9,20 +9,21 @@
  *
  * @brief Represents a population of virus
  */
-class Virus: public Updatable {
+class Virus: public Updatable
+{
 private:
-	double amount;
-	double growthRate;
-	std::array<double, 10> virulence;
+    double amount;
+    double growthRate;
+    std::array<double, 10> virulence;
 
 public:
-	Virus();
-	Virus(const Virus& other);
+    Virus();
+    Virus(const Virus& other);
 
-	/*!
-	 * @brief Creates a virus given a virulence profile
-	 */
-	Virus(const std::array<double, 10>& virulence_profile);
+    /*!
+     * @brief Creates a virus given a virulence profile
+     */
+    Virus(const std::array<double, 10>& virulence_profile);
 
     void update(sf::Time dt) override;
 
@@ -43,9 +44,9 @@ public:
 
     /*!
      * @brief Kills a part of the population
-	 *
-	 * @param the number of viruses to deduct from the current population
-	 */
+     *
+     * @param the number of viruses to deduct from the current population
+     */
     void reduceAmount(double difference);
 
     /*!

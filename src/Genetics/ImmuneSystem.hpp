@@ -12,40 +12,41 @@ class Animal;
  *
  * @brief Represents the immune system of an animal
  */
-class ImmuneSystem: public Updatable {
+class ImmuneSystem: public Updatable
+{
 private:
-	double health;
-	double activationLevel;
-	const Animal* host;
-	Virus* virus;
-	std::array<double, 10> immuneProfile;
-	double totalScore;
-	double adaptScore;
+    double health;
+    double activationLevel;
+    const Animal* host;
+    Virus* virus;
+    std::array<double, 10> immuneProfile;
+    double totalScore;
+    double adaptScore;
 
-	/*!
-	 * @brief Updates the activation level of the system
-	 */
-	void updateActivationLevel(sf::Time dt);
+    /*!
+     * @brief Updates the activation level of the system
+     */
+    void updateActivationLevel(sf::Time dt);
 
-	/*!
-	 * @brief The immune system adapts itself to the virus it is fighting.
-	 */
-	void adaptToVirus(sf::Time dt);
+    /*!
+     * @brief The immune system adapts itself to the virus it is fighting.
+     */
+    void adaptToVirus(sf::Time dt);
 
-	/*!
-	 * @brief Computes the evolution of the fight between virus and immune system.
-	 */
-	void fightInfection(sf::Time dt);
+    /*!
+     * @brief Computes the evolution of the fight between virus and immune system.
+     */
+    void fightInfection(sf::Time dt);
 
 public:
-	ImmuneSystem(const Animal* host_animal);
+    ImmuneSystem(const Animal* host_animal);
 
-	~ImmuneSystem();
+    ~ImmuneSystem();
 
-	/*!
-	 * @brief Health getter
-	 */
-	double getHealth() const;
+    /*!
+     * @brief Health getter
+     */
+    double getHealth() const;
 
     void update(sf::Time dt) override;
 
@@ -62,29 +63,29 @@ public:
     /*!
      * @brief Computes the infection score
      */
-	void computeInfectionScore();
+    void computeInfectionScore();
 
-	/*!
-	 * @brief Activation level getter
-	 */
-	double getActivationLevel() const;
+    /*!
+     * @brief Activation level getter
+     */
+    double getActivationLevel() const;
 
-	/*!
-	 * @brief Total score getter
-	 */
-	double getTotalScore() const;
+    /*!
+     * @brief Total score getter
+     */
+    double getTotalScore() const;
 
-	/*!
-	 * @brief Adaptation score getter
-	 */
-	double getAdaptScore() const;
+    /*!
+     * @brief Adaptation score getter
+     */
+    double getAdaptScore() const;
 
-	/*!
-	 * @brief The immune sytem has to fight the new virus
-	 *
-	 * @param v The virus to fight.
-	 */
-	void infect(Virus* v);
+    /*!
+     * @brief The immune sytem has to fight the new virus
+     *
+     * @param v The virus to fight.
+     */
+    void infect(Virus* v);
 };
 
 #endif

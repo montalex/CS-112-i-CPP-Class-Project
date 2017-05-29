@@ -79,11 +79,13 @@ Vec2d LivingEntity::getCenter() const
     return getPosition();
 }
 
-bool LivingEntity::isTracked() const {
+bool LivingEntity::isTracked() const
+{
     return this == getAppEnv().getTrackedEntity();
 }
 
-void LivingEntity::drawOn(sf::RenderTarget& targetWindow) const {
+void LivingEntity::drawOn(sf::RenderTarget& targetWindow) const
+{
     if (isTracked()) { // if tracked add target ssprite
         auto trackedSprite = buildSprite(getPosition() + Vec2d(-getRadius() / 3, getRadius() / 3),
                                          getRadius() / 2,
@@ -92,26 +94,32 @@ void LivingEntity::drawOn(sf::RenderTarget& targetWindow) const {
     }
 }
 
-std::unordered_map<std::string, double> LivingEntity::getStats() const {
+std::unordered_map<std::string, double> LivingEntity::getStats() const
+{
     return {{s::ENERGY, energy}};
 }
 
-void LivingEntity::die() {
+void LivingEntity::die()
+{
     setEnergy(-1);
 }
 
-bool LivingEntity::canInfect(LivingEntity const * other) const {
+bool LivingEntity::canInfect(LivingEntity const * other) const
+{
     return false;
 }
 
-bool LivingEntity::infectableBy(Sheep const * sheep) const {
+bool LivingEntity::infectableBy(Sheep const * sheep) const
+{
     return false;
 }
 
-bool LivingEntity::infectableBy(Wolf const * wolf) const {
+bool LivingEntity::infectableBy(Wolf const * wolf) const
+{
     return false;
 }
 
-bool LivingEntity::infectableBy(Grass const * grass) const {
+bool LivingEntity::infectableBy(Grass const * grass) const
+{
     return false;
 }

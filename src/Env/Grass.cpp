@@ -108,10 +108,12 @@ void Grass::breed(Grass* grass)
     return;
 }
 
-void Grass::acceptVisit(Visitor& v) {
+void Grass::acceptVisit(Visitor& v)
+{
     v.visit(this);
 }
 
-std::string Grass::getStatLabel() const {
+std::string Grass::getStatLabel() const
+{
     return s::GRASS_INDIVIDUAL;
 }

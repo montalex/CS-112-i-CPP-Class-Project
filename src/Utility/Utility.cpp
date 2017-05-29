@@ -85,7 +85,9 @@ sf::CircleShape buildAnnulus(Vec2d const& position, double radius, sf::Color col
 
 sf::RectangleShape buildSquare(Vec2d const& position, double side, sf::Color color)
 {
-    Vec2d const size{ side, side };
+    Vec2d const size {
+        side, side
+    };
     sf::RectangleShape square(size);
     square.setPosition(position);
     square.setOrigin(size / 2.0);
@@ -157,34 +159,37 @@ std::vector<std::string> split(std::string const& str, char delim)
     return tokens;
 }
 
-std::string colorAlleleToString(const ColorAllele& color) {
-        switch(color) {
-                case WHITE:
-                        return "white";
-                case BLACK:
-                default:
-                        return "black";
-        }
+std::string colorAlleleToString(const ColorAllele& color)
+{
+    switch(color) {
+    case WHITE:
+        return "white";
+    case BLACK:
+    default:
+        return "black";
+    }
 }
 
-std::string sexToString(const Sex& sex) {
-        switch(sex) {
-                case MALE:
-                        return "male";
-                case FEMALE:
-                default:
-                        return "female";
-        }
+std::string sexToString(const Sex& sex)
+{
+    switch(sex) {
+    case MALE:
+        return "male";
+    case FEMALE:
+    default:
+        return "female";
+    }
 }
 
-double getDecelerationCoef(const Deceleration& dec) {
-        switch(dec) {
-                case WEAK:
-                        return DECELERATION_WEAK;
-                case MIDRANGE:
-                        return DECELERATION_MIDRANGE;
-                case STRONG:
-                default:
-                        return DECELERATION_STRONG;
-        }
+double getDecelerationCoef(const Deceleration& dec)
+{
+    switch(dec) {
+    case WEAK:
+        return DECELERATION_WEAK;
+    case MIDRANGE:
+        return DECELERATION_MIDRANGE;
+    case STRONG:
+    default:
+        return DECELERATION_STRONG;
+    }
 }

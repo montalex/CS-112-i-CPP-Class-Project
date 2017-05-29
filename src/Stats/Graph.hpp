@@ -17,7 +17,8 @@
 #include <string>
 #include <vector>
 
-class Graph : public Drawable {
+class Graph : public Drawable
+{
 public:
     /**
      *  @brief  Construct a graph

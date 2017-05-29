@@ -4,7 +4,7 @@
 
 Wolf::Wolf(const Vec2d& initPos, Genome *mother, Genome *father)
     : Animal(initPos, getAppConfig().wolf_energy_initial, mother, father,
-            sf::seconds(getAppConfig().wolf_reproduction_gestation_time)) {}
+             sf::seconds(getAppConfig().wolf_reproduction_gestation_time)) {}
 
 Wolf::~Wolf() {}
 
@@ -86,7 +86,7 @@ void Wolf::update(sf::Time dt)
 {
     Animal::update(dt);
     setEnergy(getEnergy() - (getAppConfig().animal_base_energy_consumption
-                                         + getSpeedNorm() * getAppConfig().wolf_energy_loss_factor * dt.asSeconds()));
+                             + getSpeedNorm() * getAppConfig().wolf_energy_loss_factor * dt.asSeconds()));
 }
 
 double Wolf::feed(LivingEntity *entity)
@@ -106,10 +106,10 @@ bool Wolf::canMate(Wolf const* wolf) const
 {
     if(wolf->isFemale()) {
         return !isFemale() && !wolf->isPregnant()
-            && wolf->getEnergy() >= getAppConfig().wolf_energy_min_mating_female;
+               && wolf->getEnergy() >= getAppConfig().wolf_energy_min_mating_female;
     } else {
         return isFemale() && !isPregnant()
-            && wolf->getEnergy() >= getAppConfig().wolf_energy_min_mating_male;
+               && wolf->getEnergy() >= getAppConfig().wolf_energy_min_mating_male;
     }
 }
 
@@ -174,23 +174,28 @@ void Wolf::givingBirth()
     setNBabies(0);
 }
 
-void Wolf::acceptVisit(Visitor& v) {
+void Wolf::acceptVisit(Visitor& v)
+{
     v.visit(this);
 }
 
-bool Wolf::isFreeToMove() const {
+bool Wolf::isFreeToMove() const
+{
     return true;
 }
 
-int Wolf::getHerdId() const {
+int Wolf::getHerdId() const
+{
     return -1;
 }
 
-bool Wolf::canInfect(LivingEntity const * other) const {
+bool Wolf::canInfect(LivingEntity const * other) const
+{
     return other->infectableBy(this);
 }
 
-bool Wolf::infectableBy(Wolf const * wolf) const {
+bool Wolf::infectableBy(Wolf const * wolf) const
+{
     return wolf != this &&
            wolf->hasVirus() &&
            wolf->getVirusQuantity() > getAppConfig().virus_min_quantity_for_infection &&

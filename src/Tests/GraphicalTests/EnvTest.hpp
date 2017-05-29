@@ -17,8 +17,8 @@
 class EnvTest : public Application
 {
 public:
-     EnvTest(int argc, char const** argv)
-    : Application(argc, argv)
+    EnvTest(int argc, char const** argv)
+        : Application(argc, argv)
     {
     }
 

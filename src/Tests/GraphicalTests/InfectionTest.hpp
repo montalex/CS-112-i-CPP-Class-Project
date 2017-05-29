@@ -18,17 +18,17 @@
 class InfectionTest : public Application
 {
 public:
-	InfectionTest(int argc, char const** argv)
-		:Application(argc, argv)
-		{}
+    InfectionTest(int argc, char const** argv)
+        :Application(argc, argv)
+    {}
     virtual void onRun() override final;
-	virtual void onEvent(sf::Event event, sf::RenderWindow& window) override final;
+    virtual void onEvent(sf::Event event, sf::RenderWindow& window) override final;
 //	void singleSheepTest(std::array<double, 10>& virusProfile);
-	void singleSheepCreate(const Vec2d& position, const std::array<double, 10>& immuneProfile, bool track);
-	void singleSheepInfect(const Vec2d& position, const std::array<double, 10>& virusProfile);
-	void reset();
+    void singleSheepCreate(const Vec2d& position, const std::array<double, 10>& immuneProfile, bool track);
+    void singleSheepInfect(const Vec2d& position, const std::array<double, 10>& virusProfile);
+    void reset();
 };
 
-	
+
 #endif // INFOSV_REPRODUCTION_TEST_HPP
 

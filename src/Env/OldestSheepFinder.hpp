@@ -9,19 +9,20 @@
  * @brief Visitor used to iterate over the entities in order to
           find a new herd leader for the sheep
  */
-class OldestSheepFinder : public Visitor {
+class OldestSheepFinder : public Visitor
+{
 private:
     const Sheep* oldest;
     sf::Time oldestAge;
     int herdId;
 
 public:
-	/*!
-	 * @brief Constructs new object
-	 *
-	 * @param herd The id of the herd whose new leader needs to be
-	          elected
-	 */
+    /*!
+     * @brief Constructs new object
+     *
+     * @param herd The id of the herd whose new leader needs to be
+              elected
+     */
     OldestSheepFinder(int herd);
 
     /*!

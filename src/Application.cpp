@@ -38,7 +38,7 @@ std::string configFileRelativePath(int argc, char const** argv)
     if (argc >= 2) {
         return RES_LOCATION + argv[1];
     } else {
-			return RES_LOCATION + DEFAULT_CFG;
+        return RES_LOCATION + DEFAULT_CFG;
     }
 }
 
@@ -56,7 +56,7 @@ Vec2d getWindowSize()
 Vec2d getSimulationSize()
 {
     auto width = getAppConfig().window_simulation_width;
-	auto height = getAppConfig().window_simulation_height;
+    auto height = getAppConfig().window_simulation_height;
     return { width, height };
 }
 
@@ -68,7 +68,7 @@ Vec2d getSimulationPosition()
 Vec2d getStatsSize()
 {
     auto width = getAppConfig().window_simulation_width;
-	auto height = getAppConfig().window_stats_height;
+    auto height = getAppConfig().window_stats_height;
     return { width, height };
 }
 
@@ -94,7 +94,8 @@ sf::View setupView(Vec2d const& viewSize,
     view.setViewport({ static_cast<float>(position.x / windowSize.x),
                        static_cast<float>(position.y / windowSize.y),
                        static_cast<float>(allocation.x / windowSize.x),
-                       static_cast<float>(allocation.y / windowSize.y) });
+                       static_cast<float>(allocation.y / windowSize.y)
+                     });
 
     return view;
 }
@@ -102,16 +103,16 @@ sf::View setupView(Vec2d const& viewSize,
 } // anonymous
 
 Application::Application(int argc, char const** argv)
-: mAppDirectory(applicationDirectory(argc, argv))
-, mCfgFile(configFileRelativePath(argc, argv))
+    : mAppDirectory(applicationDirectory(argc, argv))
+    , mCfgFile(configFileRelativePath(argc, argv))
 //, mJSONRead(mAppDirectory + mCfgFile)
-, mConfig(new Config(mAppDirectory + mCfgFile))
-, mEnv(nullptr)
-, mStats(nullptr)
-, mCurrentGraphId(-1)
-, mPaused(false)
-, mIsResetting(false)
-, mIsDragging(false)
+    , mConfig(new Config(mAppDirectory + mCfgFile))
+    , mEnv(nullptr)
+    , mStats(nullptr)
+    , mCurrentGraphId(-1)
+    , mPaused(false)
+    , mIsResetting(false)
+    , mIsDragging(false)
 {
     // Set global singleton
     assert(currentApp == nullptr);
@@ -123,11 +124,11 @@ Application::Application(int argc, char const** argv)
     if (!mFont.loadFromFile(mAppDirectory + FONT_LOCATION)) {
         std::cerr << "Couldn't load " << FONT_LOCATION << std::endl;
     }
-	// prepare simulation background
-	mSimulationBackground = sf::RectangleShape();
+    // prepare simulation background
+    mSimulationBackground = sf::RectangleShape();
     mSimulationBackground.setSize(getWorldSize());
     //simulationBackground.setFillColor(sf::Color::Black);
-	mSimulationBackground.setOutlineColor(sf::Color::Black);
+    mSimulationBackground.setOutlineColor(sf::Color::Black);
     mSimulationBackground.setOutlineThickness(5);
     mSimulationBackground.setTexture(&getAppTexture(getAppConfig().simulation_world_texture));
 }
@@ -137,7 +138,7 @@ Application::~Application()
     // Destroy lab and stats, in reverse order
     delete mEnv;
     delete mStats;
-	delete mConfig;
+    delete mConfig;
 
     // Release textures
     for (auto& kv : mTextures) {
@@ -309,15 +310,15 @@ Vec2d Application::getCentre() const
 void Application::onRun()
 {
     // By default nothing is done here
-	chooseBackground();
+    chooseBackground();
 }
 
 void Application::chooseBackground()
 {
-	mSimulationBackground.setTexture(&getAppTexture(isDebugOn() ?
-													getAppConfig().simulation_world_debug_texture :
-													getAppConfig().simulation_world_texture)
-									 , true);
+    mSimulationBackground.setTexture(&getAppTexture(isDebugOn() ?
+                                     getAppConfig().simulation_world_debug_texture :
+                                     getAppConfig().simulation_world_texture)
+                                     , true);
 }
 
 void Application::onEvent(sf::Event, sf::RenderWindow&)
@@ -348,10 +349,10 @@ Vec2d Application::getCursorPositionInView() const
 
 void Application::addGraph(std::string const& title, std::vector<std::string> const& series, double min, double max)
 {
-    if (series.size() > 0){
-    mCurrentGraphId += 1;
-    getStats().addGraph(mCurrentGraphId, title, series, min, max, getStatsSize() );
-}
+    if (series.size() > 0) {
+        mCurrentGraphId += 1;
+        getStats().addGraph(mCurrentGraphId, title, series, min, max, getStatsSize() );
+    }
 }
 
 void Application::createWindow(Vec2d const& size)
@@ -407,7 +408,7 @@ void Application::handleEvent(sf::Event event, sf::RenderWindow& window)
         switch (event.key.code) {
         // Toggle debug mode
         case sf::Keyboard::D:
-			switchDebug();
+            switchDebug();
             break;
 
         // Exit simulation
@@ -416,13 +417,13 @@ void Application::handleEvent(sf::Event event, sf::RenderWindow& window)
             break;
 
         case sf::Keyboard::L:
-			delete mConfig;
+            delete mConfig;
             mConfig = new Config(mAppDirectory + mCfgFile); // reconstruct
             break;
 
         // Save the world
         case sf::Keyboard::O:
-			//  getEnv().saveWorldToFile();
+            //  getEnv().saveWorldToFile();
             break;
 
         // Toggle pause for simulation
@@ -458,10 +459,10 @@ void Application::handleEvent(sf::Event event, sf::RenderWindow& window)
             break;
 
         case sf::Keyboard::H:
-			/* UNCOMMENT IF BONUS CODED
+            /* UNCOMMENT IF BONUS CODED
             if (mCurrentGraphId > -1)
                 getStats().logCurrentGraph(getAppConfig().stats_log_folder + getAppConfig().stats_log_prefix + std::to_string(getStats().getActive()) + ".txt", getAppConfig().stats_log_header);
-			*/
+            */
             break;
 
         default:
@@ -471,7 +472,7 @@ void Application::handleEvent(sf::Event event, sf::RenderWindow& window)
         break;
 
 
-    // Handle zoom for SFML 2.3+ and older versions as well
+        // Handle zoom for SFML 2.3+ and older versions as well
 #if SFML_VERSION_MAJOR >= 2 && (SFML_VERSION_MINOR > 3 || (SFML_VERSION_MINOR == 3 && SFML_VERSION_PATCH >= 2))
     case sf::Event::MouseWheelScrolled:
         if (event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel) {
@@ -553,7 +554,7 @@ void Application::render(sf::Drawable const& simulationBackground, sf::Drawable 
     mRenderWindow.draw(simulationBackground);
     getEnv().drawOn(mRenderWindow);
 
-       // Render the stats
+    // Render the stats
     mRenderWindow.setView(mStatsView);
     mRenderWindow.draw(statsBackground);
     getStats().drawOn(mRenderWindow);
@@ -624,8 +625,8 @@ void Application::updateSimulationView()
 
 void Application::switchDebug()
 {
-	getAppConfig().switchDebug();
-	chooseBackground();
+    getAppConfig().switchDebug();
+    chooseBackground();
 }
 
 Application& getApp()

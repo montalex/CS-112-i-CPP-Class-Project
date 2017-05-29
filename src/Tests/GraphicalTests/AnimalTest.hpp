@@ -16,8 +16,8 @@
 class AnimalTest : public Application
 {
 public:
-     AnimalTest(int argc, char const** argv)
-    : Application(argc, argv)
+    AnimalTest(int argc, char const** argv)
+        : Application(argc, argv)
     {
     }
 

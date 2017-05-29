@@ -19,10 +19,10 @@
 class InfectionTestManyAnimals : public Application
 {
 public:
-	InfectionTestManyAnimals(int argc, char const** argv)
-		:Application(argc, argv)
-		{}
-	virtual void onEvent(sf::Event event, sf::RenderWindow& window) override final;
+    InfectionTestManyAnimals(int argc, char const** argv)
+        :Application(argc, argv)
+    {}
+    virtual void onEvent(sf::Event event, sf::RenderWindow& window) override final;
     virtual void onRun() override final
     {
         // Setup stats
@@ -34,15 +34,15 @@ public:
     }
 
 
-	void singleSheepCreate(const Vec2d& position);
-	void singleWolfCreate(const Vec2d& position);
+    void singleSheepCreate(const Vec2d& position);
+    void singleWolfCreate(const Vec2d& position);
 
-	void fieldSheepCreate(int p1, int p2, int nb, int p3, int p4, int nb2, int infect);
-	void fieldWolvesCreate(int p1, int p2, int nb, int p3, int p4, int nb2, int infect);
-	void fieldAnimalCreate(std::function<void(const Vec2d&)> singleAnimalCreate, int p1, int p2, int nb, int p3, int p4, int nb2, int infect);
+    void fieldSheepCreate(int p1, int p2, int nb, int p3, int p4, int nb2, int infect);
+    void fieldWolvesCreate(int p1, int p2, int nb, int p3, int p4, int nb2, int infect);
+    void fieldAnimalCreate(std::function<void(const Vec2d&)> singleAnimalCreate, int p1, int p2, int nb, int p3, int p4, int nb2, int infect);
 
-	void singleAnimalInfect(const Vec2d& position, const std::array<double, 10>& virusProfile);
-	void reset();
+    void singleAnimalInfect(const Vec2d& position, const std::array<double, 10>& virusProfile);
+    void reset();
 };
 
 #endif // INFOSV_REPRODUCTION_TEST_HPP

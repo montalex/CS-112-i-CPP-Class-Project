@@ -81,11 +81,9 @@ void InfectionTestManyAnimals::fieldAnimalCreate(std::function<void(const Vec2d&
     int interval2 = (p4-p3)/nb2;
     int i = 0;
     int j = 0;
-    while (i < nb)
-    {
+    while (i < nb) {
         j = 0;
-        while (j < nb2)
-        {
+        while (j < nb2) {
             Vec2d pos(p1+i*interval,p3+j*interval2);
             singleAnimalCreate(pos);
             if (i == nb/2 && j == nb2/2 && infect == 1)
@@ -107,58 +105,49 @@ void InfectionTestManyAnimals::singleAnimalInfect(const Vec2d& position, const s
 
 void InfectionTestManyAnimals::onEvent(sf::Event event, sf::RenderWindow&)
 {
-    if (event.type == sf::Event::KeyPressed)
-    {
+    if (event.type == sf::Event::KeyPressed) {
         // for manual testing, random profile
-        if (event.key.code == sf::Keyboard::W)
-        {
+        if (event.key.code == sf::Keyboard::W) {
             Wolf* tmp2;
             tmp2 = new Wolf(getCursorPositionInView());
 //            std::cout << *tmp2  << std::endl;
             getAppEnv().addEntity(tmp2);
         }
         // for manual testing, random profile
-        else if (event.key.code == sf::Keyboard::S)
-        {
+        else if (event.key.code == sf::Keyboard::S) {
             Sheep* tmp;
             tmp = new Sheep(getCursorPositionInView(), 1);
 //            std::cout << *tmp  << std::endl;
             getAppEnv().addEntity(tmp);
         }
         // for manual testing, set profile
-        else if (event.key.code == sf::Keyboard::Num1)
-        {
+        else if (event.key.code == sf::Keyboard::Num1) {
             singleSheepCreate(getCursorPositionInView());
         }
         // for manual testing, set profile
-        else if (event.key.code == sf::Keyboard::Num2)
-        {
+        else if (event.key.code == sf::Keyboard::Num2) {
             singleWolfCreate(getCursorPositionInView());
         }
         // creates independent lines of sheep and infects leftmost sheep of each line.
         // Observe that there is 1) linear propagation (one neighbor, fixed probability), no jump (infection radius respected)
-        else if (event.key.code == sf::Keyboard::Num3)
-        {
+        else if (event.key.code == sf::Keyboard::Num3) {
             reset();
             fieldSheepCreate(2000,3650,11, 500, 5000, 11,2);
         }
         // creates dense field of sheep. Observe 1) exponential growth of the number of infected
         // 2) the number of infected decreases to 0 symmetrically (because virus is non-lethal and sheep should be immunised against second infection)
-        else if (event.key.code == sf::Keyboard::Num4)
-        {
+        else if (event.key.code == sf::Keyboard::Num4) {
             reset();
             fieldSheepCreate(2000,3650,11, 2000, 3650, 11,1);
         }
         // check that wolves behave the same way
-        else if (event.key.code == sf::Keyboard::Num5)
-        {
+        else if (event.key.code == sf::Keyboard::Num5) {
             reset();
             fieldWolvesCreate(2000,3650,11, 2000, 3650, 11,1);
         }
         // check that double dispatch works correctly
         // test grass ?
-        else if (event.key.code == sf::Keyboard::Num6)
-        {
+        else if (event.key.code == sf::Keyboard::Num6) {
             reset();
             fieldSheepCreate(2000,2750,5, 800, 1650, 5,2);
             fieldWolvesCreate(2000,2750,5, 900, 1750, 5,0);
@@ -172,48 +161,36 @@ void InfectionTestManyAnimals::onEvent(sf::Event event, sf::RenderWindow&)
 //            getAppConfig().virus_infection_probability *= 2.;
 //            fieldSheepCreate(2000,3650,11, 2000, 3650, 11,1);
 //        }
-        else if (event.key.code == sf::Keyboard::Num7)
-        {
+        else if (event.key.code == sf::Keyboard::Num7) {
             singleAnimalInfect(getCursorPositionInView(), mildVirusProfile);
-        }
-        else if (event.key.code == sf::Keyboard::Num8)
-        {
+        } else if (event.key.code == sf::Keyboard::Num8) {
             singleAnimalInfect(getCursorPositionInView(), mildVirusProfile2);
-        }
-        else if (event.key.code == sf::Keyboard::Num9)
-        {
+        } else if (event.key.code == sf::Keyboard::Num9) {
             singleAnimalInfect(getCursorPositionInView(), deadlyVirusProfile);
-        }
-        else if (event.key.code == sf::Keyboard::G)
-        {
+        } else if (event.key.code == sf::Keyboard::G) {
             getAppEnv().addEntity(new Grass(getCursorPositionInView()));
         }
 
-        else if (event.key.code == sf::Keyboard::I)
-        {
+        else if (event.key.code == sf::Keyboard::I) {
             Virus* tmp3 = new Virus();
             std::cout << "NEW VIRUS: " << *tmp3 << std::endl;
             getAppEnv().infectEntity(getCursorPositionInView(), tmp3);
             delete tmp3;
         }
 
-        else if (event.key.code == sf::Keyboard::K)
-        {
+        else if (event.key.code == sf::Keyboard::K) {
             getAppEnv().killEntity(getCursorPositionInView());
         }
 
-        else if (event.key.code == sf::Keyboard::T)
-        {
+        else if (event.key.code == sf::Keyboard::T) {
             getAppEnv().trackEntity(getCursorPositionInView());
         }
 
-        else if (event.key.code == sf::Keyboard::Z)
-        {
+        else if (event.key.code == sf::Keyboard::Z) {
             getAppEnv().stopTrackingAnyEntity();
         }
 
-        else
-        {
+        else {
 
         }
     }

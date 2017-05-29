@@ -103,7 +103,7 @@ public:
 
     /*!
      * @brief Tracks the entity which is the closest to the provided position.
-     * 
+     *
      * @param position the position of the entity to track.
      */
     void trackEntity(Vec2d position);
@@ -120,12 +120,12 @@ public:
      * @param v The virus that will infect the animal.
      */
     void infectEntity(const Vec2d& p, Virus* v);
-    
+
     void infectEntity(const Vec2d& p);
 
     /*!
      * @brief Kills the living enitity at the provided position
-     *    
+     *
      * @param p The closest position to the animal to infect.
      */
     void killEntity(const Vec2d& p);

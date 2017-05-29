@@ -9,12 +9,14 @@ Animal::Animal(const Vec2d& initPos, const double& startEnergy, Genome *mother,
     target(Vec2d()), current_target(Vec2d(1, 0)), speedNorm(0.0), state(WANDERING),
     hungry(false), feedingTime(sf::seconds(getAppConfig().animal_feed_time)),
     matingTime(sf::seconds(0)),pregnant(false),
-    nBabies(0), gestationTime(gesTime), deliveryTime(sf::seconds(0)), babiesDad(nullptr) {
-        genome = new Genome(mother, father);
-        immuneSystem = new ImmuneSystem(this);
-    }
+    nBabies(0), gestationTime(gesTime), deliveryTime(sf::seconds(0)), babiesDad(nullptr)
+{
+    genome = new Genome(mother, father);
+    immuneSystem = new ImmuneSystem(this);
+}
 
-Animal::~Animal() {
+Animal::~Animal()
+{
     delete genome;
     delete immuneSystem;
 };
@@ -508,11 +510,13 @@ Vec2d Animal::avoidanceForce() const
     return avoidance;
 }
 
-std::string Animal::getStatLabel() const {
+std::string Animal::getStatLabel() const
+{
     return s::ANIMAL_INDIVIDUAL;
 }
 
-std::unordered_map<std::string, double> Animal::getStats() const {
+std::unordered_map<std::string, double> Animal::getStats() const
+{
     std::unordered_map<std::string, double> res = LivingEntity::getStats();
     res[s::HEALTH] = immuneSystem->getHealth();
     res[s::IMUNAC] = immuneSystem->getActivationLevel();
@@ -528,28 +532,34 @@ std::unordered_map<std::string, double> Animal::getStats() const {
     return res;
 }
 
-bool Animal::isDead() const {
+bool Animal::isDead() const
+{
     return getEnergy() < getAppConfig().animal_min_energy ||
            immuneSystem->getHealth() <= 0.0;
 }
 
-void Animal::infect(Virus* v) {
+void Animal::infect(Virus* v)
+{
     immuneSystem->infect(v);
 }
 
-void Animal::setImmuneGenes(const std::array<double, 10>& immuneProfile) {
+void Animal::setImmuneGenes(const std::array<double, 10>& immuneProfile)
+{
     genome->setImmuneGenes(immuneProfile);
 }
 
-double Animal::getVirusQuantity() const {
+double Animal::getVirusQuantity() const
+{
     return immuneSystem->getVirus()->getAmount();
 }
 
-Virus* Animal::getVirus() const {
+Virus* Animal::getVirus() const
+{
     return immuneSystem->getVirus();
 }
 
-void Animal::infect(LivingEntity* entity) const {
+void Animal::infect(LivingEntity* entity) const
+{
     Infecter infecter(getVirus());
     entity->acceptVisit(infecter);
 }

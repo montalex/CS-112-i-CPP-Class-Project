@@ -8,7 +8,8 @@
 #include <Application.hpp>
 #include <Genetics/Infecter.hpp>
 
-Environment::~Environment() {
+Environment::~Environment()
+{
 }
 
 void Environment::addEntity(LivingEntity* entity)
@@ -52,7 +53,8 @@ void Environment::reset()
     sheepLeaders.clear();
 }
 
-std::unordered_map<std::string, double> Environment::fetchData(std::string const & label) {
+std::unordered_map<std::string, double> Environment::fetchData(std::string const & label)
+{
     std::unordered_map<std::string, double> empty;
 
     if (label == s::GENERAL) {
@@ -72,11 +74,13 @@ std::unordered_map<std::string, double> Environment::fetchData(std::string const
     return empty;
 }
 
-const Sheep* Environment::getLeader(int herdId) const  {
+const Sheep* Environment::getLeader(int herdId) const
+{
     return sheepLeaders.at(herdId);
 }
 
-void Environment::addToHerd(const Sheep * const sheep) {
+void Environment::addToHerd(const Sheep * const sheep)
+{
     int herdId = sheep->getHerdId();
     // The simplest and most efficient way to check whether a map contains a certain key
     // is to count its occurrences.
@@ -85,7 +89,8 @@ void Environment::addToHerd(const Sheep * const sheep) {
     }
 }
 
-const Sheep* Environment::findOldestSheep(int herd) {
+const Sheep* Environment::findOldestSheep(int herd)
+{
     // Use OldestSheepFinder visitor to retrieve new leader.
     OldestSheepFinder finder(herd);
     for (LivingEntity* const entity : entities) {
@@ -95,7 +100,8 @@ const Sheep* Environment::findOldestSheep(int herd) {
     return finder.getOldestVisited();
 }
 
-void Environment::updateHerds() {
+void Environment::updateHerds()
+{
     std::list<int> toErase; //Store dead leaders for later remove them from map
 
     for (std::pair<const int, const Sheep*> & entry : sheepLeaders) {
@@ -126,11 +132,13 @@ std::list<LivingEntity*> Environment::getNearbyAvoidableEntitesForAnimal(const A
     return entitiesToAvoid;
 }
 
-const LivingEntity* Environment::getTrackedEntity() const {
+const LivingEntity* Environment::getTrackedEntity() const
+{
     return tracked;
 }
 
-LivingEntity* Environment::entityClosestTo(const Vec2d& position) {
+LivingEntity* Environment::entityClosestTo(const Vec2d& position)
+{
     LivingEntity* closest = nullptr;
     double distanceFromClosest = std::numeric_limits<double>::max();
     // Track element closest to given position
@@ -144,7 +152,8 @@ LivingEntity* Environment::entityClosestTo(const Vec2d& position) {
     return closest;
 }
 
-void Environment::trackEntity(Vec2d position) {
+void Environment::trackEntity(Vec2d position)
+{
     if (entities.empty()) {
         return;
     }
@@ -152,12 +161,14 @@ void Environment::trackEntity(Vec2d position) {
     getApp().focusOnStat(tracked->getStatLabel());
 }
 
-void Environment::stopTrackingAnyEntity() {
+void Environment::stopTrackingAnyEntity()
+{
     tracked = nullptr;
     getApp().focusOnStat(s::GENERAL);
 }
 
-void Environment::infectEntity(const Vec2d& p, Virus* v) {
+void Environment::infectEntity(const Vec2d& p, Virus* v)
+{
     if (entities.empty()) {
         return;
     }
@@ -165,18 +176,21 @@ void Environment::infectEntity(const Vec2d& p, Virus* v) {
     entityClosestTo(p)->acceptVisit(infecter);
 }
 
-void Environment::infectEntity(const Vec2d& p) {
+void Environment::infectEntity(const Vec2d& p)
+{
     Virus v;
     infectEntity(p, &v);
 }
 
-void Environment::killEntity(const Vec2d& p) {
+void Environment::killEntity(const Vec2d& p)
+{
     LivingEntity* closest = entityClosestTo(p);
     if (closest != nullptr) {
         closest->die();
     }
 }
 
-const std::list<LivingEntity*>& Environment::getEntities() const {
+const std::list<LivingEntity*>& Environment::getEntities() const
+{
     return entities;
 }

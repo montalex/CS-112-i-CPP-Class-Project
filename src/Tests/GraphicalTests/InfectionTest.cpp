@@ -37,12 +37,12 @@ const Vec2d pos1(500,500);
 void InfectionTest::onRun()
 {
     // Setup stats
-	Application::onRun();
-	addGraph(s::GENERAL, { s::WOLVES, s::SHEEP, s::GRASS, s::INFECTED,}, 0, 300);
-	//addGraph(s::GENERAL, { s::WOLVES, s::SHEEP, s::GRASS,}, 0, 300);
-	addGraph(s::GRASS_INDIVIDUAL, {s::ENERGY}, 0, 1000);
-	addGraph(s::ANIMAL_INDIVIDUAL, {s::ENERGY, s::HEALTH, s::VIRUS, s::ADASCORE, s::IMUNAC, s::SCORE}, 0, 200);
-	focusOnStat(s::GENERAL);
+    Application::onRun();
+    addGraph(s::GENERAL, { s::WOLVES, s::SHEEP, s::GRASS, s::INFECTED,}, 0, 300);
+    //addGraph(s::GENERAL, { s::WOLVES, s::SHEEP, s::GRASS,}, 0, 300);
+    addGraph(s::GRASS_INDIVIDUAL, {s::ENERGY}, 0, 1000);
+    addGraph(s::ANIMAL_INDIVIDUAL, {s::ENERGY, s::HEALTH, s::VIRUS, s::ADASCORE, s::IMUNAC, s::SCORE}, 0, 200);
+    focusOnStat(s::GENERAL);
 }
 
 void InfectionTest::reset()
@@ -76,83 +76,68 @@ void InfectionTest::onEvent(sf::Event event, sf::RenderWindow&)
     Sheep* tmp;
     Wolf* tmp2;
     Virus* tmp3;
-    if (event.type == sf::Event::KeyPressed)
-    {
-        if (event.key.code == sf::Keyboard::W)
-        {
+    if (event.type == sf::Event::KeyPressed) {
+        if (event.key.code == sf::Keyboard::W) {
             tmp2 = new Wolf(getCursorPositionInView());
 //            std::cout << *(tmp2->getGenome()) << std::endl;
             getAppEnv().addEntity(tmp2);
-        }
-        else if (event.key.code == sf::Keyboard::S)
-        {
+        } else if (event.key.code == sf::Keyboard::S) {
             tmp = new Sheep(getCursorPositionInView(), 1);
 //            std::cout << *tmp << std::endl;
             getAppEnv().addEntity(tmp);
         }
         // reset simulation and place sheep in the center
-        else if (event.key.code == sf::Keyboard::Num0)
-        {
+        else if (event.key.code == sf::Keyboard::Num0) {
             reset();
             singleSheepCreate(pos1, immuneProfile);
         }
         // testing a virus for which the immune system has a high affinity. Score rises very quickly, adaptive immune system has no time to plateau.
         // further increasing the affinity results in no visible infection at all
-        else if (event.key.code == sf::Keyboard::Num1)
-        {
+        else if (event.key.code == sf::Keyboard::Num1) {
             singleSheepInfect(pos1, benignVirusProfile);
         }
         // testing a virus for which the immune system has an average affinity. Virus rises, score rises (sigmoidally), virus reaches max and goes down.
         // in case sheep has already been infected, we observe that the sheep is immunised
-        else if (event.key.code == sf::Keyboard::Num2)
-        {
+        else if (event.key.code == sf::Keyboard::Num2) {
             singleSheepInfect(pos1, mildVirusProfile);
             //singleSheepTest(mildVirusProfile2);
         }
         // meant to infect an existing sheep with mildVirusProfile2. In case of infection with mildVirusProfile, we observe that immune system reacts more quickly, albeit less than if
         // it had been reinfected with mildVirusProfile.
-        else if (event.key.code == sf::Keyboard::Num3)
-        {
+        else if (event.key.code == sf::Keyboard::Num3) {
             singleSheepInfect(pos1, mildVirusProfile2);
         }
         // testing a virus for which the immune system has a poor affinity -> immune system cannot get rid of virus and sheep dies.
-        else if (event.key.code == sf::Keyboard::Num4)
-        {
+        else if (event.key.code == sf::Keyboard::Num4) {
             singleSheepInfect(pos1, deadlyVirusProfile);
         }
         // testing a virus for which the immune system has a poor affinity -> immune system cannot get rid of virus and sheep dies.
-        else if (event.key.code == sf::Keyboard::Num9)
-        {
+        else if (event.key.code == sf::Keyboard::Num9) {
             reset();
             singleSheepCreate(pos1, immuneProfile2);
         }
         // generate a new virus and infects. Useful when developing this test
-        else if (event.key.code == sf::Keyboard::I)
-        {
+        else if (event.key.code == sf::Keyboard::I) {
             Virus* tmp3 = new Virus();
-			// décommentez si l'opérateur d'affichage est codé
+            // décommentez si l'opérateur d'affichage est codé
             std::cout << "NEW VIRUS: " << *tmp3 << std::endl;
             getAppEnv().infectEntity(getCursorPositionInView(), tmp3);
 
         }
 
-        else if (event.key.code == sf::Keyboard::K)
-        {
+        else if (event.key.code == sf::Keyboard::K) {
             getAppEnv().killEntity(getCursorPositionInView());
         }
 
-        else if (event.key.code == sf::Keyboard::T)
-        {
+        else if (event.key.code == sf::Keyboard::T) {
             getAppEnv().trackEntity(getCursorPositionInView());
         }
 
-        else if (event.key.code == sf::Keyboard::Z)
-        {
+        else if (event.key.code == sf::Keyboard::Z) {
             getAppEnv().stopTrackingAnyEntity();
         }
 
-        else
-        {
+        else {
 
         }
     }

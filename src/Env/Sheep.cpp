@@ -3,11 +3,12 @@
 #include <Interface/Visitor.hpp>
 Sheep::Sheep(const Vec2d& initPos, int herd, Genome *mother, Genome *father)
     : Animal(initPos, getAppConfig().sheep_energy_initial, mother, father,
-            sf::seconds(getAppConfig().sheep_reproduction_gestation_time)), herdId(herd) {
-        if (herdId != -1) {
-            getAppEnv().addToHerd(this);
-        }
+             sf::seconds(getAppConfig().sheep_reproduction_gestation_time)), herdId(herd)
+{
+    if (herdId != -1) {
+        getAppEnv().addToHerd(this);
     }
+}
 
 Sheep::~Sheep() {}
 
@@ -93,7 +94,7 @@ void Sheep::update(sf::Time dt)
 {
     Animal::update(dt);
     setEnergy(getEnergy() - (getAppConfig().animal_base_energy_consumption
-                                         + getSpeedNorm() * getAppConfig().sheep_energy_loss_factor * dt.asSeconds()));
+                             + getSpeedNorm() * getAppConfig().sheep_energy_loss_factor * dt.asSeconds()));
 }
 
 double Sheep::feed(LivingEntity *entity)
@@ -119,10 +120,10 @@ bool Sheep::canMate(Sheep const* sheep) const
 {
     if(sheep->isFemale()) {
         return !isFemale() && !sheep->isPregnant()
-            && sheep->getEnergy() >= getAppConfig().sheep_energy_min_mating_female;
+               && sheep->getEnergy() >= getAppConfig().sheep_energy_min_mating_female;
     } else {
         return isFemale() && !isPregnant()
-            && sheep->getEnergy() >= getAppConfig().sheep_energy_min_mating_male;
+               && sheep->getEnergy() >= getAppConfig().sheep_energy_min_mating_male;
     }
 }
 
@@ -136,7 +137,8 @@ void Sheep::meet(LivingEntity* mate)
     mate->breed(this);
 }
 
-void Sheep::drawOn(sf::RenderTarget& targetWindow) const {
+void Sheep::drawOn(sf::RenderTarget& targetWindow) const
+{
     Animal::drawOn(targetWindow);
     if (isLeader()) {
         auto leaderSprite = buildSprite(getPosition() + Vec2d(getRadius() / 2, -getRadius() / 2),
@@ -193,31 +195,38 @@ void Sheep::givingBirth()
     setNBabies(0);
 }
 
-void Sheep::acceptVisit(Visitor& v) {
+void Sheep::acceptVisit(Visitor& v)
+{
     v.visit(this);
 }
 
-const Sheep* Sheep::getLeader() const {
+const Sheep* Sheep::getLeader() const
+{
     return hasLeader() ? getAppEnv().getLeader(herdId) : nullptr;
 }
 
-int Sheep::getHerdId() const {
+int Sheep::getHerdId() const
+{
     return herdId;
 }
 
-bool Sheep::hasLeader() const {
+bool Sheep::hasLeader() const
+{
     return herdId != -1;
 }
 
-bool Sheep::isLeader() const {
+bool Sheep::isLeader() const
+{
     return getLeader() == this;
 }
 
-bool Sheep::isFreeToMove() const {
+bool Sheep::isFreeToMove() const
+{
     return isLeader() || !hasLeader();
 }
 
-std::string Sheep::getDebugString() const {
+std::string Sheep::getDebugString() const
+{
     std::string herdString;
     if (hasLeader()) {
         herdString = (isLeader() ? "Leader" : "Follower") ;
@@ -228,11 +237,13 @@ std::string Sheep::getDebugString() const {
     return Animal::getDebugString() + herdString + "\n";
 }
 
-bool Sheep::canInfect(LivingEntity const * other) const {
+bool Sheep::canInfect(LivingEntity const * other) const
+{
     return other->infectableBy(this);
 }
 
-bool Sheep::infectableBy(Sheep const * sheep) const {
+bool Sheep::infectableBy(Sheep const * sheep) const
+{
     return sheep != this &&
            sheep->hasVirus() &&
            sheep->getVirusQuantity() > getAppConfig().virus_min_quantity_for_infection &&

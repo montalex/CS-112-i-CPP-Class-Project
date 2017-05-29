@@ -17,10 +17,10 @@
 class PPSTest : public Application
 {
 public:
-	PPSTest(int argc, char const** argv)
-		: Application(argc, argv)
-		{
-		}
-	virtual void onEvent(sf::Event event, sf::RenderWindow& window) override final;
+    PPSTest(int argc, char const** argv)
+        : Application(argc, argv)
+    {
+    }
+    virtual void onEvent(sf::Event event, sf::RenderWindow& window) override final;
 };
 #endif // INFOSV_PPS_TEST_HPP
